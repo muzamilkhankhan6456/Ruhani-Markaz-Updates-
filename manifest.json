@@ -1,14 +1,16 @@
 {
   "name": "Ruhani Markaz Updates",
   "short_name": "Ruhani Markaz",
-  "description": "Ruhani Markaz Kotri - Bayanat, Naat, Asbaq, Itlaa, Taameer aur tamam branches ki updates",
+  "description": "Ruhani Markaz Updates - Bayanat, Mehfil, Ijtema aur Live - روحانی مرکز اپڈیٹس - تحديثات المركز الروحاني",
   "lang": "ur",
   "dir": "rtl",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#0f3d2e",
   "theme_color": "#0f3d2e",
-  "orientation": "portrait",
+  "categories": ["education", "lifestyle", "social"],
   "icons": [
     {
       "src": "icon-192.png",
