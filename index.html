@@ -1,373 +1,192 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ruhani Markaz Updates</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0b3d2e">
+<meta name="description" content="Ruhani Markaz Updates - Bayan, Naat, Asbaq, Itlaa, Amal, Masjid / Madrase Tamir, Live - Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia Kotri">
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fdf6e9;color:#222;padding-bottom:30px}
-header{background:#0b3d2e;color:#fff;text-align:center;padding:18px 12px 14px;position:sticky;top:0;z-index:10}
-header h1{margin:0;color:#f5c542;font-size:23px;line-height:1.2}
-header p{margin:6px 0 10px;font-size:13px;opacity:.92;line-height:1.4}
-.lang{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
-.lang button{border:1px solid #f5c542;background:transparent;color:#fff;padding:7px 14px;border-radius:20px;font-size:14px}
-.lang button.on{background:#f5c542;color:#000;font-weight:bold}
-.wrap{max-width:560px;margin:auto;padding:12px}
-.top{display:flex;gap:8px;margin-top:4px}
-.top button{flex:1;padding:12px;border:0;border-radius:12px;font-weight:bold;font-size:15px}
-.btnAdmin{background:#0b3d2e;color:#fff}
-.btnShare{background:#f5c542;color:#000}
-.card{background:#fff;border:1px solid #e0d5b8;border-radius:16px;padding:14px;margin-top:12px;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
-.card h3{margin:0 0 10px;font-size:18px;color:#0b3d2e}
-input,textarea,select{width:100%;padding:11px 10px;margin:6px 0;border:1px solid #ccc;border-radius:10px;font-size:15px;background:#fff;outline:none}
-input:focus,textarea:focus,select:focus{border-color:#0b3d2e}
-textarea{min-height:80px;resize:vertical}
-label{font-size:13px;font-weight:bold;color:#333;display:block;margin-top:8px}
-.row{display:flex;gap:8px}.row>*{flex:1}
-.btn{padding:12px;border:0;border-radius:10px;font-weight:bold;font-size:15px;color:#fff;width:100%}
-.green{background:#0b3d2e}.yellow{background:#f5c542;color:#000}.red{background:#c0392b}.grey{background:#888}
-.small{font-size:12px;color:#777;text-align:center;margin:8px 0 0;line-height:1.5}
-.post{background:#fff;border-radius:16px;padding:14px;margin-top:12px;border:1px solid #e0d5b8}
-.post b.title{font-size:16px;line-height:1.4;display:block;margin-top:6px}
-.post p.desc{font-size:15px;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:8px 0}
-.post img,.post video{width:100%;border-radius:12px;margin-top:10px;display:block}
-.post audio{width:100%;margin-top:10px}
-.badge{display:inline-block;background:#fdf0c0;color:#0b3d2e;padding:5px 11px;border-radius:20px;font-size:12px;font-weight:bold}
-.pay{background:#fff8dc;border:1px solid #f5c542;padding:11px;border-radius:11px;margin-top:11px;font-size:14px;line-height:1.8;word-break:break-all}
-.hidden{display:none!important}
-.adminBox{border:1.5px dashed #0b3d2e;padding:12px;border-radius:12px;margin-top:14px;background:#f9fff8}
-.sathiRow{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid #eee;padding:8px 10px;border-radius:9px;margin-top:6px;font-size:14px}
-.sathiRow button{border:0;background:none;color:red;font-size:16px}
-.liveLink{display:block;background:#0b3d2e;color:#fff;text-align:center;padding:11px;border-radius:10px;text-decoration:none;font-weight:bold;margin-top:10px}
-.checkRow{display:flex;align-items:center;gap:8px;margin:10px 0}
-.checkRow input{width:auto;margin:0}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Arial}
+body{background:#f1f1f1;color:#222;padding-bottom:80px}
+header{background:#0b3d2e;color:#fff;padding:18px 14px 16px;text-align:center;position:sticky;top:0;z-index:20}
+header h1{font-size:23px;line-height:1.2}
+header p{font-size:13px;opacity:.92;margin-top:4px}
+.muhtamim{margin:8px 0 0 !important;font-size:14px !important;color:#f5c542 !important;font-weight:800 !important;opacity:1 !important}
+.markaz{margin:3px 0 0 !important;font-size:12px !important;opacity:.95 !important}
+.topbar{display:flex;gap:8px;padding:10px;background:#fff;overflow-x:auto;position:sticky;top:0;z-index:15;border-bottom:1px solid #eee}
+.topbar button{white-space:nowrap;padding:8px 14px;border:1px solid #ddd;border-radius:20px;background:#eee;cursor:pointer;font-size:14px}
+.topbar button.active{background:#0b3d2e;color:#fff;border-color:#0b3d2e}
+.container{max-width:760px;margin:auto;padding:12px}
+.card{background:#fff;border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.card h3{font-size:17px;margin-bottom:4px;line-height:1.4}
+.card small{color:#777}
+.card p{margin:8px 0;line-height:1.65;white-space:pre-wrap;font-size:15px}
+.card img,.card video{width:100%;border-radius:10px;margin-top:8px}
+.card audio{width:100%;margin-top:8px}
+.badge{display:inline-block;background:#e8f5e9;color:#0b3d2e;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700;margin:2px 2px 2px 0}
+.badge.live{background:#ffebee;color:#d32f2f}
+.badge.branch{background:#fff3cd;color:#333;max-width:100%}
+.btn{padding:10px 14px;border:none;border-radius:10px;cursor:pointer;font-weight:700;font-size:14px}
+.btn.green{background:#0b3d2e;color:#fff}
+.btn.gold{background:#f5c542;color:#000}
+.btn.red{background:#d32f2f;color:#fff}
+.btn.grey{background:#eee;color:#333}
+.btn.blue{background:#1976d2;color:#fff}
+input,select,textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:10px;margin:6px 0;font-size:15px;background:#fff}
+textarea{min-height:85px;resize:vertical}
+label{font-size:13px;font-weight:700;display:block;margin-top:8px}
+.row{display:flex;gap:8px}
+.row>*{flex:1}
+.fab{position:fixed;bottom:18px;right:16px;background:#0b3d2e;color:#fff;border:none;padding:14px 20px;border-radius:50px;font-weight:800;box-shadow:0 4px 14px rgba(0,0,0,.3);z-index:30;cursor:pointer}
+.adminBox{background:#fff7e6;border:1px solid #f5c542;border-radius:14px;padding:14px;margin-bottom:12px}
+.sathiRow{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#f8f8f8;padding:9px 10px;border-radius:10px;margin:5px 0}
+.sathiRow span{flex:1;font-size:14px;word-break:break-word}
+.sathiRow button{background:#ffebee;border:none;padding:7px 10px;border-radius:8px;cursor:pointer}
+.liveBox{background:#000;color:#fff;border-radius:12px;padding:12px;text-align:center;margin-top:10px}
+.liveBox a{color:#ff5252;font-weight:800}
+hr{border:none;border-top:1px solid #eee;margin:14px 0}
+.searchBox{margin-bottom:12px}
+.footer{text-align:center;font-size:12px;color:#888;margin-top:10px;line-height:1.6}
+.small{font-size:12px;color:#666}
+.preview{width:100%;border-radius:10px;margin-top:8px;display:none}
 </style>
 </head>
 <body>
 <header>
 <h1 id="appTitle">Ruhani Markaz Updates</h1>
 <p id="appSub">Bayan • Naat • Asbaq • Itlaa • Amal • Tamir • Live</p>
-<div class="lang">
-<button class="on" onclick="setLang('en',this)">English</button>
-<button onclick="setLang('ur',this)">اردو</button>
-<button onclick="setLang('ar',this)">العربية</button>
-</div>
+<p class="muhtamim">Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)</p>
+<p class="markaz">Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri</p>
 </header>
-
-<div class="wrap">
-<div class="top">
-<button class="btnAdmin" onclick="openLogin()">🔐 Admin</button>
-<button class="btnShare" onclick="shareApp()">📤 Share</button>
+<div class="topbar" id="catBar">
+<button class="active" onclick="setCat('All',this)">All</button>
+<button onclick="setCat('Bayan',this)">Bayan</button>
+<button onclick="setCat('Naat',this)">Naat</button>
+<button onclick="setCat('Asbaq',this)">Asbaq</button>
+<button onclick="setCat('Itlaa',this)">Itlaa</button>
+<button onclick="setCat('Amal',this)">Amal</button>
+<button onclick="setCat('Masjid / Madrase Tamir',this)">Masjid / Madrase Tamir</button>
+<button onclick="setCat('Live',this)">Live</button>
 </div>
-
-<div id="loginBox" class="card hidden">
-<h3 id="loginTitle">Admin Login</h3>
-<label>Admin Code</label>
-<input type="password" id="loginCode" placeholder="••••" autocomplete="off" inputmode="numeric">
-<div class="row"><button class="btn green" onclick="doLogin()">Login</button><button class="btn red" onclick="hideLogin()">Cancel</button></div>
-<p class="small">Code screen par kabhi show nahi hoga. Sirf •••• nazar aayega.</p>
+<div class="container">
+<div class="card searchBox">
+<label>Search Karo</label>
+<input id="searchInput" oninput="render()" placeholder="Bayan, Naat, Title likh kar dhoondo...">
 </div>
-
-<div id="adminPanel" class="card hidden">
-<h3>Admin Panel - <span id="adminNameShow">Unnamed</span></h3>
-
-<label>Title / Unwan</label>
-<input id="title" placeholder="Title likhen...">
-
-<label>Details / Tafseel</label>
-<textarea id="details" placeholder="Poori tafseel likhen..."></textarea>
-
+<div id="adminLoginBox" class="card">
+<b>Admin Login</b>
+<div class="row"><input id="adminCode" type="password" placeholder="Admin Code likhen"><button class="btn green" onclick="login()">Login</button></div>
+<p class="small">Admin sirf Muhtamim / zimmedar hazrat ke liye hai. Code: 1234</p>
+</div>
+<div id="adminBox" style="display:none" class="adminBox">
+<h3>Admin Panel - Assalam o Alaikum</h3>
+<p class="small">Post yahan se hogi. YouTube / Facebook Link likhna zaroori NAHI hai. Sirf Title + File se bhi post ho jayegi.</p>
+<hr>
+<label>Title *</label>
+<input id="pTitle" placeholder="Jaise: Jumma Bayan - Hazrat Muhtamim Sb">
+<label>Details</label>
+<textarea id="pDesc" placeholder="Tafseel likhen..."></textarea>
 <label>Category</label>
-<select id="cat">
-<option>Bayan</option>
-<option>Naat</option>
-<option>Asbaq</option>
-<option>Itlaa</option>
-<option>Amal</option>
-<option>Masjid / Madrase Tamir</option>
-<option>Live</option>
-</select>
-
+<select id="pCat"><option>Bayan</option><option>Naat</option><option>Asbaq</option><option>Itlaa</option><option>Amal</option><option>Masjid / Madrase Tamir</option><option>Live</option></select>
 <label>Branch</label>
-<select id="branch"></select>
-
-<label>Photo / Video / Audio (Direct Upload)</label>
-<input type="file" id="file" accept="image/*,video/*,audio/*">
-
-<label>YouTube / Facebook Live Link</label>
-<input id="link" placeholder="https://youtube.com/live... ya facebook link">
-
-<div class="checkRow"><input type="checkbox" id="showPay" checked><span>Is post me Easypaisa / JazzCash / Bank dikhao</span></div>
-
-<div class="row"><button class="btn yellow" onclick="publish()">📢 Publish Post</button><button class="btn red" onclick="logout()">Logout</button></div>
-
-<div class="adminBox">
-<h3>⚙️ Settings - Sirf Admin</h3>
-<label>Apna Naam (Admin Name)</label>
-<input id="myName" placeholder="Unnamed" maxlength="30">
-
-<label>Apna Code Badlo (Naya Code)</label>
-<input type="password" id="myCode" placeholder="Naya Code likhen ••••" autocomplete="new-password">
-
+<select id="pBranch"></select>
+<label>Photo / Video / Audio (Direct Upload - Baghair Link Ke)</label>
+<input id="pFile" type="file" accept="image/*,video/*,audio/*" onchange="previewFile(this)">
+<img id="imgPreview" class="preview">
+<label>YouTube / Facebook Live Link (Optional - Zaroori Nahi)</label>
+<input id="pLink" placeholder="Agar Live hai to link likhen, warna khaali chor den">
+<div class="row"><button class="btn green" onclick="publish()">Publish Post</button><button class="btn grey" onclick="logout()">Logout</button></div>
+<hr>
+<h4>Settings - Branches Khud Add / Edit / Delete Karo</h4>
 <label>Branch Add Karo</label>
-<div class="row"><input id="newBranch" placeholder="Nayi Branch ka naam"><button class="btn green" onclick="addBranch()">Add</button></div>
-
-<label>Easypaisa Number</label>
-<input id="ep" placeholder="Jese: 0300-1234567">
-
-<label>JazzCash Number</label>
-<input id="jc" placeholder="Jese: 0300-1234567">
-
-<label>Bank Account</label>
-<input id="bank" placeholder="Bank - Title / Account / IBAN">
-
-<label>Naya Sathi Add Karo (Total 5 tak)</label>
-<input id="sathiName" placeholder="Sathi ka naam" maxlength="30">
-<input type="password" id="sathiCode" placeholder="Uska Code ••••" autocomplete="new-password">
-<button class="btn green" onclick="addSathi()">➕ Sathi Add Karo</button>
+<div class="row"><input id="newBranch" placeholder="Nayi Branch ka naam - Jaise: Madrasa ... Kotri"><button class="btn green" onclick="addBranch()">Add</button></div>
+<div id="branchList"></div>
+<p class="small">Note: Branch 1, Branch 2 wali ghalat branch ko Delete / Edit kar ke apna asal naam likhen. Saari branches Kotri Jamshoro me hain.</p>
+<hr>
+<h4>Sathi / Students List</h4>
+<label>Sathi ka Naam</label>
+<div class="row"><input id="newSathi" placeholder="Naam likhen"><button class="btn gold" onclick="addSathi()">Add Sathi</button></div>
 <div id="sathiList"></div>
-
-<button class="btn green" style="margin-top:12px" onclick="saveSettings()">💾 Settings Save Karo</button>
-<p class="small">Settings save karne ke baad code yaad rakhen. Code kabhi screen par likha hua nahi aayega.</p>
+<hr>
+<h4>App Ka Naam / Muhtamim Badalna Ho To</h4>
+<label>App Title</label>
+<input id="setTitle" value="Ruhani Markaz Updates">
+<label>Muhtamim Naam</label>
+<input id="setMuhtamim" value="Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)">
+<div class="row"><button class="btn blue" onclick="saveAppSettings()">Save Settings</button><button class="btn red" onclick="resetAll()">Sab Data Delete</button></div>
 </div>
-</div>
-
-<div id="payBox" class="card hidden">
-<h3>💚 Taawun / Donation</h3>
-<div id="payShow" class="pay"></div>
-<p class="small">Markaz ki tamir aur deeni kaamon ke liye taawun farmayen.</p>
-</div>
-
-<div class="card">
-<label>Category Filter</label>
-<select id="filterCat" onchange="render()">
-<option value="All">Sab Dekhen</option>
-<option>Bayan</option>
-<option>Naat</option>
-<option>Asbaq</option>
-<option>Itlaa</option>
-<option>Amal</option>
-<option>Masjid / Madrase Tamir</option>
-<option>Live</option>
-</select>
-<label>Branch Filter</label>
-<select id="filterBranch" onchange="render()"></select>
-</div>
-
 <div id="posts"></div>
-<p class="small" id="noPost">No updates yet.<br>Abhi koi update nahi hai.</p>
+<div id="noPost" style="text-align:center;color:#888;padding:20px;display:none">Abhi koi post nahi hai. Admin se post ka intezar karen.</div>
+<div class="footer">Ruhani Markaz Updates<br>Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri<br>Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)<br>Kotri Jamshoro - 1 Main Markaz + 9 Branches</div>
 </div>
-
+<button class="fab" onclick="document.getElementById('adminLoginBox').scrollIntoView({behavior:'smooth'})">Admin</button>
 <script>
-var DEFAULT_SETTINGS = {admins:[{name:'Unnamed',code:'1234'}],branches:['Main Markaz','Karachi','Lahore','Hyderabad','Multan'],ep:'',jc:'',bank:''};
-var settings;
-try{ settings = JSON.parse(localStorage.getItem('rm_settings_v2')||'null') || JSON.parse(JSON.stringify(DEFAULT_SETTINGS)); }catch(e){ settings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS)); }
-var posts;
-try{ posts = JSON.parse(localStorage.getItem('rm_posts_v2')||'[]'); }catch(e){ posts = []; }
-var currentAdmin = null;
-var currentLang = 'en';
-
-function saveAll(){
-  localStorage.setItem('rm_settings_v2', JSON.stringify(settings));
-  localStorage.setItem('rm_posts_v2', JSON.stringify(posts));
-}
-function escapeHtml(s){
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-function fillBranches(){
-  var b = document.getElementById('branch');
-  var f = document.getElementById('filterBranch');
-  var oldFilter = f.value || 'All';
-  b.innerHTML = '';
-  settings.branches.forEach(function(x){ var o=document.createElement('option'); o.textContent=x; b.appendChild(o); });
-  f.innerHTML = '';
-  var oAll=document.createElement('option'); oAll.value='All'; oAll.textContent='Sab Branches'; f.appendChild(oAll);
-  settings.branches.forEach(function(x){ var o=document.createElement('option'); o.textContent=x; o.value=x; f.appendChild(o); });
-  if(settings.branches.indexOf(oldFilter)!==-1 || oldFilter==='All'){ f.value = oldFilter; }
-}
-function renderSathi(){
-  var h = '';
-  settings.admins.forEach(function(a,i){
-    h += '<div class="sathiRow"><span>'+(i+1)+'. '+escapeHtml(a.name)+'</span>'+(i>0?'<button onclick="delSathi('+i+')">❌</button>':'<span style="font-size:11px;color:#888">Main Admin</span>')+'</div>';
-  });
-  document.getElementById('sathiList').innerHTML = h + '<p class="small">Total Admin: '+settings.admins.length+' / 5 • Code kabhi show nahi hoga.</p>';
-}
-function renderPay(){
-  var box = document.getElementById('payBox');
-  if(!settings.ep && !settings.jc && !settings.bank){ box.classList.add('hidden'); return; }
-  box.classList.remove('hidden');
-  var t = '';
-  if(settings.ep) t += 'Easypaisa: <b>'+escapeHtml(settings.ep)+'</b><br>';
-  if(settings.jc) t += 'JazzCash: <b>'+escapeHtml(settings.jc)+'</b><br>';
-  if(settings.bank) t += 'Bank: <b>'+escapeHtml(settings.bank)+'</b><br>';
-  document.getElementById('payShow').innerHTML = t;
-}
-function render(){
-  fillBranches();
-  renderPay();
-  renderSathi();
-  var fc = document.getElementById('filterCat').value;
-  var fb = document.getElementById('filterBranch').value;
-  var list = posts.filter(function(p){ return (fc==='All'||p.cat===fc) && (fb==='All'||p.branch===fb); });
-  document.getElementById('noPost').style.display = list.length ? 'none' : 'block';
-  var html = '';
-  var rev = list.slice().reverse();
-  rev.forEach(function(p){
-    var realIndex = posts.indexOf(p);
-    var media = '';
-    if(p.file){
-      if(p.file.indexOf('data:image')===0) media = '<img src="'+p.file+'">';
-      else if(p.file.indexOf('data:video')===0) media = '<video controls src="'+p.file+'"></video>';
-      else if(p.file.indexOf('data:audio')===0) media = '<audio controls src="'+p.file+'"></audio>';
-      else media = '';
-    }
-    var pay = '';
-    if(p.showPay && (settings.ep||settings.jc||settings.bank)){
-      pay = '<div class="pay">';
-      if(settings.ep) pay += 'Easypaisa: <b>'+escapeHtml(settings.ep)+'</b><br>';
-      if(settings.jc) pay += 'JazzCash: <b>'+escapeHtml(settings.jc)+'</b><br>';
-      if(settings.bank) pay += 'Bank: <b>'+escapeHtml(settings.bank)+'</b>';
-      pay += '</div>';
-    }
-    var delBtn = currentAdmin ? ' <button onclick="delPost('+realIndex+')" style="color:red;border:0;background:none;font-size:13px">Delete</button>' : '';
-    html += '<div class="post"><span class="badge">'+escapeHtml(p.cat)+' • '+escapeHtml(p.branch)+'</span><b class="title">'+escapeHtml(p.title)+'</b><p class="desc">'+escapeHtml(p.details)+'</p>'+(p.link?'<a class="liveLink" href="'+escapeHtml(p.link)+'" target="_blank" rel="noopener">▶️ Live / Video Dekhen</a>':'')+media+pay+'<p class="small">By: '+escapeHtml(p.by)+' • '+escapeHtml(p.time)+delBtn+'</p></div>';
-  });
-  document.getElementById('posts').innerHTML = html;
-}
-function openLogin(){ document.getElementById('loginBox').classList.remove('hidden'); window.scrollTo({top:0,behavior:'smooth'}); }
-function hideLogin(){ document.getElementById('loginBox').classList.add('hidden'); }
-function doLogin(){
-  var c = document.getElementById('loginCode').value.trim();
-  if(!c){ alert('Pehle Code likhen'); return; }
-  var f = null;
-  for(var i=0;i<settings.admins.length;i++){ if(settings.admins[i].code===c){ f=settings.admins[i]; break; } }
-  if(!f){ alert('Ghalat Code! Dobara koshish karen.'); return; }
-  currentAdmin = f;
-  document.getElementById('loginBox').classList.add('hidden');
-  document.getElementById('adminPanel').classList.remove('hidden');
-  document.getElementById('adminNameShow').textContent = f.name;
-  document.getElementById('myName').value = f.name;
-  document.getElementById('myCode').value = '';
-  document.getElementById('ep').value = settings.ep || '';
-  document.getElementById('jc').value = settings.jc || '';
-  document.getElementById('bank').value = settings.bank || '';
-  document.getElementById('loginCode').value = '';
-  render();
-}
-function logout(){ currentAdmin=null; document.getElementById('adminPanel').classList.add('hidden'); render(); }
-function addBranch(){
-  var v = document.getElementById('newBranch').value.trim();
-  if(!v){ alert('Branch ka naam likhen'); return; }
-  if(settings.branches.indexOf(v)===-1){ settings.branches.push(v); saveAll(); }
-  document.getElementById('newBranch').value = '';
-  render();
-  alert('Branch add ho gayi: '+v);
-}
-function addSathi(){
-  if(settings.admins.length>=5){ alert('Sirf 5 Admin ho sakte hain. Pehle kisi ko delete karen.'); return; }
-  var n = document.getElementById('sathiName').value.trim();
-  var c = document.getElementById('sathiCode').value.trim();
-  if(!n || !c){ alert('Sathi ka naam aur Code dono likhen'); return; }
-  for(var i=0;i<settings.admins.length;i++){ if(settings.admins[i].code===c){ alert('Ye Code pehle se hai, doosra Code rakhen'); return; } }
-  settings.admins.push({name:n,code:c});
-  saveAll();
-  document.getElementById('sathiName').value='';
-  document.getElementById('sathiCode').value='';
-  render();
-  alert('Sathi add ho gaya: '+n);
-}
-function delSathi(i){
-  if(!confirm('Is sathi ko delete karna hai?')) return;
-  settings.admins.splice(i,1);
-  saveAll();
-  render();
-}
-function saveSettings(){
-  if(!currentAdmin){ alert('Pehle Login karen'); return; }
-  var nn = document.getElementById('myName').value.trim();
-  var nc = document.getElementById('myCode').value.trim();
-  if(nn) currentAdmin.name = nn;
-  if(nc){
-    var dup=false;
-    for(var i=0;i<settings.admins.length;i++){ if(settings.admins[i]!==currentAdmin && settings.admins[i].code===nc) dup=true; }
-    if(dup){ alert('Ye Code pehle se kisi aur ka hai, doosra rakhen'); return; }
-    currentAdmin.code = nc;
-  }
-  settings.ep = document.getElementById('ep').value.trim();
-  settings.jc = document.getElementById('jc').value.trim();
-  settings.bank = document.getElementById('bank').value.trim();
-  saveAll();
-  document.getElementById('myCode').value = '';
-  document.getElementById('adminNameShow').textContent = currentAdmin.name;
-  render();
-  alert('Settings save ho gayi!');
-}
-function delPost(i){
-  if(!confirm('Is post ko delete karna hai?')) return;
-  posts.splice(i,1);
-  saveAll();
-  render();
-}
+var posts = [];
+try{ posts = JSON.parse(localStorage.getItem('rm_posts') || '[]'); }catch(e){ posts=[]; }
+var defaultBranches = ['Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri','Kotri Jamshoro Branch 1','Kotri Jamshoro Branch 2','Kotri Jamshoro Branch 3','Kotri Jamshoro Branch 4','Kotri Jamshoro Branch 5','Kotri Jamshoro Branch 6','Kotri Jamshoro Branch 7','Kotri Jamshoro Branch 8','Kotri Jamshoro Branch 9'];
+var settings = {branches:defaultBranches.slice(), sathi:[], appTitle:'Ruhani Markaz Updates', muhtamim:'Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)'};
+try{ var s = JSON.parse(localStorage.getItem('rm_settings') || 'null'); if(s && s.branches && s.branches.length){ settings = s; if(!settings.appTitle) settings.appTitle='Ruhani Markaz Updates'; if(!settings.muhtamim) settings.muhtamim='Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)'; } }catch(e){}
+var isAdmin = localStorage.getItem('rm_admin')==='1';
+var curCat='All';
+function escapeHtml(str){ return (str||'').replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function saveAll(){ localStorage.setItem('rm_posts', JSON.stringify(posts)); localStorage.setItem('rm_settings', JSON.stringify(settings)); }
+function login(){ var v=document.getElementById('adminCode').value; if(v==='1234'){ isAdmin=true; localStorage.setItem('rm_admin','1'); render(); alert('Login ho gaya - Assalam o Alaikum'); } else { alert('Ghalat code hai'); } }
+function logout(){ isAdmin=false; localStorage.removeItem('rm_admin'); render(); }
+function setCat(c,el){ curCat=c; var btns=document.querySelectorAll('.topbar button'); for(var i=0;i<btns.length;i++){ btns[i].classList.remove('active'); } el.classList.add('active'); render(); }
+function fillBranch(){ var sel=document.getElementById('pBranch'); sel.innerHTML=''; for(var i=0;i<settings.branches.length;i++){ var o=document.createElement('option'); o.textContent=settings.branches[i]; sel.appendChild(o); } }
+function addBranch(){ var v=document.getElementById('newBranch').value.trim(); if(!v){ alert('Branch ka naam likhen'); return; } settings.branches.push(v); document.getElementById('newBranch').value=''; saveAll(); render(); alert('Branch add ho gayi: '+v); }
+function delBranch(i){ if(!confirm('Is branch ko delete karna hai?')) return; settings.branches.splice(i,1); saveAll(); render(); }
+function editBranch(i){ var old=settings.branches[i]; var nw=prompt('Branch ka naya naam likhen:', old); if(nw && nw.trim()){ settings.branches[i]=nw.trim(); saveAll(); render(); } }
+function renderBranchList(){ var h=''; for(var i=0;i<settings.branches.length;i++){ h+='<div class="sathiRow"><span>'+(i+1)+'. '+escapeHtml(settings.branches[i])+'</span><button onclick="editBranch('+i+')">✏️ Edit</button><button onclick="delBranch('+i+')">❌</button></div>'; } document.getElementById('branchList').innerHTML=h; }
+function addSathi(){ var v=document.getElementById('newSathi').value.trim(); if(!v){ alert('Naam likhen'); return; } settings.sathi.push(v); document.getElementById('newSathi').value=''; saveAll(); render(); }
+function delSathi(i){ if(!confirm('Delete karna hai?')) return; settings.sathi.splice(i,1); saveAll(); render(); }
+function renderSathi(){ var h=''; for(var i=0;i<settings.sathi.length;i++){ h+='<div class="sathiRow"><span>'+escapeHtml(settings.sathi[i])+'</span><button onclick="delSathi('+i+')">❌</button></div>'; } document.getElementById('sathiList').innerHTML=h; }
+function previewFile(inp){ var f=inp.files[0]; var img=document.getElementById('imgPreview'); if(f && f.type.indexOf('image')===0){ var r=new FileReader(); r.onload=function(e){ img.src=e.target.result; img.style.display='block'; }; r.readAsDataURL(f); } else { img.style.display='none'; } }
 function publish(){
-  if(!currentAdmin){ alert('Pehle Login karen'); return; }
-  var t = document.getElementById('title').value.trim();
-  if(!t){ alert('Title likhen'); return; }
-  var f = document.getElementById('file').files[0];
-  var doSave = function(fileData){
-    posts.push({
-      title:t,
-      details:document.getElementById('details').value.trim(),
-      cat:document.getElementById('cat').value,
-      branch:document.getElementById('branch').value,
-      link:document.getElementById('link').value.trim(),
-      file:fileData||'',
-      showPay:document.getElementById('showPay').checked,
-      by:currentAdmin.name,
-      time:new Date().toLocaleString()
-    });
-    saveAll();
-    document.getElementById('title').value='';
-    document.getElementById('details').value='';
-    document.getElementById('link').value='';
-    document.getElementById('file').value='';
-    render();
-    alert('Post ho gayi!');
-  };
-  if(f){
-    if(f.size > 8*1024*1024){ alert('File bohot bari hai. 8MB se choti file lagayen ya YouTube link use karen.'); return; }
-    var r = new FileReader();
-    r.onload = function(e){ doSave(e.target.result); };
-    r.readAsDataURL(f);
-  } else { doSave(''); }
+var title=document.getElementById('pTitle').value.trim();
+if(!title){ alert('Title likhen'); return; }
+var desc=document.getElementById('pDesc').value;
+var cat=document.getElementById('pCat').value;
+var branch=document.getElementById('pBranch').value;
+var link=document.getElementById('pLink').value.trim();
+var file=document.getElementById('pFile').files[0];
+function doSave(media,mediaType){
+posts.unshift({title:title,desc:desc,cat:cat,branch:branch,link:link,media:media,mediaType:mediaType,date:new Date().toLocaleString('ur-PK'),by:'Unnamed'});
+saveAll();
+document.getElementById('pTitle').value=''; document.getElementById('pDesc').value=''; document.getElementById('pLink').value=''; document.getElementById('pFile').value=''; document.getElementById('imgPreview').style.display='none';
+render(); alert('Post ho gayi! Baghair link ke bhi ho gayi.');
 }
-function shareApp(){
-  var u = location.href;
-  if(navigator.share){ navigator.share({title:'Ruhani Markaz Updates',url:u}).catch(function(){}); }
-  else if(navigator.clipboard){ navigator.clipboard.writeText(u).then(function(){ alert('Link copy ho gaya'); }); }
-  else { prompt('Link copy karen:', u); }
+if(file){ var reader=new FileReader(); reader.onload=function(e){ var type='image'; if(file.type.indexOf('video')===0) type='video'; if(file.type.indexOf('audio')===0) type='audio'; doSave(e.target.result,type); }; reader.readAsDataURL(file); } else { doSave('',''); }
 }
-function setLang(l,btn){
-  currentLang = l;
-  document.querySelectorAll('.lang button').forEach(function(b){ b.classList.remove('on'); });
-  if(btn) btn.classList.add('on');
-  if(l==='ur' || l==='ar'){ document.body.style.direction='rtl'; }
-  else { document.body.style.direction='ltr'; }
-  if(l==='ur'){
-    document.getElementById('appSub').textContent = 'بیان • نعت • اسباق • اطلاع • عمل • تعمیر • لائیو';
-    document.getElementById('noPost').innerHTML = 'Abhi koi update nahi hai.<br>ابھی کوئی اپڈیٹ نہیں ہے۔';
-  } else if(l==='ar'){
-    document.getElementById('appSub').textContent = 'بيان • نعت • دروس • إعلان • عمل • تعمير • مباشر';
-    document.getElementById('noPost').innerHTML = 'No updates yet.<br>لا توجد تحديثات بعد.';
-  } else {
-    document.getElementById('appSub').textContent = 'Bayan • Naat • Asbaq • Itlaa • Amal • Tamir • Live';
-    document.getElementById('noPost').innerHTML = 'No updates yet.<br>Abhi koi update nahi hai.';
-  }
+function delPost(i){ if(!confirm('Post delete karni hai?')) return; posts.splice(i,1); saveAll(); render(); }
+function sharePost(i){ var p=posts[i]; var txt=p.title+' - '+p.desc+' - Ruhani Markaz Updates, Kotri'; if(navigator.share){ navigator.share({title:p.title,text:txt,url:location.href}).catch(function(){}); } else { prompt('Copy kar ke share karen:', txt); } }
+function saveAppSettings(){ settings.appTitle=document.getElementById('setTitle').value.trim() || 'Ruhani Markaz Updates'; settings.muhtamim=document.getElementById('setMuhtamim').value.trim() || 'Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)'; saveAll(); render(); alert('Settings save ho gayi'); }
+function resetAll(){ if(!confirm('Saara data delete ho jayega. Pakka?')) return; localStorage.removeItem('rm_posts'); localStorage.removeItem('rm_settings'); posts=[]; settings={branches:defaultBranches.slice(),sathi:[],appTitle:'Ruhani Markaz Updates',muhtamim:'Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)'}; saveAll(); render(); }
+function render(){
+document.getElementById('appTitle').textContent=settings.appTitle;
+document.title=settings.appTitle;
+var muhtEls=document.querySelectorAll('.muhtamim'); for(var m=0;m<muhtEls.length;m++){ muhtEls[m].textContent='Muhtamim: '+settings.muhtamim; }
+document.getElementById('setTitle').value=settings.appTitle;
+document.getElementById('setMuhtamim').value=settings.muhtamim;
+document.getElementById('adminBox').style.display=isAdmin?'block':'none';
+document.getElementById('adminLoginBox').style.display=isAdmin?'none':'block';
+fillBranch(); renderBranchList(); renderSathi();
+var q=(document.getElementById('searchInput').value||'').toLowerCase();
+var box=document.getElementById('posts'); box.innerHTML='';
+var filtered=posts.filter(function(p){ var okCat=(curCat==='All'||p.cat===curCat); var okQ=!q || (p.title+' '+p.desc+' '+(p.branch||'')).toLowerCase().indexOf(q)>-1; return okCat && okQ; });
+document.getElementById('noPost').style.display=filtered.length?'none':'block';
+for(var k=0;k<filtered.length;k++){
+var p=filtered[k]; var idx=posts.indexOf(p); var mediaHtml='';
+if(p.media){ if(p.mediaType==='video') mediaHtml='<video controls src="'+p.media+'"></video>'; else if(p.mediaType==='audio') mediaHtml='<audio controls src="'+p.media+'"></audio>'; else mediaHtml='<img src="'+p.media+'">'; }
+var linkHtml=p.link?'<div class="liveBox">🔴 LIVE Dekhen: <a href="'+escapeHtml(p.link)+'" target="_blank">Yahan Click Karen</a></div>':'';
+var adminBtns=isAdmin?'<div class="row" style="margin-top:10px"><button class="btn red" onclick="delPost('+idx+')">Delete Post</button><button class="btn grey" onclick="sharePost('+idx+')">Share</button></div>':'<div style="margin-top:10px"><button class="btn grey" onclick="sharePost('+idx+')">Share</button></div>';
+box.innerHTML+='<div class="card"><span class="badge '+(p.cat==='Live'?'live':'')+'">'+escapeHtml(p.cat)+'</span> <span class="badge branch">'+escapeHtml(p.branch||defaultBranches[0])+'</span><h3>'+escapeHtml(p.title)+'</h3><small>'+escapeHtml(p.date)+' • By: '+escapeHtml(p.by||'Unnamed')+'</small><p>'+escapeHtml(p.desc)+'</p>'+mediaHtml+linkHtml+adminBtns+'</div>';
 }
-if('serviceWorker' in navigator){ try{ navigator.serviceWorker.register('sw.js'); }catch(e){} }
+}
 render();
+if('serviceWorker' in navigator){ try{ navigator.serviceWorker.register('sw.js'); }catch(e){} }
 </script>
 </body>
 </html>
