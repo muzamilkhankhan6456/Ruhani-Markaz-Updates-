@@ -1,29 +1,30 @@
-const CACHE_NAME = 'ruhani-markaz-v4';
+// Ruhani Markaz Updates - Service Worker - FULL FILE
+// Version: v4 - Purani cache ko delete kar dega
+
+const CACHE = 'ruhani-v4';
 const FILES_TO_CACHE = [
   './',
   './index.html',
-  './manifest.json',
-  './icon-192.png',
-  './icon-512.png'
+  './manifest.json'
 ];
 
-// Install - Nayi files save karo
+// Install - Nayi file aate hi purani ko hata do
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
+    caches.open(CACHE).then((cache) => {
       return cache.addAll(FILES_TO_CACHE);
     })
   );
-  self.skipWaiting();
 });
 
-// Activate - Purani cache delete karo
+// Activate - Purani saari cache delete kar do
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keyList) => {
+    caches.keys().then((keys) => {
       return Promise.all(
-        keyList.map((key) => {
-          if (key !== CACHE_NAME) {
+        keys.map((key) => {
+          if (key !== CACHE) {
             return caches.delete(key);
           }
         })
@@ -33,19 +34,20 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Fetch - Pehle cache se do, na mile to internet se lo
+// Fetch - Pehle Internet se nayi file lao, na mile to cache se lao
 self.addEventListener('fetch', (event) => {
-  if (event.request.method !== 'GET') return;
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(event.request).then((response) => {
+    fetch(event.request)
+      .then((response) => {
+        // Nayi file mili to cache me bhi save kar lo
+        const copy = response.clone();
+        caches.open(CACHE).then((cache) => {
+          cache.put(event.request, copy);
+        });
         return response;
-      }).catch(() => {
-        if (event.request.mode === 'navigate') {
-          return caches.match('./index.html');
-        }
-      });
-    })
+      })
+      .catch(() => {
+        return caches.match(event.request);
+      })
   );
 });
