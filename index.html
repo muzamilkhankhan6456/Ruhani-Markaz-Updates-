@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruhani Markaz Updates</title><link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f3d2e">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+*{box-sizing:border-box;font-family:system-ui}body{margin:0;background:#0f3d2e;color:#fff}
+header{background:linear-gradient(180deg,#0a2e22,#0f3d2e);padding:18px 14px 12px;text-align:center;border-bottom:2px solid #d4af37}
+header h1{margin:0;font-size:22px;color:#f5d67a}header p{margin:4px 0 0;color:#e8e8e8;font-size:13px}
+.mosque{font-size:32px} .topbtns{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.topbtns button{background:#f5d67a;color:#0f3d2e;border:none;padding:8px 12px;border-radius:20px;font-weight:700;cursor:pointer}
+nav{display:flex;overflow-x:auto;background:#083324;padding:8px;gap:8px;position:sticky;top:0;z-index:10}
+nav button{white-space:nowrap;background:#14573e;color:#fff;border:1px solid #d4af37;padding:9px 14px;border-radius:20px;cursor:pointer}
+nav button.active{background:#f5d67a;color:#0f3d2e}
+main{padding:12px;padding-bottom:90px}.card{background:#fff;color:#222;border-radius:14px;padding:12px;margin-bottom:12px;border-right:5px solid #d4af37}
+.card h3{margin:0 0 6px;color:#0f3d2e}.card small{color:#777}.badge{display:inline-block;background:#0f3d2e;color:#f5d67a;padding:3px 8px;border-radius:20px;font-size:12px}
+iframe,video{width:100%;border-radius:10px;margin-top:8px}img.postimg{width:100%;border-radius:10px;margin-top:8px}
+input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid #ccc;border-radius:10px;font-size:15px}
+.btn{background:#0f3d2e;color:#f5d67a;border:none;padding:11px;border-radius:10px;width:100%;font-weight:700;cursor:pointer}
+.btn-gold{background:#f5d67a;color:#0f3d2e}.paybox{background:#fffbe6;border:1px dashed #d4af37;border-radius:12px;padding:12px;color:#333;margin-bottom:10px}
+.paybox b{color:#0f3d2e}.copy{float:left;background:#0f3d2e;color:#fff;border:none;padding:5px 10px;border-radius:8px}
+.adminbox{background:#fff;color:#222;border-radius:12px;padding:12px;margin-bottom:12px}
+.hidden{display:none}.progress{height:10px;background:#eee;border-radius:20px;overflow:hidden}.progress div{height:100%;background:#d4af37}
+footer{position:fixed;bottom:0;left:0;right:0;background:#083324;text-align:center;padding:8px;font-size:12px;color:#f5d67a}
+</style>
+</head>
+<body>
+<header>
+<div class="mosque">🕌 🌙</div>
+<h1>روحانی مرکز اپڈیٹس</h1>
+<p>Ruhani Markaz Updates - Kotri | Hyderabad | Karachi</p>
+<div class="topbtns">
+<button onclick="showTab('home')">🏠 ہوم</button>
+<button onclick="openAdmin()">🔐 ایڈمن</button>
+<button onclick="showTab('settings')">⚙️ سیٹنگ</button>
+</div>
+</header>
+
+<nav id="tabs">
+<button class="active" onclick="showTab('home',this)">ہوم</button>
+<button onclick="showTab('bayan',this)">🎙️ بیانات</button>
+<button onclick="showTab('naat',this)">🎵 نعت</button>
+<button onclick="showTab('asbaq',this)">📖 اسباق</button>
+<button onclick="showTab('itlaa',this)">📢 اطلاع و اعمال</button>
+<button onclick="showTab('taameer',this)">🏗️ تعمیر</button>
+<button onclick="showTab('chanda',this)">💚 چندہ / تعاون</button>
+</nav>
+
+<main>
+<!-- HOME -->
+<div id="home" class="page">
+<div class="card"><h3>🌙 السلام علیکم ورحمتہ اللہ وبرکاتہ</h3><p>مرکز کی تمام تازہ اپڈیٹس، بیانات، نعت، اسباق اور تعمیر کی خبریں ایک جگہ۔</p>
+<label>برانچ منتخب کریں:</label>
+<select id="branchFilter" onchange="render()"><option value="All">سب برانچز</option><option>کوٹری</option><option>حیدرآباد</option><option>کراچی</option><option>سب برانچز</option></select>
+</div><div id="homeList"></div>
+</div>
+
+<!-- OTHER TABS -->
+<div id="bayan" class="page hidden"><div class="card"><h3>🎙️ بیانات</h3><p>جمعہ بیان، درس، اصلاحی بیان</p></div><div id="bayanList"></div></div>
+<div id="naat" class="page hidden"><div class="card"><h3>🎵 نعت شریف</h3><p>نعت، منقبت، کلام</p></div><div id="naatList"></div></div>
+<div id="asbaq" class="page hidden"><div class="card"><h3>📖 اسباق</h3><p>حفظ، ناظرہ، قاعدہ، روزانہ سبق</p></div><div id="asbaqList"></div></div>
+<div id="itlaa" class="page hidden"><div class="card"><h3>📢 اطلاع و اعمال</h3><p>چھٹی، ٹائمنگ، پروگرام، روزانہ عمل / وظیفہ</p></div><div id="itlaaList"></div></div>
+<div id="taameer" class="page hidden">
+<div class="card"><h3>🏗️ مسجد و مدرسہ تعمیر</h3><p id="taameerText">تعمیر کا کام جاری ہے۔ اللہ پاک قبول فرمائے۔</p><div class="progress"><div id="taameerBar" style="width:45%"></div></div><p><span id="taameerPct">45%</span> مکمل ہو گیا</p></div>
+<div id="taameerList"></div></div>
+
+<!-- CHANDA -->
+<div id="chanda" class="page hidden">
+<div class="card"><h3>💚 تعاون کریں - مسجد و مدرسہ کے لیے</h3><p>آپ کے تعاون سے دین کا کام چل رہا ہے۔ جزاک اللہ خیرا!</p></div>
+<div class="paybox"><b>🟢 Easypaisa</b><button class="copy" onclick="copyText('easy')">کاپی</button><p id="easyShow">ابھی نمبر ایڈ نہیں ہوا - ایڈمن سے رابطہ کریں</p></div>
+<div class="paybox"><b>🟠 JazzCash</b><button class="copy" onclick="copyText('jazz')">کاپی</button><p id="jazzShow">ابھی نمبر ایڈ نہیں ہوا</p></div>
+<div class="paybox"><b>🏦 Bank Account</b><button class="copy" onclick="copyText('bank')">کاپی</button><p id="bankShow">ابھی اکاؤنٹ ایڈ نہیں ہوا</p></div>
+<div id="chandaList"></div>
+</div>
+
+<!-- ADMIN -->
+<div id="admin" class="page hidden">
+<div id="loginBox" class="adminbox">
+<h3>🔐 ایڈمن لاگ ان</h3><p>5 ایڈمن ہیں۔ فلحال کوڈ: <b>1234</b></p>
+<input id="adminCode" type="password" placeholder="ایڈمن کوڈ لکھیں - 1234">
+<button class="btn" onclick="login()">لاگ ان</button>
+<p id="loginMsg"></p>
+</div>
+<div id="postBox" class="adminbox hidden">
+<h3>➕ نئی پوسٹ ڈالیں</h3>
+<select id="pCat"><option value="bayan">بیانات</option><option value="naat">نعت</option><option value="asbaq">اسباق</option><option value="itlaa">اطلاع / اعمال</option><option value="taameer">تعمیر</option><option value="chanda">چندہ اپڈیٹ</option></select>
+<select id="pBranch"><option>کوٹری</option><option>حیدرآباد</option><option>کراچی</option><option>سب برانچز</option></select>
+<input id="pTitle" placeholder="عنوان لکھیں - جیسے جمعہ کا بیان">
+<textarea id="pDesc" placeholder="تفصیل / اطلاع / عمل لکھیں"></textarea>
+<input id="pYoutube" placeholder="YouTube لنک یہاں پیسٹ کریں (اگر ہو تو)">
+<label>یا موبائل سے ویڈیو / آڈیو / تصویر:</label>
+<input id="pFile" type="file" accept="video/*,audio/*,image/*">
+<button class="btn btn-gold" onclick="addPost()">📤 پوسٹ کریں</button>
+<button class="btn" onclick="logout()" style="margin-top:8px;background:#888">لاگ آؤٹ</button>
+</div>
+</div>
+
+<!-- SETTINGS -->
+<div id="settings" class="page hidden">
+<div class="adminbox"><h3>⚙️ سیٹنگ - ایڈمن خود بدلے گا</h3><p>یہاں سے آپ ایڈمن کے نام، کوڈ اور پیمنٹ نمبر خود بدل سکتے ہیں۔</p></div>
+<div class="adminbox"><h3>👥 5 ایڈمن</h3>
+<div id="adminList"></div>
+<input id="newAdminName" placeholder="نیا نام - جیسے استاد احمد"><input id="newAdminCode" placeholder="نیا کوڈ - جیسے 5678"><button class="btn" onclick="updateAdmin()">نام / کوڈ محفوظ کریں</button><p style="font-size:12px;color:#666">نوٹ: پہلا ایڈمن آپ ہیں۔ باقی 4 کی جگہ پر Unnamed لکھا ہے، آپ یہاں سے بدل سکتے ہیں۔</p></div>
+<div class="adminbox"><h3>💚 پیمنٹ نمبر</h3>
+<input id="easyIn" placeholder="Easypaisa نمبر"><input id="jazzIn" placeholder="JazzCash نمبر"><input id="bankIn" placeholder="Bank - نام + اکاؤنٹ نمبر"><button class="btn btn-gold" onclick="savePayments()">پیمنٹ محفوظ کریں</button></div>
+<div class="adminbox"><h3>🏗️ تعمیر %</h3><input id="taameerIn" type="number" placeholder="کتنے % مکمل - جیسے 60"><button class="btn" onclick="saveTaameer()">محفوظ کریں</button></div>
+</div>
+</main>
+<footer>روحانی مرکز کوٹری • Ruhani Markaz Updates • Emerald & Gold</footer>
+
+<script>
+let posts = JSON.parse(localStorage.getItem('rmu_posts')||'[]');
+let admins = JSON.parse(localStorage.getItem('rmu_admins')||'[{"name":"Admin 1 - آپ","code":"1234"},{"name":"Admin 2 - Unnamed","code":"1234"},{"name":"Admin 3 - Unnamed","code":"1234"},{"name":"Admin 4 - Unnamed","code":"1234"},{"name":"Admin 5 - Unnamed","code":"1234"}]');
+let pays = JSON.parse(localStorage.getItem('rmu_pays')||'{"easy":"","jazz":"","bank":""}');
+let taameerPct = localStorage.getItem('rmu_taameer')||'45';
+let isAdmin=false;
+if(posts.length==0){
+posts=[
+{cat:'itlaa',branch:'سب برانچز',title:'خوش آمدید! روحانی مرکز اپڈیٹس ایپ آ گئی ہے',desc:'اب تمام بیانات، نعت، اسباق، اطلاع اور تعمیر کی اپڈیٹ یہیں ملے گی۔',yt:'',file:'',date:new Date().toLocaleDateString('ur-PK')},
+{cat:'bayan',branch:'کوٹری',title:'جمعہ کا بیان - نمونہ',desc:'یہ نمونہ پوسٹ ہے۔ ایڈمن لاگ ان کر کے اسے ڈیلیٹ کر کے اپنی پوسٹ ڈال سکتا ہے۔',yt:'',file:'',date:new Date().toLocaleDateString('ur-PK')},
+{cat:'naat',branch:'کوٹری',title:'نعت شریف - نمونہ',desc:'نعت کی ویڈیو یوٹیوب لنک یا ڈائریکٹ اپلوڈ کریں۔',yt:'',file:'',date:new Date().toLocaleDateString('ur-PK')}
+]; savePosts();
+}
+function savePosts(){localStorage.setItem('rmu_posts',JSON.stringify(posts))}
+function showTab(id,btn){document.querySelectorAll('.page').forEach(e=>e.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');window.scrollTo(0,0)}
+function ytEmbed(url){if(!url)return '';let id='';if(url.includes('youtu.be/'))id=url.split('youtu.be/')[1].split('?')[0];else if(url.includes('v='))id=url.split('v=')[1].split('&')[0];if(!id)return '';return `<iframe height="220" src="https://www.youtube.com/embed/${id}" frameborder="0" allowfullscreen></iframe>`}
+function fileTag(p){if(!p.file)return '';if(p.file.startsWith('data:image'))return `<img class="postimg" src="${p.file}">`;if(p.file.startsWith('data:video'))return `<video controls src="${p.file}"></video>`;if(p.file.startsWith('data:audio'))return `<audio controls style="width:100%" src="${p.file}"></audio>`;return ''}
+function cardHTML(p,i){return `<div class="card"><span class="badge">${p.branch}</span> <small>${p.date}</small><h3>${p.title}</h3><p>${p.desc}</p>${ytEmbed(p.yt)}${fileTag(p)}${isAdmin?`<button onclick="delPost(${i})" style="margin-top:8px;background:#c00;color:#fff;border:none;padding:6px 12px;border-radius:8px">🗑️ ڈیلیٹ</button>`:''}</div>`}
+function render(){
+let f=document.getElementById('branchFilter').value;
+let filtered=posts.filter(p=>f=='All'||p.branch==f||p.branch=='سب برانچز');
+document.getElementById('homeList').innerHTML=filtered.map((p,i)=>cardHTML(p,i)).join('')||'<div class="card">ابھی کوئی پوسٹ نہیں</div>';
+['bayan','naat','asbaq','itlaa','taameer','chanda'].forEach(c=>{let el=document.getElementById(c+'List');if(el)el.innerHTML=posts.filter(p=>p.cat==c).map((p,i)=>cardHTML(p,posts.indexOf(p))).join('')||'<div class="card">ابھی کوئی پوسٹ نہیں</div>'});
+document.getElementById('easyShow').innerText=pays.easy||'ابھی نمبر ایڈ نہیں ہوا';
+document.getElementById('jazzShow').innerText=pays.jazz||'ابھی نمبر ایڈ نہیں ہوا';
+document.getElementById('bankShow').innerText=pays.bank||'ابھی اکاؤنٹ ایڈ نہیں ہوا';
+document.getElementById('taameerPct').innerText=taameerPct+'%';document.getElementById('taameerBar').style.width=taameerPct+'%';
+document.getElementById('adminList').innerHTML=admins.map((a,i)=>`<p><b>${i+1}.</b> ${a.name} - کوڈ: ${a.code}</p>`).join('');
+}
+function openAdmin(){showTab('admin');}
+function login(){let c=document.getElementById('adminCode').value;let found=admins.find(a=>a.code==c);if(found){isAdmin=true;document.getElementById('loginBox').classList.add('hidden');document.getElementById('postBox').classList.remove('hidden');document.getElementById('loginMsg').innerText='خوش آمدید '+found.name;render()}else{document.getElementById('loginMsg').innerText='❌ غلط کوڈ ہے'}}
+function logout(){isAdmin=false;document.getElementById('loginBox').classList.remove('hidden');document.getElementById('postBox').classList.add('hidden');render()}
+function addPost(){
+let fileInput=document.getElementById('pFile');
+let doSave=(fileData)=>{let p={cat:document.getElementById('pCat').value,branch:document.getElementById('pBranch').value,title:document.getElementById('pTitle').value||'بغیر عنوان',desc:document.getElementById('pDesc').value,yt:document.getElementById('pYoutube').value,file:fileData||'',date:new Date().toLocaleDateString('ur-PK')};posts.unshift(p);savePosts();render();alert('✅ پوسٹ ہو گئی!');showTab('home');document.getElementById('pTitle').value='';document.getElementById('pDesc').value='';document.getElementById('pYoutube').value=''};
+if(fileInput.files[0]){let r=new FileReader();r.onload=e=>doSave(e.target.result);r.readAsDataURL(fileInput.files[0])}else doSave('');
+}
+function delPost(i){if(confirm('ڈیلیٹ کریں؟')){posts.splice(i,1);savePosts();render()}}
+function updateAdmin(){let n=document.getElementById('newAdminName').value;let c=document.getElementById('newAdminCode').value;if(!n||!c){alert('نام اور کوڈ دونوں لکھیں');return}admins[0]={name:n,code:c};localStorage.setItem('rmu_admins',JSON.stringify(admins));alert('✅ محفوظ ہو گیا! اب آپ کا نام: '+n+' کوڈ: '+c);render()}
+function savePayments(){pays={easy:document.getElementById('easyIn').value,jazz:document.getElementById('jazzIn').value,bank:document.getElementById('bankIn').value};localStorage.setItem('rmu_pays',JSON.stringify(pays));alert('✅ پیمنٹ نمبر محفوظ ہو گئے');render()}
+function saveTaameer(){taameerPct=document.getElementById('taameerIn').value||taameerPct;localStorage.setItem('rmu_taameer',taameerPct);render();alert('✅ تعمیر % محفوظ ہو گیا')}
+function copyText(type){let t=type=='easy'?pays.easy:type=='jazz'?pays.jazz:pays.bank;if(!t){alert('ابھی نمبر ایڈ نہیں ہوا');return}navigator.clipboard.writeText(t);alert('کاپی ہو گیا: '+t)}
+render();
+</script><script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+</script>
+</body>
+</body>
+</html>
