@@ -1,186 +1,373 @@
 <!DOCTYPE html>
-<html lang="ur" dir="rtl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Ruhani Markaz Updates</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0f3d2e">
-<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#0b3d2e">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:#f6f1e7;color:#222;min-height:100vh}
-header{background:linear-gradient(135deg,#0f3d2e,#1a5c44);color:#fff;padding:16px;text-align:center;position:sticky;top:0;z-index:10;box-shadow:0 2px 10px rgba(0,0,0,.2)}
-header h1{font-size:24px;color:#f5c542}
-header p{font-size:13px;opacity:.9;margin-top:4px}
-.lang-bar{display:flex;justify-content:center;gap:8px;margin:12px 0 0}
-.lang-bar button{border:2px solid #f5c542;background:transparent;color:#fff;padding:6px 16px;border-radius:20px;cursor:pointer;font-weight:700}
-.lang-bar button.active{background:#f5c542;color:#0f3d2e}
-.container{max-width:650px;margin:auto;padding:14px;padding-bottom:80px}
-.top-btns{display:flex;gap:10px;margin:10px 0}
-.btn{flex:1;padding:12px;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer}
-.btn-gold{background:#f5c542;color:#0f3d2e}
-.btn-dark{background:#0f3d2e;color:#fff}
-.btn-red{background:#c0392b;color:#fff}
-.live-box{background:#000;border-radius:14px;overflow:hidden;margin:14px 0;display:none}
-.live-box.show{display:block}
-.live-head{background:#e74c3c;color:#fff;padding:8px 12px;font-weight:800;display:flex;gap:8px;align-items:center}
-.live-box iframe{width:100%;height:280px;border:0;display:block}
-.card{background:#fff;border-radius:14px;padding:14px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.08);border-right:5px solid #f5c542}
-.card h3{color:#0f3d2e;margin-bottom:6px;font-size:18px}
-.card small{color:#888}
-.card p{margin-top:8px;line-height:1.7;white-space:pre-wrap}
-.card img,.card video{width:100%;border-radius:10px;margin-top:10px}
-.admin-box{background:#fff;border:2px solid #0f3d2e;border-radius:14px;padding:14px;margin:14px 0;display:none}
-.admin-box.show{display:block}
-input,textarea,select{width:100%;padding:11px;border:1.5px solid #ddd;border-radius:10px;margin:7px 0;font-size:15px;font-family:inherit}
-textarea{min-height:90px}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:99;padding:16px}
-.modal.show{display:flex}
-.modal-inner{background:#fff;width:100%;max-width:360px;border-radius:16px;padding:20px;text-align:center}
-.empty{text-align:center;color:#888;padding:30px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fdf6e9;color:#222;padding-bottom:30px}
+header{background:#0b3d2e;color:#fff;text-align:center;padding:18px 12px 14px;position:sticky;top:0;z-index:10}
+header h1{margin:0;color:#f5c542;font-size:23px;line-height:1.2}
+header p{margin:6px 0 10px;font-size:13px;opacity:.92;line-height:1.4}
+.lang{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
+.lang button{border:1px solid #f5c542;background:transparent;color:#fff;padding:7px 14px;border-radius:20px;font-size:14px}
+.lang button.on{background:#f5c542;color:#000;font-weight:bold}
+.wrap{max-width:560px;margin:auto;padding:12px}
+.top{display:flex;gap:8px;margin-top:4px}
+.top button{flex:1;padding:12px;border:0;border-radius:12px;font-weight:bold;font-size:15px}
+.btnAdmin{background:#0b3d2e;color:#fff}
+.btnShare{background:#f5c542;color:#000}
+.card{background:#fff;border:1px solid #e0d5b8;border-radius:16px;padding:14px;margin-top:12px;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+.card h3{margin:0 0 10px;font-size:18px;color:#0b3d2e}
+input,textarea,select{width:100%;padding:11px 10px;margin:6px 0;border:1px solid #ccc;border-radius:10px;font-size:15px;background:#fff;outline:none}
+input:focus,textarea:focus,select:focus{border-color:#0b3d2e}
+textarea{min-height:80px;resize:vertical}
+label{font-size:13px;font-weight:bold;color:#333;display:block;margin-top:8px}
+.row{display:flex;gap:8px}.row>*{flex:1}
+.btn{padding:12px;border:0;border-radius:10px;font-weight:bold;font-size:15px;color:#fff;width:100%}
+.green{background:#0b3d2e}.yellow{background:#f5c542;color:#000}.red{background:#c0392b}.grey{background:#888}
+.small{font-size:12px;color:#777;text-align:center;margin:8px 0 0;line-height:1.5}
+.post{background:#fff;border-radius:16px;padding:14px;margin-top:12px;border:1px solid #e0d5b8}
+.post b.title{font-size:16px;line-height:1.4;display:block;margin-top:6px}
+.post p.desc{font-size:15px;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:8px 0}
+.post img,.post video{width:100%;border-radius:12px;margin-top:10px;display:block}
+.post audio{width:100%;margin-top:10px}
+.badge{display:inline-block;background:#fdf0c0;color:#0b3d2e;padding:5px 11px;border-radius:20px;font-size:12px;font-weight:bold}
+.pay{background:#fff8dc;border:1px solid #f5c542;padding:11px;border-radius:11px;margin-top:11px;font-size:14px;line-height:1.8;word-break:break-all}
 .hidden{display:none!important}
-[dir="ltr"] .card{border-right:none;border-left:5px solid #f5c542}
+.adminBox{border:1.5px dashed #0b3d2e;padding:12px;border-radius:12px;margin-top:14px;background:#f9fff8}
+.sathiRow{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid #eee;padding:8px 10px;border-radius:9px;margin-top:6px;font-size:14px}
+.sathiRow button{border:0;background:none;color:red;font-size:16px}
+.liveLink{display:block;background:#0b3d2e;color:#fff;text-align:center;padding:11px;border-radius:10px;text-decoration:none;font-weight:bold;margin-top:10px}
+.checkRow{display:flex;align-items:center;gap:8px;margin:10px 0}
+.checkRow input{width:auto;margin:0}
 </style>
 </head>
 <body>
 <header>
-<h1 data-t="title">روحانی مرکز اپڈیٹس</h1>
-<p data-t="subtitle">بayanat • Mehfil • Ijtema • Live</p>
-<div class="lang-bar">
-<button onclick="setLang('en')" id="btn-en">English</button>
-<button onclick="setLang('ur')" id="btn-ur" class="active">اردو</button>
-<button onclick="setLang('ar')" id="btn-ar">العربية</button>
+<h1 id="appTitle">Ruhani Markaz Updates</h1>
+<p id="appSub">Bayan • Naat • Asbaq • Itlaa • Amal • Tamir • Live</p>
+<div class="lang">
+<button class="on" onclick="setLang('en',this)">English</button>
+<button onclick="setLang('ur',this)">اردو</button>
+<button onclick="setLang('ar',this)">العربية</button>
 </div>
 </header>
 
-<div class="container">
-<div class="top-btns">
-<button class="btn btn-dark" onclick="openLogin()" data-t="adminBtn">🔐 ایڈمن</button>
-<button class="btn btn-gold" onclick="shareApp()" data-t="shareBtn">📤 شیئر کریں</button>
+<div class="wrap">
+<div class="top">
+<button class="btnAdmin" onclick="openLogin()">🔐 Admin</button>
+<button class="btnShare" onclick="shareApp()">📤 Share</button>
 </div>
 
-<div id="liveBox" class="live-box">
-<div class="live-head">🔴 <span data-t="liveNow">LIVE NOW</span></div>
-<iframe id="liveFrame" allowfullscreen></iframe>
+<div id="loginBox" class="card hidden">
+<h3 id="loginTitle">Admin Login</h3>
+<label>Admin Code</label>
+<input type="password" id="loginCode" placeholder="••••" autocomplete="off" inputmode="numeric">
+<div class="row"><button class="btn green" onclick="doLogin()">Login</button><button class="btn red" onclick="hideLogin()">Cancel</button></div>
+<p class="small">Code screen par kabhi show nahi hoga. Sirf •••• nazar aayega.</p>
 </div>
 
-<div id="adminBox" class="admin-box">
-<h3 data-t="adminPanel">ایڈمن پینل</h3>
-<input id="postTitle" data-ph="postTitlePh" placeholder="عنوان / Title">
-<textarea id="postText" data-ph="postTextPh" placeholder="تفصیل لکھیں..."></textarea>
-<input type="file" id="postFile" accept="image/*,video/*">
-<select id="postType">
-<option value="bayan" data-t="optBayan">بیان</option>
-<option value="mehfil" data-t="optMehfil">محفل</option>
-<option value="ijtema" data-t="optIjtema">اجتماع</option>
-<option value="live" data-t="optLive">لائیو لنک</option>
+<div id="adminPanel" class="card hidden">
+<h3>Admin Panel - <span id="adminNameShow">Unnamed</span></h3>
+
+<label>Title / Unwan</label>
+<input id="title" placeholder="Title likhen...">
+
+<label>Details / Tafseel</label>
+<textarea id="details" placeholder="Poori tafseel likhen..."></textarea>
+
+<label>Category</label>
+<select id="cat">
+<option>Bayan</option>
+<option>Naat</option>
+<option>Asbaq</option>
+<option>Itlaa</option>
+<option>Amal</option>
+<option>Masjid / Madrase Tamir</option>
+<option>Live</option>
 </select>
-<input id="liveLink" data-ph="liveLinkPh" placeholder="YouTube / Facebook Live Link yahan paste karein (sirf Live ke liye)">
-<button class="btn btn-gold" onclick="addPost()" data-t="publish">پوسٹ کریں</button>
-<button class="btn btn-red" onclick="logout()" data-t="logout">لاگ آؤٹ</button>
-<p style="font-size:12px;color:#888;margin-top:8px" data-t="adminNote">Live ke liye Type me Live select karein aur link paste karein.</p>
+
+<label>Branch</label>
+<select id="branch"></select>
+
+<label>Photo / Video / Audio (Direct Upload)</label>
+<input type="file" id="file" accept="image/*,video/*,audio/*">
+
+<label>YouTube / Facebook Live Link</label>
+<input id="link" placeholder="https://youtube.com/live... ya facebook link">
+
+<div class="checkRow"><input type="checkbox" id="showPay" checked><span>Is post me Easypaisa / JazzCash / Bank dikhao</span></div>
+
+<div class="row"><button class="btn yellow" onclick="publish()">📢 Publish Post</button><button class="btn red" onclick="logout()">Logout</button></div>
+
+<div class="adminBox">
+<h3>⚙️ Settings - Sirf Admin</h3>
+<label>Apna Naam (Admin Name)</label>
+<input id="myName" placeholder="Unnamed" maxlength="30">
+
+<label>Apna Code Badlo (Naya Code)</label>
+<input type="password" id="myCode" placeholder="Naya Code likhen ••••" autocomplete="new-password">
+
+<label>Branch Add Karo</label>
+<div class="row"><input id="newBranch" placeholder="Nayi Branch ka naam"><button class="btn green" onclick="addBranch()">Add</button></div>
+
+<label>Easypaisa Number</label>
+<input id="ep" placeholder="Jese: 0300-1234567">
+
+<label>JazzCash Number</label>
+<input id="jc" placeholder="Jese: 0300-1234567">
+
+<label>Bank Account</label>
+<input id="bank" placeholder="Bank - Title / Account / IBAN">
+
+<label>Naya Sathi Add Karo (Total 5 tak)</label>
+<input id="sathiName" placeholder="Sathi ka naam" maxlength="30">
+<input type="password" id="sathiCode" placeholder="Uska Code ••••" autocomplete="new-password">
+<button class="btn green" onclick="addSathi()">➕ Sathi Add Karo</button>
+<div id="sathiList"></div>
+
+<button class="btn green" style="margin-top:12px" onclick="saveSettings()">💾 Settings Save Karo</button>
+<p class="small">Settings save karne ke baad code yaad rakhen. Code kabhi screen par likha hua nahi aayega.</p>
+</div>
+</div>
+
+<div id="payBox" class="card hidden">
+<h3>💚 Taawun / Donation</h3>
+<div id="payShow" class="pay"></div>
+<p class="small">Markaz ki tamir aur deeni kaamon ke liye taawun farmayen.</p>
+</div>
+
+<div class="card">
+<label>Category Filter</label>
+<select id="filterCat" onchange="render()">
+<option value="All">Sab Dekhen</option>
+<option>Bayan</option>
+<option>Naat</option>
+<option>Asbaq</option>
+<option>Itlaa</option>
+<option>Amal</option>
+<option>Masjid / Madrase Tamir</option>
+<option>Live</option>
+</select>
+<label>Branch Filter</label>
+<select id="filterBranch" onchange="render()"></select>
 </div>
 
 <div id="posts"></div>
-<div id="empty" class="empty" data-t="noPost">ابھی کوئی اپڈیٹ نہیں ہے۔</div>
-</div>
-
-<div id="loginModal" class="modal">
-<div class="modal-inner">
-<h3 data-t="loginTitle">ایڈمن لاگ ان</h3>
-<input type="password" id="passInput" data-ph="passPh" placeholder="ایڈمن کوڈ">
-<button class="btn btn-dark" onclick="checkLogin()" data-t="login">لاگ ان</button>
-<button class="btn" onclick="closeLogin()" data-t="cancel">بند کریں</button>
-<p id="loginErr" style="color:red;font-size:13px;margin-top:8px"></p>
-</div>
+<p class="small" id="noPost">No updates yet.<br>Abhi koi update nahi hai.</p>
 </div>
 
 <script>
-const T = {
-en:{title:"Ruhani Markaz Updates",subtitle:"Bayanat • Mehfil • Ijtema • Live",adminBtn:"🔐 Admin",shareBtn:"📤 Share",liveNow:"LIVE NOW",adminPanel:"Admin Panel",postTitlePh:"Title",postTextPh:"Write details...",optBayan:"Bayan",optMehfil:"Mehfil",optIjtema:"Ijtema",optLive:"Live Link",liveLinkPh:"Paste YouTube / Facebook Live Link (for Live only)",publish:"Publish Post",logout:"Logout",adminNote:"For Live, select Live in Type and paste link.",noPost:"No updates yet.",loginTitle:"Admin Login",passPh:"Admin Code",login:"Login",cancel:"Close",wrong:"Wrong code!",delete:"Delete",shareText:"Ruhani Markaz Updates App - Download:\n"},
-ur:{title:"روحانی مرکز اپڈیٹس",subtitle:"بیانات • محفل • اجتماع • لائیو",adminBtn:"🔐 ایڈمن",shareBtn:"📤 شیئر کریں",liveNow:"لائیو جاری ہے",adminPanel:"ایڈمن پینل",postTitlePh:"عنوان",postTextPh:"تفصیل لکھیں...",optBayan:"بیان",optMehfil:"محفل",optIjtema:"اجتماع",optLive:"لائیو لنک",liveLinkPh:"یوٹیوب / فیس بک لائیو لنک یہاں پیسٹ کریں (صرف لائیو کے لیے)",publish:"پوسٹ کریں",logout:"لاگ آؤٹ",adminNote:"لائیو کے لیے Type میں Live منتخب کریں اور لنک پیسٹ کریں۔",noPost:"ابھی کوئی اپڈیٹ نہیں ہے۔",loginTitle:"ایڈمن لاگ ان",passPh:"ایڈمن کوڈ",login:"لاگ ان",cancel:"بند کریں",wrong:"غلط کوڈ!",delete:"ڈیلیٹ",shareText:"روحانی مرکز اپڈیٹس ایپ - ڈاؤن لوڈ کریں:\n"},
-ar:{title:"تحديثات المركز الروحاني",subtitle:"بيانات • محفل • اجتماع • مباشر",adminBtn:"🔐 المشرف",shareBtn:"📤 مشاركة",liveNow:"مباشر الآن",adminPanel:"لوحة المشرف",postTitlePh:"العنوان",postTextPh:"اكتب التفاصيل...",optBayan:"بيان",optMehfil:"محفل",optIjtema:"اجتماع",optLive:"رابط مباشر",liveLinkPh:"الصق رابط البث المباشر يوتيوب / فيسبوك (للمباشر فقط)",publish:"نشر المنشور",logout:"تسجيل خروج",adminNote:"للمباشر، اختر مباشر في النوع والصق الرابط.",noPost:"لا توجد تحديثات بعد.",loginTitle:"دخول المشرف",passPh:"رمز المشرف",login:"دخول",cancel:"إغلاق",wrong:"رمز خاطئ!",delete:"حذف",shareText:"تطبيق تحديثات المركز الروحاني - تحميل:\n"}
-};
-let lang = localStorage.getItem('rm_lang') || 'ur';
-function setLang(l){
-lang=l; localStorage.setItem('rm_lang',l);
-document.documentElement.lang=l;
-document.documentElement.dir=(l==='en')?'ltr':'rtl';
-document.querySelectorAll('[data-t]').forEach(el=>{ el.textContent=T[l][el.dataset.t] });
-document.querySelectorAll('[data-ph]').forEach(el=>{ el.placeholder=T[l][el.dataset.ph] });
-document.getElementById('btn-en').classList.toggle('active',l==='en');
-document.getElementById('btn-ur').classList.toggle('active',l==='ur');
-document.getElementById('btn-ar').classList.toggle('active',l==='ar');
-render();
-}
-// Admin code is NOT stored here - only its secure hash is checked. No one can see the real code from source.
-const ADMIN_HASH = "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4";
-async function sha256(str){ const b=await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str)); return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join(''); }
-let isAdmin = sessionStorage.getItem('rm_admin')==='1';
-function openLogin(){ if(isAdmin){document.getElementById('adminBox').classList.add('show'); return;} document.getElementById('loginModal').classList.add('show'); }
-function closeLogin(){ document.getElementById('loginModal').classList.remove('show'); }
-async function checkLogin(){
-const v=document.getElementById('passInput').value;
-const h=await sha256(v);
-if(h===ADMIN_HASH){ isAdmin=true; sessionStorage.setItem('rm_admin','1'); document.getElementById('adminBox').classList.add('show'); closeLogin(); document.getElementById('passInput').value=''; }
-else{ document.getElementById('loginErr').textContent=T[lang].wrong; }
-}
-function logout(){ isAdmin=false; sessionStorage.removeItem('rm_admin'); document.getElementById('adminBox').classList.remove('show'); render(); }
+var DEFAULT_SETTINGS = {admins:[{name:'Unnamed',code:'1234'}],branches:['Main Markaz','Karachi','Lahore','Hyderabad','Multan'],ep:'',jc:'',bank:''};
+var settings;
+try{ settings = JSON.parse(localStorage.getItem('rm_settings_v2')||'null') || JSON.parse(JSON.stringify(DEFAULT_SETTINGS)); }catch(e){ settings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS)); }
+var posts;
+try{ posts = JSON.parse(localStorage.getItem('rm_posts_v2')||'[]'); }catch(e){ posts = []; }
+var currentAdmin = null;
+var currentLang = 'en';
 
-function getPosts(){ try{return JSON.parse(localStorage.getItem('rm_posts')||'[]')}catch(e){return []} }
-function savePosts(p){ localStorage.setItem('rm_posts', JSON.stringify(p)); }
-
-function toEmbed(url){
-if(!url) return '';
-if(url.includes('youtube.com/watch')) return url.replace('watch?v=','embed/');
-if(url.includes('youtu.be/')) return url.replace('youtu.be/','www.youtube.com/embed/');
-if(url.includes('facebook.com')) return 'https://www.facebook.com/plugins/video.php?href='+encodeURIComponent(url)+'&show_text=false&autoplay=true';
-return url;
+function saveAll(){
+  localStorage.setItem('rm_settings_v2', JSON.stringify(settings));
+  localStorage.setItem('rm_posts_v2', JSON.stringify(posts));
 }
-function addPost(){
-const title=document.getElementById('postTitle').value.trim();
-const text=document.getElementById('postText').value.trim();
-const type=document.getElementById('postType').value;
-const liveLink=document.getElementById('liveLink').value.trim();
-const file=document.getElementById('postFile').files[0];
-if(!title && !text && !liveLink) return;
-if(file){
-const r=new FileReader();
-r.onload=e=>{ doAdd(title,text,type,liveLink,e.target.result, file.type.startsWith('video')?'video':'image'); };
-r.readAsDataURL(file);
-}else{ doAdd(title,text,type,liveLink,'',''); }
+function escapeHtml(s){
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-function doAdd(title,text,type,liveLink,media,mediaType){
-const posts=getPosts();
-posts.unshift({id:Date.now(),title,text,type,liveLink,media,mediaType,date:new Date().toLocaleString()});
-savePosts(posts);
-document.getElementById('postTitle').value=''; document.getElementById('postText').value=''; document.getElementById('liveLink').value=''; document.getElementById('postFile').value='';
-render();
+function fillBranches(){
+  var b = document.getElementById('branch');
+  var f = document.getElementById('filterBranch');
+  var oldFilter = f.value || 'All';
+  b.innerHTML = '';
+  settings.branches.forEach(function(x){ var o=document.createElement('option'); o.textContent=x; b.appendChild(o); });
+  f.innerHTML = '';
+  var oAll=document.createElement('option'); oAll.value='All'; oAll.textContent='Sab Branches'; f.appendChild(oAll);
+  settings.branches.forEach(function(x){ var o=document.createElement('option'); o.textContent=x; o.value=x; f.appendChild(o); });
+  if(settings.branches.indexOf(oldFilter)!==-1 || oldFilter==='All'){ f.value = oldFilter; }
 }
-function deletePost(id){ if(!confirm(T[lang].delete+'?')) return; savePosts(getPosts().filter(p=>p.id!==id)); render(); }
+function renderSathi(){
+  var h = '';
+  settings.admins.forEach(function(a,i){
+    h += '<div class="sathiRow"><span>'+(i+1)+'. '+escapeHtml(a.name)+'</span>'+(i>0?'<button onclick="delSathi('+i+')">❌</button>':'<span style="font-size:11px;color:#888">Main Admin</span>')+'</div>';
+  });
+  document.getElementById('sathiList').innerHTML = h + '<p class="small">Total Admin: '+settings.admins.length+' / 5 • Code kabhi show nahi hoga.</p>';
+}
+function renderPay(){
+  var box = document.getElementById('payBox');
+  if(!settings.ep && !settings.jc && !settings.bank){ box.classList.add('hidden'); return; }
+  box.classList.remove('hidden');
+  var t = '';
+  if(settings.ep) t += 'Easypaisa: <b>'+escapeHtml(settings.ep)+'</b><br>';
+  if(settings.jc) t += 'JazzCash: <b>'+escapeHtml(settings.jc)+'</b><br>';
+  if(settings.bank) t += 'Bank: <b>'+escapeHtml(settings.bank)+'</b><br>';
+  document.getElementById('payShow').innerHTML = t;
+}
 function render(){
-const posts=getPosts();
-const box=document.getElementById('posts');
-document.getElementById('empty').style.display=posts.length?'none':'block';
-const live=posts.find(p=>p.type==='live' && p.liveLink);
-const liveBox=document.getElementById('liveBox');
-if(live){ liveBox.classList.add('show'); document.getElementById('liveFrame').src=toEmbed(live.liveLink); }
-else{ liveBox.classList.remove('show'); }
-box.innerHTML=posts.map(p=>`
-<div class="card"><h3>${p.title||''}</h3><small>${p.date} • ${p.type}</small><p>${p.text||''}</p>
-${p.media ? (p.mediaType==='video'? `<video src="${p.media}" controls></video>` : `<img src="${p.media}">`) : ''}
-${p.type==='live' && p.liveLink ? `<a href="${p.liveLink}" target="_blank" style="color:#0f3d2e;font-weight:700">▶ ${T[lang].liveNow}</a>`:''}
-${isAdmin? `<br><button class="btn btn-red" style="margin-top:10px;padding:8px" onclick="deletePost(${p.id})">${T[lang].delete}</button>`:''}
-</div>`).join('');
-if(isAdmin) document.getElementById('adminBox').classList.add('show');
+  fillBranches();
+  renderPay();
+  renderSathi();
+  var fc = document.getElementById('filterCat').value;
+  var fb = document.getElementById('filterBranch').value;
+  var list = posts.filter(function(p){ return (fc==='All'||p.cat===fc) && (fb==='All'||p.branch===fb); });
+  document.getElementById('noPost').style.display = list.length ? 'none' : 'block';
+  var html = '';
+  var rev = list.slice().reverse();
+  rev.forEach(function(p){
+    var realIndex = posts.indexOf(p);
+    var media = '';
+    if(p.file){
+      if(p.file.indexOf('data:image')===0) media = '<img src="'+p.file+'">';
+      else if(p.file.indexOf('data:video')===0) media = '<video controls src="'+p.file+'"></video>';
+      else if(p.file.indexOf('data:audio')===0) media = '<audio controls src="'+p.file+'"></audio>';
+      else media = '';
+    }
+    var pay = '';
+    if(p.showPay && (settings.ep||settings.jc||settings.bank)){
+      pay = '<div class="pay">';
+      if(settings.ep) pay += 'Easypaisa: <b>'+escapeHtml(settings.ep)+'</b><br>';
+      if(settings.jc) pay += 'JazzCash: <b>'+escapeHtml(settings.jc)+'</b><br>';
+      if(settings.bank) pay += 'Bank: <b>'+escapeHtml(settings.bank)+'</b>';
+      pay += '</div>';
+    }
+    var delBtn = currentAdmin ? ' <button onclick="delPost('+realIndex+')" style="color:red;border:0;background:none;font-size:13px">Delete</button>' : '';
+    html += '<div class="post"><span class="badge">'+escapeHtml(p.cat)+' • '+escapeHtml(p.branch)+'</span><b class="title">'+escapeHtml(p.title)+'</b><p class="desc">'+escapeHtml(p.details)+'</p>'+(p.link?'<a class="liveLink" href="'+escapeHtml(p.link)+'" target="_blank" rel="noopener">▶️ Live / Video Dekhen</a>':'')+media+pay+'<p class="small">By: '+escapeHtml(p.by)+' • '+escapeHtml(p.time)+delBtn+'</p></div>';
+  });
+  document.getElementById('posts').innerHTML = html;
+}
+function openLogin(){ document.getElementById('loginBox').classList.remove('hidden'); window.scrollTo({top:0,behavior:'smooth'}); }
+function hideLogin(){ document.getElementById('loginBox').classList.add('hidden'); }
+function doLogin(){
+  var c = document.getElementById('loginCode').value.trim();
+  if(!c){ alert('Pehle Code likhen'); return; }
+  var f = null;
+  for(var i=0;i<settings.admins.length;i++){ if(settings.admins[i].code===c){ f=settings.admins[i]; break; } }
+  if(!f){ alert('Ghalat Code! Dobara koshish karen.'); return; }
+  currentAdmin = f;
+  document.getElementById('loginBox').classList.add('hidden');
+  document.getElementById('adminPanel').classList.remove('hidden');
+  document.getElementById('adminNameShow').textContent = f.name;
+  document.getElementById('myName').value = f.name;
+  document.getElementById('myCode').value = '';
+  document.getElementById('ep').value = settings.ep || '';
+  document.getElementById('jc').value = settings.jc || '';
+  document.getElementById('bank').value = settings.bank || '';
+  document.getElementById('loginCode').value = '';
+  render();
+}
+function logout(){ currentAdmin=null; document.getElementById('adminPanel').classList.add('hidden'); render(); }
+function addBranch(){
+  var v = document.getElementById('newBranch').value.trim();
+  if(!v){ alert('Branch ka naam likhen'); return; }
+  if(settings.branches.indexOf(v)===-1){ settings.branches.push(v); saveAll(); }
+  document.getElementById('newBranch').value = '';
+  render();
+  alert('Branch add ho gayi: '+v);
+}
+function addSathi(){
+  if(settings.admins.length>=5){ alert('Sirf 5 Admin ho sakte hain. Pehle kisi ko delete karen.'); return; }
+  var n = document.getElementById('sathiName').value.trim();
+  var c = document.getElementById('sathiCode').value.trim();
+  if(!n || !c){ alert('Sathi ka naam aur Code dono likhen'); return; }
+  for(var i=0;i<settings.admins.length;i++){ if(settings.admins[i].code===c){ alert('Ye Code pehle se hai, doosra Code rakhen'); return; } }
+  settings.admins.push({name:n,code:c});
+  saveAll();
+  document.getElementById('sathiName').value='';
+  document.getElementById('sathiCode').value='';
+  render();
+  alert('Sathi add ho gaya: '+n);
+}
+function delSathi(i){
+  if(!confirm('Is sathi ko delete karna hai?')) return;
+  settings.admins.splice(i,1);
+  saveAll();
+  render();
+}
+function saveSettings(){
+  if(!currentAdmin){ alert('Pehle Login karen'); return; }
+  var nn = document.getElementById('myName').value.trim();
+  var nc = document.getElementById('myCode').value.trim();
+  if(nn) currentAdmin.name = nn;
+  if(nc){
+    var dup=false;
+    for(var i=0;i<settings.admins.length;i++){ if(settings.admins[i]!==currentAdmin && settings.admins[i].code===nc) dup=true; }
+    if(dup){ alert('Ye Code pehle se kisi aur ka hai, doosra rakhen'); return; }
+    currentAdmin.code = nc;
+  }
+  settings.ep = document.getElementById('ep').value.trim();
+  settings.jc = document.getElementById('jc').value.trim();
+  settings.bank = document.getElementById('bank').value.trim();
+  saveAll();
+  document.getElementById('myCode').value = '';
+  document.getElementById('adminNameShow').textContent = currentAdmin.name;
+  render();
+  alert('Settings save ho gayi!');
+}
+function delPost(i){
+  if(!confirm('Is post ko delete karna hai?')) return;
+  posts.splice(i,1);
+  saveAll();
+  render();
+}
+function publish(){
+  if(!currentAdmin){ alert('Pehle Login karen'); return; }
+  var t = document.getElementById('title').value.trim();
+  if(!t){ alert('Title likhen'); return; }
+  var f = document.getElementById('file').files[0];
+  var doSave = function(fileData){
+    posts.push({
+      title:t,
+      details:document.getElementById('details').value.trim(),
+      cat:document.getElementById('cat').value,
+      branch:document.getElementById('branch').value,
+      link:document.getElementById('link').value.trim(),
+      file:fileData||'',
+      showPay:document.getElementById('showPay').checked,
+      by:currentAdmin.name,
+      time:new Date().toLocaleString()
+    });
+    saveAll();
+    document.getElementById('title').value='';
+    document.getElementById('details').value='';
+    document.getElementById('link').value='';
+    document.getElementById('file').value='';
+    render();
+    alert('Post ho gayi!');
+  };
+  if(f){
+    if(f.size > 8*1024*1024){ alert('File bohot bari hai. 8MB se choti file lagayen ya YouTube link use karen.'); return; }
+    var r = new FileReader();
+    r.onload = function(e){ doSave(e.target.result); };
+    r.readAsDataURL(f);
+  } else { doSave(''); }
 }
 function shareApp(){
-const txt=T[lang].shareText + location.href;
-if(navigator.share){ navigator.share({text:txt}); } else { navigator.clipboard.writeText(txt); alert(txt); }
+  var u = location.href;
+  if(navigator.share){ navigator.share({title:'Ruhani Markaz Updates',url:u}).catch(function(){}); }
+  else if(navigator.clipboard){ navigator.clipboard.writeText(u).then(function(){ alert('Link copy ho gaya'); }); }
+  else { prompt('Link copy karen:', u); }
 }
-setLang(lang);
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
+function setLang(l,btn){
+  currentLang = l;
+  document.querySelectorAll('.lang button').forEach(function(b){ b.classList.remove('on'); });
+  if(btn) btn.classList.add('on');
+  if(l==='ur' || l==='ar'){ document.body.style.direction='rtl'; }
+  else { document.body.style.direction='ltr'; }
+  if(l==='ur'){
+    document.getElementById('appSub').textContent = 'بیان • نعت • اسباق • اطلاع • عمل • تعمیر • لائیو';
+    document.getElementById('noPost').innerHTML = 'Abhi koi update nahi hai.<br>ابھی کوئی اپڈیٹ نہیں ہے۔';
+  } else if(l==='ar'){
+    document.getElementById('appSub').textContent = 'بيان • نعت • دروس • إعلان • عمل • تعمير • مباشر';
+    document.getElementById('noPost').innerHTML = 'No updates yet.<br>لا توجد تحديثات بعد.';
+  } else {
+    document.getElementById('appSub').textContent = 'Bayan • Naat • Asbaq • Itlaa • Amal • Tamir • Live';
+    document.getElementById('noPost').innerHTML = 'No updates yet.<br>Abhi koi update nahi hai.';
+  }
+}
+if('serviceWorker' in navigator){ try{ navigator.serviceWorker.register('sw.js'); }catch(e){} }
+render();
 </script>
 </body>
 </html>
