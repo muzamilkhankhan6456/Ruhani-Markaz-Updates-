@@ -6,187 +6,133 @@
 <title>Ruhani Markaz Updates</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0b3d2e">
-<meta name="description" content="Ruhani Markaz Updates - Bayan, Naat, Asbaq, Itlaa, Amal, Masjid / Madrase Tamir, Live - Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia Kotri">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Arial}
-body{background:#f1f1f1;color:#222;padding-bottom:80px}
-header{background:#0b3d2e;color:#fff;padding:18px 14px 16px;text-align:center;position:sticky;top:0;z-index:20}
-header h1{font-size:23px;line-height:1.2}
-header p{font-size:13px;opacity:.92;margin-top:4px}
-.muhtamim{margin:8px 0 0 !important;font-size:14px !important;color:#f5c542 !important;font-weight:800 !important;opacity:1 !important}
-.markaz{margin:3px 0 0 !important;font-size:12px !important;opacity:.95 !important}
-.topbar{display:flex;gap:8px;padding:10px;background:#fff;overflow-x:auto;position:sticky;top:0;z-index:15;border-bottom:1px solid #eee}
-.topbar button{white-space:nowrap;padding:8px 14px;border:1px solid #ddd;border-radius:20px;background:#eee;cursor:pointer;font-size:14px}
-.topbar button.active{background:#0b3d2e;color:#fff;border-color:#0b3d2e}
-.container{max-width:760px;margin:auto;padding:12px}
-.card{background:#fff;border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
-.card h3{font-size:17px;margin-bottom:4px;line-height:1.4}
-.card small{color:#777}
-.card p{margin:8px 0;line-height:1.65;white-space:pre-wrap;font-size:15px}
-.card img,.card video{width:100%;border-radius:10px;margin-top:8px}
-.card audio{width:100%;margin-top:8px}
-.badge{display:inline-block;background:#e8f5e9;color:#0b3d2e;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700;margin:2px 2px 2px 0}
-.badge.live{background:#ffebee;color:#d32f2f}
-.badge.branch{background:#fff3cd;color:#333;max-width:100%}
-.btn{padding:10px 14px;border:none;border-radius:10px;cursor:pointer;font-weight:700;font-size:14px}
-.btn.green{background:#0b3d2e;color:#fff}
-.btn.gold{background:#f5c542;color:#000}
-.btn.red{background:#d32f2f;color:#fff}
-.btn.grey{background:#eee;color:#333}
-.btn.blue{background:#1976d2;color:#fff}
-input,select,textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:10px;margin:6px 0;font-size:15px;background:#fff}
-textarea{min-height:85px;resize:vertical}
-label{font-size:13px;font-weight:700;display:block;margin-top:8px}
-.row{display:flex;gap:8px}
-.row>*{flex:1}
-.fab{position:fixed;bottom:18px;right:16px;background:#0b3d2e;color:#fff;border:none;padding:14px 20px;border-radius:50px;font-weight:800;box-shadow:0 4px 14px rgba(0,0,0,.3);z-index:30;cursor:pointer}
-.adminBox{background:#fff7e6;border:1px solid #f5c542;border-radius:14px;padding:14px;margin-bottom:12px}
-.sathiRow{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#f8f8f8;padding:9px 10px;border-radius:10px;margin:5px 0}
-.sathiRow span{flex:1;font-size:14px;word-break:break-word}
-.sathiRow button{background:#ffebee;border:none;padding:7px 10px;border-radius:8px;cursor:pointer}
-.liveBox{background:#000;color:#fff;border-radius:12px;padding:12px;text-align:center;margin-top:10px}
-.liveBox a{color:#ff5252;font-weight:800}
-hr{border:none;border-top:1px solid #eee;margin:14px 0}
-.searchBox{margin-bottom:12px}
-.footer{text-align:center;font-size:12px;color:#888;margin-top:10px;line-height:1.6}
-.small{font-size:12px;color:#666}
-.preview{width:100%;border-radius:10px;margin-top:8px;display:none}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:#f3efe6}
+header{background:#0b3d2e;color:#fff;text-align:center;padding:20px 12px}
+header h1{margin:0;font-size:24px}
+header p{margin:4px 0;font-size:13px;color:#d8e8dd}
+.muhtamim{color:#f5c542;font-weight:bold;font-size:14px}
+.markaz{font-size:12px}
+.langs{margin-top:10px;display:flex;justify-content:center;gap:8px}
+.langs button{border:0;padding:7px 14px;border-radius:20px;cursor:pointer;background:#fff;color:#0b3d2e;font-weight:bold}
+.langs button.active{background:#f5c542;color:#000}
+.cats{display:flex;gap:8px;overflow:auto;padding:10px;background:#fff}
+.cats button{border:1px solid #ddd;background:#f1f1f1;padding:8px 14px;border-radius:20px;white-space:nowrap;cursor:pointer}
+.cats button.active{background:#0b3d2e;color:#fff}
+.card{background:#fff;margin:12px;padding:14px;border-radius:12px}
+input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid #ddd;border-radius:8px}
+button.main{background:#0b3d2e;color:#fff;border:0;padding:11px;border-radius:8px;width:100%;font-weight:bold;cursor:pointer}
+.post{background:#fff;margin:12px;padding:14px;border-radius:12px}
+.post h3{margin:0 0 6px}
+.badge{background:#f5c542;padding:3px 8px;border-radius:10px;font-size:11px}
+.adminBtn{position:fixed;right:14px;bottom:14px;background:#0b3d2e;color:#fff;border:0;padding:12px 18px;border-radius:30px;font-weight:bold}
+footer{text-align:center;color:#777;font-size:12px;padding:20px;line-height:20px}
 </style>
 </head>
 <body>
 <header>
-<h1 id="appTitle">Ruhani Markaz Updates</h1>
-<p id="appSub">Bayan • Naat • Asbaq • Itlaa • Amal • Tamir • Live</p>
-<p class="muhtamim">Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)</p>
-<p class="markaz">Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri</p>
+<h1 id="t-title">Ruhani Markaz Updates</h1>
+<p id="t-sub">Bayan • Naat • Asbaq • Itlaa • Amal • Tamir • Live</p>
+<div class="muhtamim" id="t-muhtamim">Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)</div>
+<div class="markaz" id="t-markaz">Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri</div>
+<div class="langs">
+<button onclick="setLang('en')" id="b-en">English</button>
+<button onclick="setLang('ur')" id="b-ur" class="active">Urdu</button>
+<button onclick="setLang('ar')" id="b-ar">Arabic</button>
+</div>
 </header>
-<div class="topbar" id="catBar">
-<button class="active" onclick="setCat('All',this)">All</button>
-<button onclick="setCat('Bayan',this)">Bayan</button>
-<button onclick="setCat('Naat',this)">Naat</button>
-<button onclick="setCat('Asbaq',this)">Asbaq</button>
-<button onclick="setCat('Itlaa',this)">Itlaa</button>
-<button onclick="setCat('Amal',this)">Amal</button>
-<button onclick="setCat('Masjid / Madrase Tamir',this)">Masjid / Madrase Tamir</button>
-<button onclick="setCat('Live',this)">Live</button>
+
+<div class="cats" id="cats"></div>
+
+<div class="card">
+<b id="t-search">Search Karo</b>
+<input id="search" placeholder="Bayan, Naat, Title likh kar dhoondo..." oninput="render()">
 </div>
-<div class="container">
-<div class="card searchBox">
-<label>Search Karo</label>
-<input id="searchInput" oninput="render()" placeholder="Bayan, Naat, Title likh kar dhoondo...">
+
+<div class="card" id="loginBox">
+<b id="t-login">Admin Login</b>
+<input id="code" type="password" placeholder="Admin Code likhen">
+<button class="main" onclick="login()" id="t-loginBtn">Login</button>
 </div>
-<div id="adminLoginBox" class="card">
-<b>Admin Login</b>
-<div class="row"><input id="adminCode" type="password" placeholder="Admin Code likhen"><button class="btn green" onclick="login()">Login</button></div>
-<p class="small">Admin sirf Muhtamim / zimmedar hazrat ke liye hai. Code: 1234</p>
-</div>
-<div id="adminBox" style="display:none" class="adminBox">
-<h3>Admin Panel - Assalam o Alaikum</h3>
-<p class="small">Post yahan se hogi. YouTube / Facebook Link likhna zaroori NAHI hai. Sirf Title + File se bhi post ho jayegi.</p>
+
+<div class="card" id="adminBox" style="display:none">
+<b id="t-admin">Admin Panel</b>
+<select id="pCat"><option>Bayan</option><option>Naat</option><option>Asbaq</option><option>Itlaa</option><option>Amal</option><option>Tamir</option><option>Live</option></select>
+<input id="pTitle" placeholder="Title likhen">
+<textarea id="pDesc" placeholder="Tafseel likhen (zaroori nahi)"></textarea>
+<input id="pLink" placeholder="Link (zaroori nahi - khaali chor sakte hain)">
+<input id="pBranch" placeholder="Branch ka naam">
+<button class="main" onclick="addPost()" id="t-publish">Publish Post</button>
 <hr>
-<label>Title *</label>
-<input id="pTitle" placeholder="Jaise: Jumma Bayan - Hazrat Muhtamim Sb">
-<label>Details</label>
-<textarea id="pDesc" placeholder="Tafseel likhen..."></textarea>
-<label>Category</label>
-<select id="pCat"><option>Bayan</option><option>Naat</option><option>Asbaq</option><option>Itlaa</option><option>Amal</option><option>Masjid / Madrase Tamir</option><option>Live</option></select>
-<label>Branch</label>
-<select id="pBranch"></select>
-<label>Photo / Video / Audio (Direct Upload - Baghair Link Ke)</label>
-<input id="pFile" type="file" accept="image/*,video/*,audio/*" onchange="previewFile(this)">
-<img id="imgPreview" class="preview">
-<label>YouTube / Facebook Live Link (Optional - Zaroori Nahi)</label>
-<input id="pLink" placeholder="Agar Live hai to link likhen, warna khaali chor den">
-<div class="row"><button class="btn green" onclick="publish()">Publish Post</button><button class="btn grey" onclick="logout()">Logout</button></div>
-<hr>
-<h4>Settings - Branches Khud Add / Edit / Delete Karo</h4>
-<label>Branch Add Karo</label>
-<div class="row"><input id="newBranch" placeholder="Nayi Branch ka naam - Jaise: Madrasa ... Kotri"><button class="btn green" onclick="addBranch()">Add</button></div>
+<b id="t-branchTitle">Branch Add Karo</b>
+<input id="bName" placeholder="Nayi Branch ka naam">
+<button class="main" onclick="addBranch()" id="t-addBranch">Add Branch</button>
 <div id="branchList"></div>
-<p class="small">Note: Branch 1, Branch 2 wali ghalat branch ko Delete / Edit kar ke apna asal naam likhen. Saari branches Kotri Jamshoro me hain.</p>
-<hr>
-<h4>Sathi / Students List</h4>
-<label>Sathi ka Naam</label>
-<div class="row"><input id="newSathi" placeholder="Naam likhen"><button class="btn gold" onclick="addSathi()">Add Sathi</button></div>
-<div id="sathiList"></div>
-<hr>
-<h4>App Ka Naam / Muhtamim Badalna Ho To</h4>
-<label>App Title</label>
-<input id="setTitle" value="Ruhani Markaz Updates">
-<label>Muhtamim Naam</label>
-<input id="setMuhtamim" value="Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)">
-<div class="row"><button class="btn blue" onclick="saveAppSettings()">Save Settings</button><button class="btn red" onclick="resetAll()">Sab Data Delete</button></div>
+<button class="main" onclick="logout()" style="background:#999;margin-top:10px" id="t-logout">Logout</button>
 </div>
+
 <div id="posts"></div>
-<div id="noPost" style="text-align:center;color:#888;padding:20px;display:none">Abhi koi post nahi hai. Admin se post ka intezar karen.</div>
-<div class="footer">Ruhani Markaz Updates<br>Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri<br>Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)<br>Kotri Jamshoro - 1 Main Markaz + 9 Branches</div>
-</div>
-<button class="fab" onclick="document.getElementById('adminLoginBox').scrollIntoView({behavior:'smooth'})">Admin</button>
+
+<footer id="t-footer">Ruhani Markaz Updates<br>Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri<br>Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)<br>Kotri Jamshoro - 1 Main Markaz + 9 Branches</footer>
+<button class="adminBtn" onclick="document.getElementById('loginBox').scrollIntoView()">Admin</button>
+
 <script>
-var posts = [];
-try{ posts = JSON.parse(localStorage.getItem('rm_posts') || '[]'); }catch(e){ posts=[]; }
-var defaultBranches = ['Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri','Kotri Jamshoro Branch 1','Kotri Jamshoro Branch 2','Kotri Jamshoro Branch 3','Kotri Jamshoro Branch 4','Kotri Jamshoro Branch 5','Kotri Jamshoro Branch 6','Kotri Jamshoro Branch 7','Kotri Jamshoro Branch 8','Kotri Jamshoro Branch 9'];
-var settings = {branches:defaultBranches.slice(), sathi:[], appTitle:'Ruhani Markaz Updates', muhtamim:'Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)'};
-try{ var s = JSON.parse(localStorage.getItem('rm_settings') || 'null'); if(s && s.branches && s.branches.length){ settings = s; if(!settings.appTitle) settings.appTitle='Ruhani Markaz Updates'; if(!settings.muhtamim) settings.muhtamim='Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)'; } }catch(e){}
-var isAdmin = localStorage.getItem('rm_admin')==='1';
-var curCat='All';
-function escapeHtml(str){ return (str||'').replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-function saveAll(){ localStorage.setItem('rm_posts', JSON.stringify(posts)); localStorage.setItem('rm_settings', JSON.stringify(settings)); }
-function login(){ var v=document.getElementById('adminCode').value; if(v==='1234'){ isAdmin=true; localStorage.setItem('rm_admin','1'); render(); alert('Login ho gaya - Assalam o Alaikum'); } else { alert('Ghalat code hai'); } }
-function logout(){ isAdmin=false; localStorage.removeItem('rm_admin'); render(); }
-function setCat(c,el){ curCat=c; var btns=document.querySelectorAll('.topbar button'); for(var i=0;i<btns.length;i++){ btns[i].classList.remove('active'); } el.classList.add('active'); render(); }
-function fillBranch(){ var sel=document.getElementById('pBranch'); sel.innerHTML=''; for(var i=0;i<settings.branches.length;i++){ var o=document.createElement('option'); o.textContent=settings.branches[i]; sel.appendChild(o); } }
-function addBranch(){ var v=document.getElementById('newBranch').value.trim(); if(!v){ alert('Branch ka naam likhen'); return; } settings.branches.push(v); document.getElementById('newBranch').value=''; saveAll(); render(); alert('Branch add ho gayi: '+v); }
-function delBranch(i){ if(!confirm('Is branch ko delete karna hai?')) return; settings.branches.splice(i,1); saveAll(); render(); }
-function editBranch(i){ var old=settings.branches[i]; var nw=prompt('Branch ka naya naam likhen:', old); if(nw && nw.trim()){ settings.branches[i]=nw.trim(); saveAll(); render(); } }
-function renderBranchList(){ var h=''; for(var i=0;i<settings.branches.length;i++){ h+='<div class="sathiRow"><span>'+(i+1)+'. '+escapeHtml(settings.branches[i])+'</span><button onclick="editBranch('+i+')">✏️ Edit</button><button onclick="delBranch('+i+')">❌</button></div>'; } document.getElementById('branchList').innerHTML=h; }
-function addSathi(){ var v=document.getElementById('newSathi').value.trim(); if(!v){ alert('Naam likhen'); return; } settings.sathi.push(v); document.getElementById('newSathi').value=''; saveAll(); render(); }
-function delSathi(i){ if(!confirm('Delete karna hai?')) return; settings.sathi.splice(i,1); saveAll(); render(); }
-function renderSathi(){ var h=''; for(var i=0;i<settings.sathi.length;i++){ h+='<div class="sathiRow"><span>'+escapeHtml(settings.sathi[i])+'</span><button onclick="delSathi('+i+')">❌</button></div>'; } document.getElementById('sathiList').innerHTML=h; }
-function previewFile(inp){ var f=inp.files[0]; var img=document.getElementById('imgPreview'); if(f && f.type.indexOf('image')===0){ var r=new FileReader(); r.onload=function(e){ img.src=e.target.result; img.style.display='block'; }; r.readAsDataURL(f); } else { img.style.display='none'; } }
-function publish(){
-var title=document.getElementById('pTitle').value.trim();
-if(!title){ alert('Title likhen'); return; }
-var desc=document.getElementById('pDesc').value;
-var cat=document.getElementById('pCat').value;
-var branch=document.getElementById('pBranch').value;
-var link=document.getElementById('pLink').value.trim();
-var file=document.getElementById('pFile').files[0];
-function doSave(media,mediaType){
-posts.unshift({title:title,desc:desc,cat:cat,branch:branch,link:link,media:media,mediaType:mediaType,date:new Date().toLocaleString('ur-PK'),by:'Unnamed'});
-saveAll();
-document.getElementById('pTitle').value=''; document.getElementById('pDesc').value=''; document.getElementById('pLink').value=''; document.getElementById('pFile').value=''; document.getElementById('imgPreview').style.display='none';
-render(); alert('Post ho gayi! Baghair link ke bhi ho gayi.');
+let lang = localStorage.getItem('rm_lang') || 'ur';
+let posts = JSON.parse(localStorage.getItem('rm_posts') || '[]');
+let branches = JSON.parse(localStorage.getItem('rm_branches') || '["Main Markaz - Kotri"]');
+let curCat = 'All';
+let cats = ['All','Bayan','Naat','Asbaq','Itlaa','Amal','Tamir','Live'];
+
+const T = {
+en:{title:"Ruhani Markaz Updates",sub:"Bayan • Naat • Asbaq • Itlaa • Amal • Tamir • Live",muhtamim:"Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)",markaz:"Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri",search:"Search",searchPh:"Search Bayan, Naat, Title...",login:"Admin Login",loginBtn:"Login",codePh:"Enter Admin Code",admin:"Admin Panel",publish:"Publish Post",branchTitle:"Add Branch",addBranch:"Add Branch",logout:"Logout",noPost:"No post yet. Wait for Admin.",footer:"Ruhani Markaz Updates"},
+ur:{title:"Ruhani Markaz Updates",sub:"Bayan • Naat • Asbaq • Itlaa • Amal • Tamir • Live",muhtamim:"Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)",markaz:"Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri",search:"Search Karo",searchPh:"Bayan, Naat, Title likh kar dhoondo...",login:"Admin Login",loginBtn:"Login",codePh:"Admin Code likhen",admin:"Admin Panel",publish:"Publish Post",branchTitle:"Branch Add Karo",addBranch:"Add Branch",logout:"Logout",noPost:"Abhi koi post nahi hai. Admin se post ka intezar karen.",footer:"Ruhani Markaz Updates"},
+ar:{title:"المركز الروحاني للتحديثات",sub:"بيان • نعت • دروس • إعلان • عمل • تعمير • مباشر",muhtamim:"المحتمم: حضرت مولانا زبير أحمد شيخ صاحب (د.ب)",markaz:"جامع مسجد بلال و مدرسة عربية إعزاز العلوم الحمادية - كوتري",search:"بحث",searchPh:"ابحث عن بيان، نعت، عنوان...",login:"دخول المسؤول",loginBtn:"دخول",codePh:"أدخل رمز المسؤول",admin:"لوحة المسؤول",publish:"نشر المنشور",branchTitle:"إضافة فرع",addBranch:"إضافة فرع",logout:"تسجيل خروج",noPost:"لا توجد منشورات بعد. انتظر المسؤول.",footer:"المركز الروحاني للتحديثات"}
+};
+
+function setLang(l){
+  lang = l; localStorage.setItem('rm_lang', l);
+  document.getElementById('b-en').className = l=='en'?'active':'';
+  document.getElementById('b-ur').className = l=='ur'?'active':'';
+  document.getElementById('b-ar').className = l=='ar'?'active':'';
+  document.documentElement.lang = l;
+  document.body.dir = l=='ar'?'rtl':'ltr';
+  let t = T[l];
+  document.getElementById('t-title').innerText = t.title;
+  document.getElementById('t-sub').innerText = t.sub;
+  document.getElementById('t-muhtamim').innerText = t.muhtamim;
+  document.getElementById('t-markaz').innerText = t.markaz;
+  document.getElementById('t-search').innerText = t.search;
+  document.getElementById('search').placeholder = t.searchPh;
+  document.getElementById('t-login').innerText = t.login;
+  document.getElementById('t-loginBtn').innerText = t.loginBtn;
+  document.getElementById('code').placeholder = t.codePh;
+  document.getElementById('t-admin').innerText = t.admin;
+  document.getElementById('t-publish').innerText = t.publish;
+  document.getElementById('t-branchTitle').innerText = t.branchTitle;
+  document.getElementById('t-addBranch').innerText = t.addBranch;
+  document.getElementById('t-logout').innerText = t.logout;
+  render();
 }
-if(file){ var reader=new FileReader(); reader.onload=function(e){ var type='image'; if(file.type.indexOf('video')===0) type='video'; if(file.type.indexOf('audio')===0) type='audio'; doSave(e.target.result,type); }; reader.readAsDataURL(file); } else { doSave('',''); }
+function login(){ if(document.getElementById('code').value=='1234'){ document.getElementById('loginBox').style.display='none'; document.getElementById('adminBox').style.display='block'; renderBranches(); } else alert('Ghalat Code'); }
+function logout(){ document.getElementById('loginBox').style.display='block'; document.getElementById('adminBox').style.display='none'; }
+function addPost(){
+  let title=document.getElementById('pTitle').value; if(!title) return alert('Title likhen');
+  posts.unshift({cat:document.getElementById('pCat').value,title,desc:document.getElementById('pDesc').value,link:document.getElementById('pLink').value,branch:document.getElementById('pBranch').value,date:new Date().toLocaleDateString()});
+  localStorage.setItem('rm_posts',JSON.stringify(posts));
+  document.getElementById('pTitle').value=''; document.getElementById('pDesc').value=''; document.getElementById('pLink').value=''; document.getElementById('pBranch').value='';
+  render(); alert('Post ho gaya!');
 }
-function delPost(i){ if(!confirm('Post delete karni hai?')) return; posts.splice(i,1); saveAll(); render(); }
-function sharePost(i){ var p=posts[i]; var txt=p.title+' - '+p.desc+' - Ruhani Markaz Updates, Kotri'; if(navigator.share){ navigator.share({title:p.title,text:txt,url:location.href}).catch(function(){}); } else { prompt('Copy kar ke share karen:', txt); } }
-function saveAppSettings(){ settings.appTitle=document.getElementById('setTitle').value.trim() || 'Ruhani Markaz Updates'; settings.muhtamim=document.getElementById('setMuhtamim').value.trim() || 'Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)'; saveAll(); render(); alert('Settings save ho gayi'); }
-function resetAll(){ if(!confirm('Saara data delete ho jayega. Pakka?')) return; localStorage.removeItem('rm_posts'); localStorage.removeItem('rm_settings'); posts=[]; settings={branches:defaultBranches.slice(),sathi:[],appTitle:'Ruhani Markaz Updates',muhtamim:'Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)'}; saveAll(); render(); }
+function addBranch(){ let n=document.getElementById('bName').value; if(!n) return; branches.push(n); localStorage.setItem('rm_branches',JSON.stringify(branches)); document.getElementById('bName').value=''; renderBranches(); }
+function delBranch(i){ branches.splice(i,1); localStorage.setItem('rm_branches',JSON.stringify(branches)); renderBranches(); }
+function renderBranches(){ document.getElementById('branchList').innerHTML = branches.map((b,i)=>`<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee"><span>${b}</span><button onclick="delBranch(${i})">❌</button></div>`).join(''); }
 function render(){
-document.getElementById('appTitle').textContent=settings.appTitle;
-document.title=settings.appTitle;
-var muhtEls=document.querySelectorAll('.muhtamim'); for(var m=0;m<muhtEls.length;m++){ muhtEls[m].textContent='Muhtamim: '+settings.muhtamim; }
-document.getElementById('setTitle').value=settings.appTitle;
-document.getElementById('setMuhtamim').value=settings.muhtamim;
-document.getElementById('adminBox').style.display=isAdmin?'block':'none';
-document.getElementById('adminLoginBox').style.display=isAdmin?'none':'block';
-fillBranch(); renderBranchList(); renderSathi();
-var q=(document.getElementById('searchInput').value||'').toLowerCase();
-var box=document.getElementById('posts'); box.innerHTML='';
-var filtered=posts.filter(function(p){ var okCat=(curCat==='All'||p.cat===curCat); var okQ=!q || (p.title+' '+p.desc+' '+(p.branch||'')).toLowerCase().indexOf(q)>-1; return okCat && okQ; });
-document.getElementById('noPost').style.display=filtered.length?'none':'block';
-for(var k=0;k<filtered.length;k++){
-var p=filtered[k]; var idx=posts.indexOf(p); var mediaHtml='';
-if(p.media){ if(p.mediaType==='video') mediaHtml='<video controls src="'+p.media+'"></video>'; else if(p.mediaType==='audio') mediaHtml='<audio controls src="'+p.media+'"></audio>'; else mediaHtml='<img src="'+p.media+'">'; }
-var linkHtml=p.link?'<div class="liveBox">🔴 LIVE Dekhen: <a href="'+escapeHtml(p.link)+'" target="_blank">Yahan Click Karen</a></div>':'';
-var adminBtns=isAdmin?'<div class="row" style="margin-top:10px"><button class="btn red" onclick="delPost('+idx+')">Delete Post</button><button class="btn grey" onclick="sharePost('+idx+')">Share</button></div>':'<div style="margin-top:10px"><button class="btn grey" onclick="sharePost('+idx+')">Share</button></div>';
-box.innerHTML+='<div class="card"><span class="badge '+(p.cat==='Live'?'live':'')+'">'+escapeHtml(p.cat)+'</span> <span class="badge branch">'+escapeHtml(p.branch||defaultBranches[0])+'</span><h3>'+escapeHtml(p.title)+'</h3><small>'+escapeHtml(p.date)+' • By: '+escapeHtml(p.by||'Unnamed')+'</small><p>'+escapeHtml(p.desc)+'</p>'+mediaHtml+linkHtml+adminBtns+'</div>';
+  document.getElementById('cats').innerHTML = cats.map(c=>`<button class="${c==curCat?'active':''}" onclick="curCat='${c}';render()">${c}</button>`).join('');
+  let q=document.getElementById('search').value.toLowerCase();
+  let list=posts.filter(p=>(curCat=='All'||p.cat==curCat)&&(p.title.toLowerCase().includes(q)));
+  document.getElementById('posts').innerHTML = list.length? list.map(p=>`<div class="post"><span class="badge">${p.cat}</span> <span style="font-size:11px;color:#888">${p.branch||''} • ${p.date}</span><h3>${p.title}</h3><p>${p.desc||''}</p>${p.link?`<a href="${p.link}" target="_blank">Open Link</a>`:''}</div>`).join('') : `<p style="text-align:center;color:#888;padding:20px">${T[lang].noPost}</p>`;
 }
-}
-render();
-if('serviceWorker' in navigator){ try{ navigator.serviceWorker.register('sw.js'); }catch(e){} }
+setLang(lang);
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </script>
 </body>
 </html>
