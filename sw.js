@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ruhani-markaz-updates-v2';
+const CACHE_NAME = 'ruhani-markaz-v4';
 const FILES_TO_CACHE = [
   './',
   './index.html',
@@ -7,7 +7,7 @@ const FILES_TO_CACHE = [
   './icon-512.png'
 ];
 
-// Install - nayi files cache karo
+// Install - Nayi files save karo
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -17,12 +17,12 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-// Activate - purana v1 cache delete karo
+// Activate - Purani cache delete karo
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keys) => {
+    caches.keys().then((keyList) => {
       return Promise.all(
-        keys.map((key) => {
+        keyList.map((key) => {
           if (key !== CACHE_NAME) {
             return caches.delete(key);
           }
@@ -33,20 +33,15 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Fetch - pehle cache, phir net, live ke liye hamesha net
+// Fetch - Pehle cache se do, na mile to internet se lo
 self.addEventListener('fetch', (event) => {
-  const url = event.request.url;
-  // YouTube / Facebook Live ko kabhi cache mat karo, hamesha fresh lo
-  if (url.includes('youtube.com') || url.includes('facebook.com') || url.includes('youtu.be')) {
-    event.respondWith(fetch(event.request));
-    return;
-  }
+  if (event.request.method !== 'GET') return;
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request).then((fetchRes) => {
-        return fetchRes;
+    caches.match(event.request).then((cached) => {
+      if (cached) return cached;
+      return fetch(event.request).then((response) => {
+        return response;
       }).catch(() => {
-        // Offline ho to cached index dikhao
         if (event.request.mode === 'navigate') {
           return caches.match('./index.html');
         }
