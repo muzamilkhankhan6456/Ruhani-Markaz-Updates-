@@ -19,7 +19,6 @@ header p{font-size:14px;color:#d8e8dd}
 .langs button.active{background:#f5c542;color:#000}
 .cats{display:flex;gap:8px;overflow:auto;padding:10px;background:#fff}
 .cats button{border:1px solid #ddd;background:#f1f1f1;padding:8px 14px;border-radius:20px;white-space:nowrap;cursor:pointer}
-.cats button.active{background:#0b3d2e;color:#fff}
 .card{background:#fff;margin:12px;padding:14px;border-radius:12px}
 input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid #ddd;border-radius:8px}
 button.main{background:#0b3d2e;color:#fff;border:0;padding:11px;border-radius:8px;width:100%;font-weight:bold;cursor:pointer}
@@ -32,6 +31,9 @@ footer{text-align:center;color:#777;font-size:12px;padding:20px;line-height:22px
 .uploadBox{border:2px dashed #0b3d2e;border-radius:10px;padding:12px;text-align:center;background:#f9fff9;margin:6px 0}
 .uploadBox input{border:0}
 #preview img,#preview video{width:100%;border-radius:10px;margin-top:6px}
+#status{text-align:center;color:#0b3d2e;font-weight:bold;padding:8px;display:none;background:#fff3cd;border-radius:8px;margin:6px 0}
+#progress{width:100%;height:10px;background:#eee;border-radius:10px;overflow:hidden;display:none;margin:6px 0}
+#progressBar{height:10px;width:0%;background:#0b3d2e}
 </style>
 </head>
 <body>
@@ -61,18 +63,18 @@ footer{text-align:center;color:#777;font-size:12px;padding:20px;line-height:22px
 <select id="pCat"></select>
 <input id="pTitle" placeholder="Title likhen">
 <textarea id="pDesc" placeholder="Tafseel likhen (zaroori nahi)"></textarea>
-
 <div class="uploadBox">
-<b id="t-upload">📷 Gallery se Photo / Video Lagao</b><br>
-<span style="font-size:12px;color:#666" id="t-uploadSub">Photo ya Video choose karo - Gallery khulegi</span><br><br>
+<b id="t-upload">☁️ Gallery se Photo / Video Lagao - 10,000 MB Tak</b><br>
+<span style="font-size:12px;color:#666" id="t-uploadSub">Bari se bari Video bhi Cloud me Upload hogi - Sab ko nazar aayegi</span><br><br>
 <input type="file" id="pFile" accept="image/*,video/*" onchange="previewFile()">
 <div id="preview"></div>
+<div id="progress"><div id="progressBar"></div></div>
+<div id="status">Upload ho raha hai... Internet ON rakhen, App band mat karen...</div>
 <button type="button" onclick="clearFile()" style="background:#eee;border:0;padding:6px 12px;border-radius:20px;margin-top:6px" id="t-remove">❌ Photo Hatado</button>
 </div>
-
-<input id="pLink" placeholder="Link (zaroori nahi)">
+<input id="pLink" placeholder="Ya TikTok / YouTube / Drive ka Link yahan daal do">
 <input id="pBranch" placeholder="Branch ka naam">
-<button class="main" onclick="addPost()" id="t-publish"></button>
+<button class="main" onclick="addPost()" id="t-publish">Publish Post</button>
 <hr>
 <b id="t-branchTitle"></b>
 <input id="bName" placeholder="Nayi Branch ka naam">
@@ -84,28 +86,29 @@ footer{text-align:center;color:#777;font-size:12px;padding:20px;line-height:22px
 <footer id="t-footer"></footer>
 <button class="adminBtn" onclick="document.getElementById('loginBox').scrollIntoView()">Admin</button>
 <script>
+const CLOUD_NAME = "v1rjdpet";
+const UPLOAD_PRESET = "ruhani";
 let lang = localStorage.getItem('rm_lang') || 'ur';
 let posts = JSON.parse(localStorage.getItem('rm_posts') || '[]');
 let branches = JSON.parse(localStorage.getItem('rm_branches') || '["Main Markaz - Kotri"]');
 let curCat = 'All';
-let selectedFile = '';
+let selectedFile = null;
 let selectedType = '';
+let uploadedURL = '';
 const T = {
-en:{title:"Ruhani Markaz Updates",sub:"Bayan • Naat • Asbaq • Itlaa • Amal • Tamir • Live",muhtamim:"Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)",markaz:"Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri",search:"Search",searchPh:"Search Bayan, Naat, Title...",login:"Admin Login",loginBtn:"Login",codePh:"Enter Admin Code",admin:"Admin Panel",publish:"Publish Post",branchTitle:"Add Branch",addBranch:"Add Branch",logout:"Logout",noPost:"No post yet. Wait for Admin.",upload:"📷 Gallery se Photo / Video Lagao",uploadSub:"Photo ya Video choose karo - Gallery khulegi",remove:"❌ Photo Hatado",cats:['All','Bayan','Naat','Asbaq','Itlaa','Amal','Tamir','Live'],footer:"Ruhani Markaz Updates<br>Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri<br>Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)<br>Kotri Jamshoro - 1 Main Markaz + 9 Branches"},
-ur:{title:"روحانی مرکز اپ ڈیٹس",sub:"بیان • نعت • اسباق • اطلاع • عمل • تعمیر • لائیو",muhtamim:"مہتمم: حضرت مولانا زبیر احمد شیخ صاحب (د۔ب)",markaz:"جامع مسجد بلال و مدرسہ عربیہ اعزاز العلوم حمادیہ - کوٹری",search:"تلاش کریں",searchPh:"بیان، نعت، عنوان لکھ کر تلاش کریں...",login:"ایڈمن لاگ ان",loginBtn:"لاگ ان",codePh:"ایڈمن کوڈ لکھیں",admin:"ایڈمن پینل",publish:"پوسٹ شائع کریں",branchTitle:"برانچ شامل کریں",addBranch:"برانچ شامل کریں",logout:"لاگ آؤٹ",noPost:"ابھی کوئی پوسٹ نہیں ہے۔ ایڈمن کی پوسٹ کا انتظار کریں۔",upload:"📷 گیلری سے تصویر / ویڈیو لگائیں",uploadSub:"تصویر یا ویڈیو منتخب کریں - گیلری کھلے گی",remove:"❌ تصویر ہٹائیں",cats:['سب','بیان','نعت','اسباق','اطلاع','عمل','تعمیر','لائیو'],footer:"روحانی مرکز اپ ڈیٹس<br>جامع مسجد بلال و مدرسہ عربیہ اعزاز العلوم حمادیہ - کوٹری<br>مہتمم: حضرت مولانا زبیر احمد شیخ صاحب (د۔ب)<br>کوٹری جامشورو - 1 مرکزی مرکز + 9 برانچز"},
-ar:{title:"المركز الروحاني للتحديثات",sub:"بيان • نعت • دروس • إعلان • عمل • تعمير • مباشر",muhtamim:"المحتمم: حضرت مولانا زبير أحمد شيخ صاحب (د.ب)",markaz:"جامع مسجد بلال و مدرسة عربية إعزاز العلوم الحمادية - كوتري",search:"بحث",searchPh:"ابحث عن بيان، نعت، عنوان...",login:"دخول المسؤول",loginBtn:"دخول",codePh:"أدخل رمز المسؤول",admin:"لوحة المسؤول",publish:"نشر المنشور",branchTitle:"إضافة فرع",addBranch:"إضافة فرع",logout:"تسجيل خروج",noPost:"لا توجد منشورات بعد. انتظر المسؤول.",upload:"📷 أضف صورة / فيديو من المعرض",uploadSub:"اختر صورة أو فيديو - سيفتح المعرض",remove:"❌ إزالة الصورة",cats:['الكل','بيان','نعت','دروس','إعلان','عمل','تعمير','مباشر'],footer:"المركز الروحاني للتحديثات<br>جامع مسجد بلال و مدرسة عربية إعزاز العلوم الحمادية - كوتري<br>المحتمم: حضرت مولانا زبير أحمد شيخ صاحب (د.ب)<br>كوتري جامشورو - 1 مركز رئيسي + 9 فروع"}
+en:{title:"Ruhani Markaz Updates",sub:"Bayan • Naat • Asbaq • Itlaa • Amal • Tamir • Live",muhtamim:"Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)",markaz:"Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri",search:"Search",searchPh:"Search Bayan, Naat, Title...",login:"Admin Login",loginBtn:"Login",codePh:"Enter Admin Code",admin:"Admin Panel",publish:"Publish Post",branchTitle:"Add Branch",addBranch:"Add Branch",logout:"Logout",noPost:"No post yet. Wait for Admin.",upload:"☁️ Gallery se Photo / Video Lagao - 10,000 MB Tak",uploadSub:"Bari se bari Video bhi Cloud me Upload hogi - Sab ko nazar aayegi",remove:"❌ Photo Hatado",cats:['All','Bayan','Naat','Asbaq','Itlaa','Amal','Tamir','Live'],footer:"Ruhani Markaz Updates<br>Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri<br>Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)<br>Kotri Jamshoro - 1 Main Markaz + 9 Branches"},
+ur:{title:"روحانی مرکز اپ ڈیٹس",sub:"بیان • نعت • اسباق • اطلاع • عمل • تعمیر • لائیو",muhtamim:"مہتمم: حضرت مولانا زبیر احمد شیخ صاحب (د۔ب)",markaz:"جامع مسجد بلال و مدرسہ عربیہ اعزاز العلوم حمادیہ - کوٹری",search:"تلاش کریں",searchPh:"بیان، نعت، عنوان لکھ کر تلاش کریں...",login:"ایڈمن لاگ ان",loginBtn:"لاگ ان",codePh:"ایڈمن کوڈ لکھیں",admin:"ایڈمن پینل",publish:"پوسٹ شائع کریں",branchTitle:"برانچ شامل کریں",addBranch:"برانچ شامل کریں",logout:"لاگ آؤٹ",noPost:"ابھی کوئی پوسٹ نہیں ہے۔ ایڈمن کی پوسٹ کا انتظار کریں۔",upload:"☁️ گیلری سے تصویر / ویڈیو لگائیں - 10,000 ایم بی تک",uploadSub:"بڑی سے بڑی ویڈیو بھی کلاؤڈ میں اپلوڈ ہوگی - سب کو نظر آئے گی",remove:"❌ تصویر ہٹائیں",cats:['سب','بیان','نعت','اسباق','اطلاع','عمل','تعمیر','لائیو'],footer:"روحانی مرکز اپ ڈیٹس<br>جامع مسجد بلال و مدرسہ عربیہ اعزاز العلوم حمادیہ - کوٹری<br>مہتمم: حضرت مولانا زبیر احمد شیخ صاحب (د۔ب)<br>کوٹری جامشورو - 1 مرکزی مرکز + 9 برانچز"},
+ar:{title:"المركز الروحاني للتحديثات",sub:"بيان • نعت • دروس • إعلان • عمل • تعمير • مباشر",muhtamim:"المحتمم: حضرت مولانا زبير أحمد شيخ صاحب (د.ب)",markaz:"جامع مسجد بلال و مدرسة عربية إعزاز العلوم الحمادية - كوتري",search:"بحث",searchPh:"ابحث عن بيان، نعت، عنوان...",login:"دخول المسؤول",loginBtn:"دخول",codePh:"أدخل رمز المسؤول",admin:"لوحة المسؤول",publish:"نشر المنشور",branchTitle:"إضافة فرع",addBranch:"إضافة فرع",logout:"تسجيل خروج",noPost:"لا توجد منشورات بعد. انتظر المسؤول.",upload:"☁️ أضف صورة / فيديو من المعرض - حتى 10000 ميجا",uploadSub:"سيتم رفع أكبر فيديو إلى السحابة - سيراه الجميع",remove:"❌ إزالة الصورة",cats:['الكل','بيان','نعت','دروس','إعلان','عمل','تعمير','مباشر'],footer:"المركز الروحاني للتحديثات<br>جامع مسجد بلال و مدرسة عربية إعزاز العلوم الحمادية - كوتري<br>المحتمم: حضرت مولانا زبير أحمد شيخ صاحب (د.ب)<br>كوتري جامشورو - 1 مركز رئيسي + 9 فروع"}
 };
 function previewFile(){
   let f=document.getElementById('pFile').files[0]; if(!f) return;
-  let r=new FileReader();
-  r.onload=function(e){
-    selectedFile=e.target.result; selectedType=f.type;
-    if(f.type.startsWith('video')) document.getElementById('preview').innerHTML=`<video controls src="${selectedFile}"></video>`;
-    else document.getElementById('preview').innerHTML=`<img src="${selectedFile}">`;
-  };
-  r.readAsDataURL(f);
+  selectedFile=f; selectedType=f.type; uploadedURL='';
+  let url=URL.createObjectURL(f);
+  if(f.type.startsWith('video')) document.getElementById('preview').innerHTML=`<video controls src="${url}"></video>`;
+  else document.getElementById('preview').innerHTML=`<img src="${url}">`;
+  alert('File select ho gayi: ' + f.name + ' (' + (f.size/1024/1024).toFixed(1) + ' MB) - Ab Title likh kar Publish dabao, Cloud me Upload hogi.');
 }
-function clearFile(){ selectedFile=''; selectedType=''; document.getElementById('pFile').value=''; document.getElementById('preview').innerHTML=''; }
+function clearFile(){ selectedFile=null; selectedType=''; uploadedURL=''; document.getElementById('pFile').value=''; document.getElementById('preview').innerHTML=''; }
 function setLang(l){
   lang=l; localStorage.setItem('rm_lang',l);
   let t=T[l];
@@ -138,7 +141,36 @@ function setLang(l){
 }
 function login(){ if(document.getElementById('code').value=='1234'){ document.getElementById('loginBox').style.display='none'; document.getElementById('adminBox').style.display='block'; renderBranches(); } else alert('Ghalat Code'); }
 function logout(){ document.getElementById('loginBox').style.display='block'; document.getElementById('adminBox').style.display='none'; }
-function addPost(){ let title=document.getElementById('pTitle').value; if(!title) return alert('Title likhen'); posts.unshift({cat:document.getElementById('pCat').value,title,desc:document.getElementById('pDesc').value,link:document.getElementById('pLink').value,branch:document.getElementById('pBranch').value,file:selectedFile,ftype:selectedType,date:new Date().toLocaleDateString()}); localStorage.setItem('rm_posts',JSON.stringify(posts)); document.getElementById('pTitle').value=''; document.getElementById('pDesc').value=''; document.getElementById('pLink').value=''; document.getElementById('pBranch').value=''; clearFile(); render(); alert('Post ho gaya!'); }
+async function uploadToCloud(file){
+  let fd=new FormData();
+  fd.append('file', file);
+  fd.append('upload_preset', UPLOAD_PRESET);
+  let res=await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, {method:'POST', body:fd});
+  let data=await res.json();
+  if(!data.secure_url) throw new Error(data.error?.message || 'Upload Fail - Preset ruhani bana hua hai? Unsigned kiya hai?');
+  return data.secure_url;
+}
+async function addPost(){
+  let title=document.getElementById('pTitle').value; if(!title) return alert('Title likhen - Upar Title wali jagah khaali hai!');
+  document.getElementById('status').style.display='block';
+  document.getElementById('progress').style.display='block';
+  document.getElementById('t-publish').textContent='Cloud me Upload ho raha hai... Ruk jao...';
+  try{
+    let finalURL='';
+    if(selectedFile){
+      document.getElementById('progressBar').style.width='30%';
+      finalURL=await uploadToCloud(selectedFile);
+      document.getElementById('progressBar').style.width='100%';
+    }
+    posts.unshift({cat:document.getElementById('pCat').value,title,desc:document.getElementById('pDesc').value,link:document.getElementById('pLink').value,branch:document.getElementById('pBranch').value,cloudURL:finalURL,ftype:selectedType,date:new Date().toLocaleDateString()});
+    localStorage.setItem('rm_posts',JSON.stringify(posts));
+    document.getElementById('pTitle').value=''; document.getElementById('pDesc').value=''; document.getElementById('pLink').value=''; document.getElementById('pBranch').value=''; clearFile();
+    document.getElementById('status').style.display='none';
+    document.getElementById('progress').style.display='none';
+    document.getElementById('progressBar').style.width='0%';
+    setLang(lang); render(); alert('Post ho gaya! ✅ Ab ye Video sab ke phone me chalegi.');
+  }catch(e){ document.getElementById('status').style.display='none'; document.getElementById('progress').style.display='none'; setLang(lang); alert('Upload Fail: ' + e.message); }
+}
 function addBranch(){ let n=document.getElementById('bName').value; if(!n) return; branches.push(n); localStorage.setItem('rm_branches',JSON.stringify(branches)); document.getElementById('bName').value=''; renderBranches(); }
 function delBranch(i){ branches.splice(i,1); localStorage.setItem('rm_branches',JSON.stringify(branches)); renderBranches(); }
 function renderBranches(){ document.getElementById('branchList').innerHTML = branches.map((b,i)=>`<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee"><span>${b}</span><button onclick="delBranch(${i})">❌</button></div>`).join(''); }
@@ -147,7 +179,13 @@ function render(){
   document.getElementById('cats').innerHTML = t.cats.map(c=>`<button onclick="curCat='${c}';render()">${c}</button>`).join('');
   let q=document.getElementById('search').value.toLowerCase();
   let list=posts.filter(p=>(curCat=='All'||curCat=='سب'||curCat=='الكل'||p.cat==curCat)&&(p.title.toLowerCase().includes(q)));
-  document.getElementById('posts').innerHTML = list.length? list.map((p,idx)=>`<div class="post"><span class="badge">${p.cat}</span> <span style="font-size:11px;color:#888">${p.branch||''} • ${p.date}</span><h3>${p.title}</h3><p>${p.desc||''}</p>${p.file? (p.ftype&&p.ftype.startsWith('video')? `<video controls src="${p.file}"></video>` : `<img src="${p.file}">`) : ''}${p.link?`<br><a href="${p.link}" target="_blank">Open Link</a>`:''}<br><button onclick="delPost(${idx})" style="background:#ffeded;border:0;padding:6px 12px;border-radius:20px;margin-top:8px">🗑 Delete</button></div>`).join('') : `<p style="text-align:center;color:#888;padding:20px">${t.noPost}</p>`;
+  if(!list.length){ document.getElementById('posts').innerHTML=`<p style="text-align:center;color:#888;padding:20px">${t.noPost}</p>`; return; }
+  document.getElementById('posts').innerHTML = list.map(p=>{
+    let media='';
+    if(p.cloudURL){ media = (p.ftype&&p.ftype.startsWith('video'))? `<video controls preload="metadata" src="${p.cloudURL}"></video>` : `<img src="${p.cloudURL}">`; }
+    else if(p.file){ media = (p.ftype&&p.ftype.startsWith('video'))? `<video controls src="${p.file}"></video>` : `<img src="${p.file}">`; }
+    return `<div class="post"><span class="badge">${p.cat}</span> <span style="font-size:11px;color:#888">${p.branch||''} • ${p.date}</span><h3>${p.title}</h3><p>${p.desc||''}</p>${media}${p.link?`<br><a href="${p.link}" target="_blank">Open Link</a>`:''}<br><button onclick="delPost(${posts.indexOf(p)})" style="background:#ffeded;border:0;padding:6px 12px;border-radius:20px;margin-top:8px">🗑 Delete</button></div>`;
+  }).join('');
 }
 function delPost(i){ if(!confirm('Delete karni hai?')) return; posts.splice(i,1); localStorage.setItem('rm_posts',JSON.stringify(posts)); render(); }
 setLang(lang);
