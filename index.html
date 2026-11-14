@@ -9,11 +9,11 @@
 <style>
 *{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:#f3efe6}
 header{background:#0b3d2e;color:#fff;text-align:center;padding:20px 12px;overflow:hidden}
-header h1,header p,header div{margin:0;padding:3px 0;unicode-bidi:isolate;white-space:normal}
-header h1{font-size:24px}
-header p{font-size:13px;color:#d8e8dd}
-.muhtamim{color:#f5c542;font-weight:bold;font-size:14px}
-.markaz{font-size:12px}
+header h1,header p,header div{margin:0;padding:3px 0}
+header h1{font-size:26px}
+header p{font-size:14px;color:#d8e8dd}
+.muhtamim{color:#f5c542;font-weight:bold;font-size:15px}
+.markaz{font-size:13px}
 .langs{margin-top:10px;display:flex;justify-content:center;gap:8px}
 .langs button{border:0;padding:7px 14px;border-radius:20px;cursor:pointer;background:#fff;color:#0b3d2e;font-weight:bold}
 .langs button.active{background:#f5c542;color:#000}
@@ -27,7 +27,7 @@ button.main{background:#0b3d2e;color:#fff;border:0;padding:11px;border-radius:8p
 .post h3{margin:0 0 6px}
 .badge{background:#f5c542;padding:3px 8px;border-radius:10px;font-size:11px}
 .adminBtn{position:fixed;right:14px;bottom:14px;background:#0b3d2e;color:#fff;border:0;padding:12px 18px;border-radius:30px;font-weight:bold}
-footer{text-align:center;color:#777;font-size:12px;padding:20px;line-height:20px}
+footer{text-align:center;color:#777;font-size:12px;padding:20px;line-height:22px}
 </style>
 </head>
 <body>
@@ -77,7 +77,7 @@ let branches = JSON.parse(localStorage.getItem('rm_branches') || '["Main Markaz 
 let curCat = 'All';
 const T = {
 en:{title:"Ruhani Markaz Updates",sub:"Bayan • Naat • Asbaq • Itlaa • Amal • Tamir • Live",muhtamim:"Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)",markaz:"Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri",search:"Search",searchPh:"Search Bayan, Naat, Title...",login:"Admin Login",loginBtn:"Login",codePh:"Enter Admin Code",admin:"Admin Panel",publish:"Publish Post",branchTitle:"Add Branch",addBranch:"Add Branch",logout:"Logout",noPost:"No post yet. Wait for Admin.",cats:['All','Bayan','Naat','Asbaq','Itlaa','Amal','Tamir','Live'],footer:"Ruhani Markaz Updates<br>Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri<br>Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)<br>Kotri Jamshoro - 1 Main Markaz + 9 Branches"},
-ur:{title:"Ruhani Markaz Updates",sub:"Bayan • Naat • Asbaq • Itlaa • Amal • Tamir • Live",muhtamim:"Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)",markaz:"Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri",search:"Search Karo",searchPh:"Bayan, Naat, Title likh kar dhoondo...",login:"Admin Login",loginBtn:"Login",codePh:"Admin Code likhen",admin:"Admin Panel",publish:"Publish Post",branchTitle:"Branch Add Karo",addBranch:"Add Branch",logout:"Logout",noPost:"Abhi koi post nahi hai. Admin se post ka intezar karen.",cats:['All','Bayan','Naat','Asbaq','Itlaa','Amal','Tamir','Live'],footer:"Ruhani Markaz Updates<br>Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri<br>Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)<br>Kotri Jamshoro - 1 Main Markaz + 9 Branches"},
+ur:{title:"روحانی مرکز اپ ڈیٹس",sub:"بیان • نعت • اسباق • اطلاع • عمل • تعمیر • لائیو",muhtamim:"مہتمم: حضرت مولانا زبیر احمد شیخ صاحب (د۔ب)",markaz:"جامع مسجد بلال و مدرسہ عربیہ اعزاز العلوم حمادیہ - کوٹری",search:"تلاش کریں",searchPh:"بیان، نعت، عنوان لکھ کر تلاش کریں...",login:"ایڈمن لاگ ان",loginBtn:"لاگ ان",codePh:"ایڈمن کوڈ لکھیں",admin:"ایڈمن پینل",publish:"پوسٹ شائع کریں",branchTitle:"برانچ شامل کریں",addBranch:"برانچ شامل کریں",logout:"لاگ آؤٹ",noPost:"ابھی کوئی پوسٹ نہیں ہے۔ ایڈمن کی پوسٹ کا انتظار کریں۔",cats:['سب','بیان','نعت','اسباق','اطلاع','عمل','تعمیر','لائیو'],footer:"روحانی مرکز اپ ڈیٹس<br>جامع مسجد بلال و مدرسہ عربیہ اعزاز العلوم حمادیہ - کوٹری<br>مہتمم: حضرت مولانا زبیر احمد شیخ صاحب (د۔ب)<br>کوٹری جامشورو - 1 مرکزی مرکز + 9 برانچز"},
 ar:{title:"المركز الروحاني للتحديثات",sub:"بيان • نعت • دروس • إعلان • عمل • تعمير • مباشر",muhtamim:"المحتمم: حضرت مولانا زبير أحمد شيخ صاحب (د.ب)",markaz:"جامع مسجد بلال و مدرسة عربية إعزاز العلوم الحمادية - كوتري",search:"بحث",searchPh:"ابحث عن بيان، نعت، عنوان...",login:"دخول المسؤول",loginBtn:"دخول",codePh:"أدخل رمز المسؤول",admin:"لوحة المسؤول",publish:"نشر المنشور",branchTitle:"إضافة فرع",addBranch:"إضافة فرع",logout:"تسجيل خروج",noPost:"لا توجد منشورات بعد. انتظر المسؤول.",cats:['الكل','بيان','نعت','دروس','إعلان','عمل','تعمير','مباشر'],footer:"المركز الروحاني للتحديثات<br>جامع مسجد بلال و مدرسة عربية إعزاز العلوم الحمادية - كوتري<br>المحتمم: حضرت مولانا زبير أحمد شيخ صاحب (د.ب)<br>كوتري جامشورو - 1 مركز رئيسي + 9 فروع"}
 };
 function setLang(l){
@@ -87,9 +87,7 @@ function setLang(l){
   document.getElementById('b-ur').className = l=='ur'?'active':'';
   document.getElementById('b-ar').className = l=='ar'?'active':'';
   document.documentElement.lang=l;
-  document.body.dir = l=='ar'?'rtl':'ltr';
-  // Purana text pehle poora saaf karo, phir naya likho - isi se double wala masla khatam hoga
-  ['t-title','t-sub','t-muhtamim','t-markaz','t-search','t-login','t-loginBtn','t-admin','t-publish','t-branchTitle','t-addBranch','t-logout','t-footer'].forEach(id=>{document.getElementById(id).textContent='';});
+  document.body.dir = (l=='ur'||l=='ar')?'rtl':'ltr';
   document.getElementById('t-title').textContent=t.title;
   document.getElementById('t-sub').textContent=t.sub;
   document.getElementById('t-muhtamim').textContent=t.muhtamim;
@@ -117,10 +115,9 @@ function delBranch(i){ branches.splice(i,1); localStorage.setItem('rm_branches',
 function renderBranches(){ document.getElementById('branchList').innerHTML = branches.map((b,i)=>`<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee"><span>${b}</span><button onclick="delBranch(${i})">❌</button></div>`).join(''); }
 function render(){
   let t=T[lang];
-  document.getElementById('cats').innerHTML='';
-  document.getElementById('cats').innerHTML = t.cats.map(c=>`<button class="${(c==curCat || (c=='All'&&curCat=='All') || (c=='الكل'&&curCat=='All'))?'active':''}" onclick="curCat='${c}';render()">${c}</button>`).join('');
+  document.getElementById('cats').innerHTML = t.cats.map(c=>`<button onclick="curCat='${c}';render()">${c}</button>`).join('');
   let q=document.getElementById('search').value.toLowerCase();
-  let list=posts.filter(p=>(curCat=='All'||curCat=='الكل'||p.cat==curCat)&&(p.title.toLowerCase().includes(q)));
+  let list=posts.filter(p=>(curCat=='All'||curCat=='سب'||curCat=='الكل'||p.cat==curCat)&&(p.title.toLowerCase().includes(q)));
   document.getElementById('posts').innerHTML = list.length? list.map(p=>`<div class="post"><span class="badge">${p.cat}</span> <span style="font-size:11px;color:#888">${p.branch||''} • ${p.date}</span><h3>${p.title}</h3><p>${p.desc||''}</p>${p.link?`<a href="${p.link}" target="_blank">Open Link</a>`:''}</div>`).join('') : `<p style="text-align:center;color:#888;padding:20px">${t.noPost}</p>`;
 }
 setLang(lang);
