@@ -24,10 +24,14 @@ header p{font-size:14px;color:#d8e8dd}
 input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid #ddd;border-radius:8px}
 button.main{background:#0b3d2e;color:#fff;border:0;padding:11px;border-radius:8px;width:100%;font-weight:bold;cursor:pointer}
 .post{background:#fff;margin:12px;padding:14px;border-radius:12px}
+.post img,.post video{width:100%;border-radius:10px;margin-top:8px}
 .post h3{margin:0 0 6px}
 .badge{background:#f5c542;padding:3px 8px;border-radius:10px;font-size:11px}
 .adminBtn{position:fixed;right:14px;bottom:14px;background:#0b3d2e;color:#fff;border:0;padding:12px 18px;border-radius:30px;font-weight:bold}
 footer{text-align:center;color:#777;font-size:12px;padding:20px;line-height:22px}
+.uploadBox{border:2px dashed #0b3d2e;border-radius:10px;padding:12px;text-align:center;background:#f9fff9;margin:6px 0}
+.uploadBox input{border:0}
+#preview img,#preview video{width:100%;border-radius:10px;margin-top:6px}
 </style>
 </head>
 <body>
@@ -57,6 +61,15 @@ footer{text-align:center;color:#777;font-size:12px;padding:20px;line-height:22px
 <select id="pCat"></select>
 <input id="pTitle" placeholder="Title likhen">
 <textarea id="pDesc" placeholder="Tafseel likhen (zaroori nahi)"></textarea>
+
+<div class="uploadBox">
+<b id="t-upload">📷 Gallery se Photo / Video Lagao</b><br>
+<span style="font-size:12px;color:#666" id="t-uploadSub">Photo ya Video choose karo - Gallery khulegi</span><br><br>
+<input type="file" id="pFile" accept="image/*,video/*" onchange="previewFile()">
+<div id="preview"></div>
+<button type="button" onclick="clearFile()" style="background:#eee;border:0;padding:6px 12px;border-radius:20px;margin-top:6px" id="t-remove">❌ Photo Hatado</button>
+</div>
+
 <input id="pLink" placeholder="Link (zaroori nahi)">
 <input id="pBranch" placeholder="Branch ka naam">
 <button class="main" onclick="addPost()" id="t-publish"></button>
@@ -75,11 +88,24 @@ let lang = localStorage.getItem('rm_lang') || 'ur';
 let posts = JSON.parse(localStorage.getItem('rm_posts') || '[]');
 let branches = JSON.parse(localStorage.getItem('rm_branches') || '["Main Markaz - Kotri"]');
 let curCat = 'All';
+let selectedFile = '';
+let selectedType = '';
 const T = {
-en:{title:"Ruhani Markaz Updates",sub:"Bayan • Naat • Asbaq • Itlaa • Amal • Tamir • Live",muhtamim:"Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)",markaz:"Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri",search:"Search",searchPh:"Search Bayan, Naat, Title...",login:"Admin Login",loginBtn:"Login",codePh:"Enter Admin Code",admin:"Admin Panel",publish:"Publish Post",branchTitle:"Add Branch",addBranch:"Add Branch",logout:"Logout",noPost:"No post yet. Wait for Admin.",cats:['All','Bayan','Naat','Asbaq','Itlaa','Amal','Tamir','Live'],footer:"Ruhani Markaz Updates<br>Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri<br>Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)<br>Kotri Jamshoro - 1 Main Markaz + 9 Branches"},
-ur:{title:"روحانی مرکز اپ ڈیٹس",sub:"بیان • نعت • اسباق • اطلاع • عمل • تعمیر • لائیو",muhtamim:"مہتمم: حضرت مولانا زبیر احمد شیخ صاحب (د۔ب)",markaz:"جامع مسجد بلال و مدرسہ عربیہ اعزاز العلوم حمادیہ - کوٹری",search:"تلاش کریں",searchPh:"بیان، نعت، عنوان لکھ کر تلاش کریں...",login:"ایڈمن لاگ ان",loginBtn:"لاگ ان",codePh:"ایڈمن کوڈ لکھیں",admin:"ایڈمن پینل",publish:"پوسٹ شائع کریں",branchTitle:"برانچ شامل کریں",addBranch:"برانچ شامل کریں",logout:"لاگ آؤٹ",noPost:"ابھی کوئی پوسٹ نہیں ہے۔ ایڈمن کی پوسٹ کا انتظار کریں۔",cats:['سب','بیان','نعت','اسباق','اطلاع','عمل','تعمیر','لائیو'],footer:"روحانی مرکز اپ ڈیٹس<br>جامع مسجد بلال و مدرسہ عربیہ اعزاز العلوم حمادیہ - کوٹری<br>مہتمم: حضرت مولانا زبیر احمد شیخ صاحب (د۔ب)<br>کوٹری جامشورو - 1 مرکزی مرکز + 9 برانچز"},
-ar:{title:"المركز الروحاني للتحديثات",sub:"بيان • نعت • دروس • إعلان • عمل • تعمير • مباشر",muhtamim:"المحتمم: حضرت مولانا زبير أحمد شيخ صاحب (د.ب)",markaz:"جامع مسجد بلال و مدرسة عربية إعزاز العلوم الحمادية - كوتري",search:"بحث",searchPh:"ابحث عن بيان، نعت، عنوان...",login:"دخول المسؤول",loginBtn:"دخول",codePh:"أدخل رمز المسؤول",admin:"لوحة المسؤول",publish:"نشر المنشور",branchTitle:"إضافة فرع",addBranch:"إضافة فرع",logout:"تسجيل خروج",noPost:"لا توجد منشورات بعد. انتظر المسؤول.",cats:['الكل','بيان','نعت','دروس','إعلان','عمل','تعمير','مباشر'],footer:"المركز الروحاني للتحديثات<br>جامع مسجد بلال و مدرسة عربية إعزاز العلوم الحمادية - كوتري<br>المحتمم: حضرت مولانا زبير أحمد شيخ صاحب (د.ب)<br>كوتري جامشورو - 1 مركز رئيسي + 9 فروع"}
+en:{title:"Ruhani Markaz Updates",sub:"Bayan • Naat • Asbaq • Itlaa • Amal • Tamir • Live",muhtamim:"Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)",markaz:"Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri",search:"Search",searchPh:"Search Bayan, Naat, Title...",login:"Admin Login",loginBtn:"Login",codePh:"Enter Admin Code",admin:"Admin Panel",publish:"Publish Post",branchTitle:"Add Branch",addBranch:"Add Branch",logout:"Logout",noPost:"No post yet. Wait for Admin.",upload:"📷 Gallery se Photo / Video Lagao",uploadSub:"Photo ya Video choose karo - Gallery khulegi",remove:"❌ Photo Hatado",cats:['All','Bayan','Naat','Asbaq','Itlaa','Amal','Tamir','Live'],footer:"Ruhani Markaz Updates<br>Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri<br>Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)<br>Kotri Jamshoro - 1 Main Markaz + 9 Branches"},
+ur:{title:"روحانی مرکز اپ ڈیٹس",sub:"بیان • نعت • اسباق • اطلاع • عمل • تعمیر • لائیو",muhtamim:"مہتمم: حضرت مولانا زبیر احمد شیخ صاحب (د۔ب)",markaz:"جامع مسجد بلال و مدرسہ عربیہ اعزاز العلوم حمادیہ - کوٹری",search:"تلاش کریں",searchPh:"بیان، نعت، عنوان لکھ کر تلاش کریں...",login:"ایڈمن لاگ ان",loginBtn:"لاگ ان",codePh:"ایڈمن کوڈ لکھیں",admin:"ایڈمن پینل",publish:"پوسٹ شائع کریں",branchTitle:"برانچ شامل کریں",addBranch:"برانچ شامل کریں",logout:"لاگ آؤٹ",noPost:"ابھی کوئی پوسٹ نہیں ہے۔ ایڈمن کی پوسٹ کا انتظار کریں۔",upload:"📷 گیلری سے تصویر / ویڈیو لگائیں",uploadSub:"تصویر یا ویڈیو منتخب کریں - گیلری کھلے گی",remove:"❌ تصویر ہٹائیں",cats:['سب','بیان','نعت','اسباق','اطلاع','عمل','تعمیر','لائیو'],footer:"روحانی مرکز اپ ڈیٹس<br>جامع مسجد بلال و مدرسہ عربیہ اعزاز العلوم حمادیہ - کوٹری<br>مہتمم: حضرت مولانا زبیر احمد شیخ صاحب (د۔ب)<br>کوٹری جامشورو - 1 مرکزی مرکز + 9 برانچز"},
+ar:{title:"المركز الروحاني للتحديثات",sub:"بيان • نعت • دروس • إعلان • عمل • تعمير • مباشر",muhtamim:"المحتمم: حضرت مولانا زبير أحمد شيخ صاحب (د.ب)",markaz:"جامع مسجد بلال و مدرسة عربية إعزاز العلوم الحمادية - كوتري",search:"بحث",searchPh:"ابحث عن بيان، نعت، عنوان...",login:"دخول المسؤول",loginBtn:"دخول",codePh:"أدخل رمز المسؤول",admin:"لوحة المسؤول",publish:"نشر المنشور",branchTitle:"إضافة فرع",addBranch:"إضافة فرع",logout:"تسجيل خروج",noPost:"لا توجد منشورات بعد. انتظر المسؤول.",upload:"📷 أضف صورة / فيديو من المعرض",uploadSub:"اختر صورة أو فيديو - سيفتح المعرض",remove:"❌ إزالة الصورة",cats:['الكل','بيان','نعت','دروس','إعلان','عمل','تعمير','مباشر'],footer:"المركز الروحاني للتحديثات<br>جامع مسجد بلال و مدرسة عربية إعزاز العلوم الحمادية - كوتري<br>المحتمم: حضرت مولانا زبير أحمد شيخ صاحب (د.ب)<br>كوتري جامشورو - 1 مركز رئيسي + 9 فروع"}
 };
+function previewFile(){
+  let f=document.getElementById('pFile').files[0]; if(!f) return;
+  let r=new FileReader();
+  r.onload=function(e){
+    selectedFile=e.target.result; selectedType=f.type;
+    if(f.type.startsWith('video')) document.getElementById('preview').innerHTML=`<video controls src="${selectedFile}"></video>`;
+    else document.getElementById('preview').innerHTML=`<img src="${selectedFile}">`;
+  };
+  r.readAsDataURL(f);
+}
+function clearFile(){ selectedFile=''; selectedType=''; document.getElementById('pFile').value=''; document.getElementById('preview').innerHTML=''; }
 function setLang(l){
   lang=l; localStorage.setItem('rm_lang',l);
   let t=T[l];
@@ -102,6 +128,9 @@ function setLang(l){
   document.getElementById('t-branchTitle').textContent=t.branchTitle;
   document.getElementById('t-addBranch').textContent=t.addBranch;
   document.getElementById('t-logout').textContent=t.logout;
+  document.getElementById('t-upload').textContent=t.upload;
+  document.getElementById('t-uploadSub').textContent=t.uploadSub;
+  document.getElementById('t-remove').textContent=t.remove;
   document.getElementById('t-footer').innerHTML=t.footer;
   document.getElementById('pCat').innerHTML = t.cats.slice(1).map(c=>`<option>${c}</option>`).join('');
   curCat='All';
@@ -109,7 +138,7 @@ function setLang(l){
 }
 function login(){ if(document.getElementById('code').value=='1234'){ document.getElementById('loginBox').style.display='none'; document.getElementById('adminBox').style.display='block'; renderBranches(); } else alert('Ghalat Code'); }
 function logout(){ document.getElementById('loginBox').style.display='block'; document.getElementById('adminBox').style.display='none'; }
-function addPost(){ let title=document.getElementById('pTitle').value; if(!title) return alert('Title likhen'); posts.unshift({cat:document.getElementById('pCat').value,title,desc:document.getElementById('pDesc').value,link:document.getElementById('pLink').value,branch:document.getElementById('pBranch').value,date:new Date().toLocaleDateString()}); localStorage.setItem('rm_posts',JSON.stringify(posts)); document.getElementById('pTitle').value=''; document.getElementById('pDesc').value=''; document.getElementById('pLink').value=''; document.getElementById('pBranch').value=''; render(); alert('Post ho gaya!'); }
+function addPost(){ let title=document.getElementById('pTitle').value; if(!title) return alert('Title likhen'); posts.unshift({cat:document.getElementById('pCat').value,title,desc:document.getElementById('pDesc').value,link:document.getElementById('pLink').value,branch:document.getElementById('pBranch').value,file:selectedFile,ftype:selectedType,date:new Date().toLocaleDateString()}); localStorage.setItem('rm_posts',JSON.stringify(posts)); document.getElementById('pTitle').value=''; document.getElementById('pDesc').value=''; document.getElementById('pLink').value=''; document.getElementById('pBranch').value=''; clearFile(); render(); alert('Post ho gaya!'); }
 function addBranch(){ let n=document.getElementById('bName').value; if(!n) return; branches.push(n); localStorage.setItem('rm_branches',JSON.stringify(branches)); document.getElementById('bName').value=''; renderBranches(); }
 function delBranch(i){ branches.splice(i,1); localStorage.setItem('rm_branches',JSON.stringify(branches)); renderBranches(); }
 function renderBranches(){ document.getElementById('branchList').innerHTML = branches.map((b,i)=>`<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee"><span>${b}</span><button onclick="delBranch(${i})">❌</button></div>`).join(''); }
@@ -118,8 +147,9 @@ function render(){
   document.getElementById('cats').innerHTML = t.cats.map(c=>`<button onclick="curCat='${c}';render()">${c}</button>`).join('');
   let q=document.getElementById('search').value.toLowerCase();
   let list=posts.filter(p=>(curCat=='All'||curCat=='سب'||curCat=='الكل'||p.cat==curCat)&&(p.title.toLowerCase().includes(q)));
-  document.getElementById('posts').innerHTML = list.length? list.map(p=>`<div class="post"><span class="badge">${p.cat}</span> <span style="font-size:11px;color:#888">${p.branch||''} • ${p.date}</span><h3>${p.title}</h3><p>${p.desc||''}</p>${p.link?`<a href="${p.link}" target="_blank">Open Link</a>`:''}</div>`).join('') : `<p style="text-align:center;color:#888;padding:20px">${t.noPost}</p>`;
+  document.getElementById('posts').innerHTML = list.length? list.map((p,idx)=>`<div class="post"><span class="badge">${p.cat}</span> <span style="font-size:11px;color:#888">${p.branch||''} • ${p.date}</span><h3>${p.title}</h3><p>${p.desc||''}</p>${p.file? (p.ftype&&p.ftype.startsWith('video')? `<video controls src="${p.file}"></video>` : `<img src="${p.file}">`) : ''}${p.link?`<br><a href="${p.link}" target="_blank">Open Link</a>`:''}<br><button onclick="delPost(${idx})" style="background:#ffeded;border:0;padding:6px 12px;border-radius:20px;margin-top:8px">🗑 Delete</button></div>`).join('') : `<p style="text-align:center;color:#888;padding:20px">${t.noPost}</p>`;
 }
+function delPost(i){ if(!confirm('Delete karni hai?')) return; posts.splice(i,1); localStorage.setItem('rm_posts',JSON.stringify(posts)); render(); }
 setLang(lang);
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </script>
