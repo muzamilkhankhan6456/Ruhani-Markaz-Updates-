@@ -1,53 +1,26 @@
-// Ruhani Markaz Updates - Service Worker - FULL FILE
-// Version: v4 - Purani cache ko delete kar dega
-
-const CACHE = 'ruhani-v4';
-const FILES_TO_CACHE = [
+const CACHE = 'ruhani-v6';
+const FILES = [
   './',
   './index.html',
   './manifest.json'
 ];
 
-// Install - Nayi file aate hi purani ko hata do
-self.addEventListener('install', (event) => {
-  self.skipWaiting();
-  event.waitUntil(
-    caches.open(CACHE).then((cache) => {
-      return cache.addAll(FILES_TO_CACHE);
-    })
+self.addEventListener('install', e => {
+  e.waitUntil(
+    caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting())
   );
 });
 
-// Activate - Purani saari cache delete kar do
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE) {
-            return caches.delete(key);
-          }
-        })
-      );
-    })
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys().then(keys => Promise.all(
+      keys.filter(k => k !== CACHE).map(k => caches.delete(k))
+    )).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
-// Fetch - Pehle Internet se nayi file lao, na mile to cache se lao
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        // Nayi file mili to cache me bhi save kar lo
-        const copy = response.clone();
-        caches.open(CACHE).then((cache) => {
-          cache.put(event.request, copy);
-        });
-        return response;
-      })
-      .catch(() => {
-        return caches.match(event.request);
-      })
+self.addEventListener('fetch', e => {
+  e.respondWith(
+    fetch(e.request).catch(() => caches.match(e.request)).then(res => res || caches.match('./index.html'))
   );
 });
