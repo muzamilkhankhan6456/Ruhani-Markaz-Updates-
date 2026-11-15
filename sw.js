@@ -1,4 +1,4 @@
-const CACHE = 'ruhani-v14';
+const CACHE = 'ruhani-v15';
 const FILES = [
   './',
   './index.html',
