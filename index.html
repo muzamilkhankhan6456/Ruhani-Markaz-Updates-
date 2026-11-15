@@ -120,13 +120,14 @@ footer{text-align:center;color:#777;font-size:12px;padding:20px;line-height:22px
 </div>
 
 <script>
+const BIN_ID = "6af98076ac6210605a8916c0";
+const BIN_KEY = "$2a$10$CQhq8vJrwLzFNcDdqNWZz.wL9wjURBp4HQ6XjR.4pP6mctWwf8BWWm";
 const CLOUD_NAME = "v1rjdpet";
 const UPLOAD_PRESET = "ruhani";
-const CONTACT_NUM = "03003037168";
 let lang = localStorage.getItem('rm_lang') || 'ur';
-let posts = JSON.parse(localStorage.getItem('rm_posts') || '[]');
+let posts = [];
 let branches = JSON.parse(localStorage.getItem('rm_branches') || '["Main Markaz - Kotri"]');
-let donate = JSON.parse(localStorage.getItem('rm_donate') || '{"easy":"03003037168","easyName":"Ruhani Markaz - Kotri","jazz":"03003037168","jazzName":"Ruhani Markaz - Kotri","bank":"","bankName":""}');
+let donate = {easy:"03003037168",easyName:"Ruhani Markaz - Kotri",jazz:"03003037168",jazzName:"Ruhani Markaz - Kotri",bank:"",bankName:""};
 let curCat = 'All';
 let selectedFile = null;
 let selectedType = '';
@@ -136,14 +137,27 @@ en:{title:"Ruhani Markaz Updates",sub:"Bayan • Naat • Asbaq • Itlaa • Am
 ur:{title:"روحانی مرکز اپ ڈیٹس",sub:"بیان • نعت • اسباق • اطلاع • عمل • تعمیر • لائیو",muhtamim:"مہتمم: حضرت مولانا زبیر احمد شیخ صاحب (د۔ب)",markaz:"جامع مسجد بلال و مدرسہ عربیہ اعزاز العلوم حمادیہ - کوٹری",search:"تلاش کریں",searchPh:"بیان، نعت، عنوان لکھ کر تلاش کریں...",login:"ایڈمن لاگ ان",loginBtn:"لاگ ان",codePh:"ایڈمن کوڈ لکھیں",admin:"ایڈمن پینل",publish:"پوسٹ شائع کریں",branchTitle:"برانچ شامل کریں",addBranch:"برانچ شامل کریں",logout:"لاگ آؤٹ",noPost:"ابھی کوئی پوسٹ نہیں ہے۔ ایڈمن کی پوسٹ کا انتظار کریں۔",upload:"گیلری سے تصویر / ویڈیو لگائیں - 10,000 ایم بی تک",uploadSub:"بڑی سے بڑی ویڈیو بھی کلاؤڈ میں اپلوڈ ہوگی - سب کو نظر آئے گی",remove:"تصویر ہٹائیں",donateTitle:"💚 صدقہ / ڈونیشن - مرکز کے لیے تعاون",donateSub:"کسی بھی آپشن پر دبائیں - سیدھا ایپ کھلے گی۔ نمبر کاپی بھی ہو جائے گا۔",cats:['سب','بیان','نعت','اسباق','اطلاع','عمل','تعمیر','لائیو'],footer:"روحانی مرکز اپ ڈیٹس<br>جامع مسجد بلال و مدرسہ عربیہ اعزاز العلوم حمادیہ - کوٹری<br>مہتمم: حضرت مولانا زبیر احمد شیخ صاحب (د۔ب)<br>کوٹری جامشورو - 1 مرکزی مرکز + 9 برانچز - رابطہ: 0300-3037168"},
 ar:{title:"المركز الروحاني للتحديثات",sub:"بيان • نعت • دروس • إعلان • عمل • تعمير • مباشر",muhtamim:"المحتمم: حضرت مولانا زبير أحمد شيخ صاحب (د.ب)",markaz:"جامع مسجد بلال و مدرسة عربية إعزاز العلوم الحمادية - كوتري",search:"بحث",searchPh:"ابحث عن بيان، نعت، عنوان...",login:"دخول المسؤول",loginBtn:"دخول",codePh:"أدخل رمز المسؤول",admin:"لوحة المسؤول",publish:"نشر المنشور",branchTitle:"إضافة فرع",addBranch:"إضافة فرع",logout:"تسجيل خروج",noPost:"لا توجد منشورات بعد. انتظر المسؤول.",upload:"أضف صورة / فيديو من المعرض - حتى 10000 ميجا",uploadSub:"سيتم رفع أكبر فيديو إلى السحابة - سيراه الجميع",remove:"إزالة الصورة",donateTitle:"💚 صدقة / تبرع - للمركز",donateSub:"اضغط على أي خيار - سيفتح التطبيق مباشرة. سيتم نسخ الرقم أيضا.",cats:['الكل','بيان','نعت','دروس','إعلان','عمل','تعمير','مباشر'],footer:"المركز الروحاني للتحديثات<br>جامع مسجد بلال و مدرسة عربية إعزاز العلوم الحمادية - كوتري<br>المحتمم: حضرت مولانا زبير أحمد شيخ صاحب (د.ب)<br>كوتري جامشورو - 1 مركز رئيسي + 9 فروع - التواصل: 0300-3037168"}
 };
-function cleanNum(n){ return (n||'').replace(/\D/g,'').replace(/^0/,'92'); }
+async function loadData(){
+  try{
+    let res = await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID+'/latest', {headers:{'X-Master-Key':BIN_KEY}});
+    let j = await res.json();
+    let d = j.record || {};
+    posts = d.posts || [];
+    if(d.donate && d.donate.easy) donate = d.donate;
+  }catch(e){ console.log('Load fail',e); }
+  renderDonation(); render();
+}
+async function saveData(){
+  try{
+    await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID, {method:'PUT', headers:{'Content-Type':'application/json','X-Master-Key':BIN_KEY}, body: JSON.stringify({posts:posts, donate:donate})});
+  }catch(e){ alert('Internet slow hai, dobara try karo'); }
+}
 function copyNum(id){ let t=document.getElementById(id).innerText; navigator.clipboard.writeText(t); alert('Copy ho gaya: '+t); }
 function openEasy(e){ e.preventDefault(); if(!donate.easy) return alert('Easypaisa Number abhi nahi lagaya'); try{navigator.clipboard.writeText(donate.easy);}catch(err){} var a=document.createElement('a'); a.href='intent://open#Intent;scheme=easypaisa;package=pk.com.telenor.phoenix;S.browser_fallback_url=https://play.google.com/store/apps/details?id=pk.com.telenor.phoenix;end'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ alert('Number Copy ho gaya: '+donate.easy+'\n\nAb Easypaisa App me ja kar SEND MONEY dabao aur Number PASTE kar do.'); },600); }
 function openJazz(e){ e.preventDefault(); if(!donate.jazz) return alert('JazzCash Number abhi nahi lagaya'); try{navigator.clipboard.writeText(donate.jazz);}catch(err){} var a=document.createElement('a'); a.href='intent://open#Intent;scheme=jazzcash;package=com.techlogix.mobilinkcustomer;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.techlogix.mobilinkcustomer;end'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ alert('Number Copy ho gaya: '+donate.jazz+'\n\nAb JazzCash App me ja kar SEND MONEY dabao aur Number PASTE kar do.'); },600); }
-function saveDonation(){
+async function saveDonation(){
   donate={easy:document.getElementById('dEasy').value, easyName:document.getElementById('dEasyName').value, jazz:document.getElementById('dJazz').value, jazzName:document.getElementById('dJazzName').value, bank:document.getElementById('dBank').value, bankName:document.getElementById('dBankName').value};
-  localStorage.setItem('rm_donate',JSON.stringify(donate));
-  renderDonation(); alert('Donation Numbers Save ho gaye! Ab sab ko nazar aayenge.');
+  await saveData(); renderDonation(); alert('Donation Numbers Save ho gaye! Ab sab ko nazar aayenge.');
 }
 function renderDonation(){
   document.getElementById('showEasy').textContent = donate.easy || '--- Abhi Number Nahi Lagaya ---';
@@ -224,12 +238,12 @@ async function addPost(){
       document.getElementById('progressBar').style.width='100%';
     }
     posts.unshift({cat:document.getElementById('pCat').value,title,desc:document.getElementById('pDesc').value,link:document.getElementById('pLink').value,branch:document.getElementById('pBranch').value,cloudURL:finalURL,ftype:selectedType,date:new Date().toLocaleDateString()});
-    localStorage.setItem('rm_posts',JSON.stringify(posts));
+    await saveData();
     document.getElementById('pTitle').value=''; document.getElementById('pDesc').value=''; document.getElementById('pLink').value=''; document.getElementById('pBranch').value=''; clearFile();
     document.getElementById('status').style.display='none';
     document.getElementById('progress').style.display='none';
     document.getElementById('progressBar').style.width='0%';
-    setLang(lang); render(); alert('Post ho gaya! Ab ye Video sab ke phone me chalegi.');
+    setLang(lang); render(); alert('Post ho gaya! Ab ye Video SAB ke phone me chalegi.');
   }catch(e){ document.getElementById('status').style.display='none'; document.getElementById('progress').style.display='none'; setLang(lang); alert('Upload Fail: ' + e.message); }
 }
 function addBranch(){ let n=document.getElementById('bName').value; if(!n) return; branches.push(n); localStorage.setItem('rm_branches',JSON.stringify(branches)); document.getElementById('bName').value=''; renderBranches(); }
@@ -248,9 +262,10 @@ function render(){
     return `<div class="post"><span class="badge">${p.cat}</span> <span style="font-size:11px;color:#888">${p.branch||''} • ${p.date}</span><h3>${p.title}</h3><p>${p.desc||''}</p>${media}${p.link?`<br><a href="${p.link}" target="_blank">Open Link</a>`:''}<br><button onclick="delPost(${posts.indexOf(p)})" style="background:#ffeded;border:0;padding:6px 12px;border-radius:20px;margin-top:8px">Delete</button></div>`;
   }).join('');
 }
-function delPost(i){ if(!confirm('Delete karni hai?')) return; posts.splice(i,1); localStorage.setItem('rm_posts',JSON.stringify(posts)); render(); }
+async function delPost(i){ if(!confirm('Delete karni hai?')) return; posts.splice(i,1); await saveData(); render(); }
 setLang(lang);
 renderDonation();
+loadData();
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </script>
 </body>
