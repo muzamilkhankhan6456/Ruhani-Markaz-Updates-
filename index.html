@@ -5,179 +5,167 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ruhani Markaz Updates</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0b3d2e">
+<meta name="theme-color" content="#0b6e4f">
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 <style>
-*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:#f3efe6;padding-bottom:80px}
-header{background:#0b3d2e;color:#fff;text-align:center;padding:20px 12px}
-header h1,header p,header div{margin:0;padding:3px 0}
-header h1{font-size:26px} header p{font-size:14px;color:#d8e8dd}
-.muhtamim{color:#f5c542;font-weight:bold;font-size:15px} .markaz{font-size:13px}
-.langs{margin-top:10px;display:flex;justify-content:center;gap:8px}
-.langs button{border:0;padding:7px 14px;border-radius:20px;cursor:pointer;background:#fff;color:#0b3d2e;font-weight:bold}
-.langs button.active{background:#f5c542;color:#000}
-.cats{display:flex;gap:8px;overflow:auto;padding:10px;background:#fff}
-.cats button{border:1px solid #ddd;background:#f1f1f1;padding:8px 14px;border-radius:20px;white-space:nowrap;cursor:pointer}
-.card{background:#fff;margin:12px;padding:14px;border-radius:12px}
-input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid #ddd;border-radius:8px}
-button.main{background:#0b3d2e;color:#fff;border:0;padding:11px;border-radius:8px;width:100%;font-weight:bold;cursor:pointer}
-.post{background:#fff;margin:12px;padding:14px;border-radius:12px}
-.post img,.post video{width:100%;border-radius:10px;margin-top:8px}
-.post h3{margin:0 0 6px} .badge{background:#f5c542;padding:3px 8px;border-radius:10px;font-size:11px}
-.adminBtn{position:fixed;right:14px;bottom:84px;background:#0b3d2e;color:#fff;border:0;padding:12px 18px;border-radius:30px;font-weight:bold;z-index:99}
-footer{text-align:center;color:#777;font-size:12px;padding:20px;line-height:22px}
-.uploadBox{border:2px dashed #0b3d2e;border-radius:10px;padding:12px;text-align:center;background:#f9fff9;margin:6px 0}
-#preview img,#preview video{width:100%;border-radius:10px;margin-top:6px}
-#status{text-align:center;color:#0b3d2e;font-weight:bold;padding:8px;display:none;background:#fff3cd;border-radius:8px;margin:6px 0}
-#progress{width:100%;height:10px;background:#eee;border-radius:10px;overflow:hidden;display:none;margin:6px 0}
-#progressBar{height:10px;width:0%;background:#0b3d2e}
-.donateBox{background:#fffbe6;border:2px solid #f5c542;border-radius:12px;padding:14px;margin:12px}
-.donateRow{display:flex;justify-content:space-between;align-items:center;background:#fff;padding:12px;border-radius:10px;margin:8px 0;border:1px solid #eee;text-decoration:none;color:#000}
-.donateRow b{font-size:15px} .donateRow span{font-weight:bold;color:#0b3d2e;font-size:16px}
-.openBtn{background:#0b3d2e;color:#fff;border:0;padding:8px 14px;border-radius:20px;font-weight:bold;white-space:nowrap}
-.contactBar{position:fixed;left:0;right:0;bottom:0;background:#0b3d2e;display:flex;gap:8px;padding:10px;z-index:100}
-.contactBar a{flex:1;text-align:center;text-decoration:none;color:#fff;padding:12px 4px;border-radius:10px;font-weight:bold;font-size:14px}
-.wa{background:#25D366}.call{background:#f5c542;color:#000!important}.sms{background:#fff;color:#0b3d2e!important}
+*{box-sizing:border-box}body{margin:0;font-family:Arial;background:#f0f2f5;color:#222;padding-bottom:80px}
+header{background:#0b6e4f;color:#fff;padding:18px;text-align:center;position:sticky;top:0;z-index:10}
+header h1{margin:0;font-size:22px}header p{margin:4px 0 0;opacity:.9;font-size:13px}
+.card{background:#fff;margin:12px;padding:15px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+input,select{width:100%;padding:12px;margin-top:8px;border:1px solid #ddd;border-radius:10px;font-size:15px}
+button{cursor:pointer}
+.btn{width:100%;padding:13px;border:none;border-radius:10px;font-weight:bold;font-size:15px;margin-top:8px}
+.btn-green{background:#0b6e4f;color:#fff}.btn-red{background:#ff0000;color:#fff}.btn-grey{background:#eee;color:#333}
+.list-item{display:flex;justify-content:space-between;align-items:center;background:#f8f9fa;padding:10px;border-radius:10px;margin-top:8px}
 </style>
 </head>
 <body>
+
 <header>
-<h1 id="t-title"></h1><p id="t-sub"></p><div class="muhtamim" id="t-muhtamim"></div><div class="markaz" id="t-markaz"></div>
-<div class="langs"><button onclick="setLang('en')" id="b-en">English</button><button onclick="setLang('ur')" id="b-ur">Urdu</button><button onclick="setLang('ar')" id="b-ar">Arabic</button></div>
+<h1>🕌 Ruhani Markaz Kotri</h1>
+<p>Members • Attendance • 1000+ Bayanat</p>
 </header>
-<div class="donateBox">
-<b id="t-donateTitle" style="font-size:18px">💚 Sadqa / Donation</b>
-<p id="t-donateSub" style="font-size:13px;color:#666;margin:6px 0">Kisi bhi option par dabao - Seedha App khulegi.</p>
-<a class="donateRow" href="#" onclick="openEasy(event)"><div><b>Easypaisa</b><br><span id="showEasy">---</span><br><small id="showEasyName"></small></div><span class="openBtn">Open App</span></a>
-<a class="donateRow" href="#" onclick="openJazz(event)"><div><b>JazzCash</b><br><span id="showJazz">---</span><br><small id="showJazzName"></small></div><span class="openBtn">Open App</span></a>
-<a class="donateRow" href="#" onclick="copyNum('showBank');return false;"><div><b>Bank Account</b><br><span id="showBank">---</span><br><small id="showBankName"></small></div><span class="openBtn">Copy</span></a>
+
+<!-- MEMBERS -->
+<div class="card">
+<h3 style="margin:0">👥 Members Add Karein</h3>
+<input id="mName" placeholder="Member ka naam">
+<input id="mPhone" placeholder="Phone Number">
+<button class="btn btn-green" onclick="addMember()">+ Member Add Karein</button>
+<input id="mSearch" placeholder="Member search..." oninput="renderMembers()">
+<div id="memberList"></div>
 </div>
-<div class="cats" id="cats"></div>
-<div class="card"><b id="t-search"></b><input id="search" oninput="render()"></div>
-<div class="card" id="loginBox"><b id="t-login"></b><input id="code" type="password"><button class="main" onclick="login()" id="t-loginBtn"></button></div>
-<div class="card" id="adminBox" style="display:none">
-<b id="t-admin"></b><select id="pCat"></select>
-<input id="pTitle" placeholder="Title likhen"><textarea id="pDesc" placeholder="Tafseel likhen"></textarea>
-<div class="uploadBox"><b id="t-upload"></b><br><span style="font-size:12px;color:#666" id="t-uploadSub"></span><br><br>
-<input type="file" id="pFile" accept="image/*,video/*" onchange="previewFile()"><div id="preview"></div>
-<div id="progress"><div id="progressBar"></div></div><div id="status">Upload ho raha hai...</div>
-<button type="button" onclick="clearFile()" style="background:#eee;border:0;padding:6px 12px;border-radius:20px;margin-top:6px" id="t-remove"></button></div>
-<input id="pLink" placeholder="Ya TikTok / YouTube / Drive ka Link"><input id="pBranch" placeholder="Branch ka naam">
-<button class="main" onclick="addPost()" id="t-publish">Publish Post</button><hr>
-<b>💚 Donation Numbers</b>
-<input id="dEasy" placeholder="Easypaisa Number"><input id="dEasyName" placeholder="Easypaisa Naam">
-<input id="dJazz" placeholder="JazzCash Number"><input id="dJazzName" placeholder="JazzCash Naam">
-<input id="dBank" placeholder="Bank Account Number"><input id="dBankName" placeholder="Bank Name + Title">
-<button class="main" onclick="saveDonation()" style="background:#f5c542;color:#000">Donation Numbers Save Karo</button><hr>
-<b id="t-branchTitle"></b><input id="bName" placeholder="Nayi Branch ka naam"><button class="main" onclick="addBranch()" id="t-addBranch"></button><div id="branchList"></div>
-<button class="main" onclick="logout()" style="background:#999;margin-top:10px" id="t-logout"></button></div>
-<div id="posts"></div><footer id="t-footer"></footer>
-<button class="adminBtn" onclick="document.getElementById('loginBox').scrollIntoView()">Admin</button>
-<div class="contactBar"><a class="wa" href="https://wa.me/923003037168" target="_blank">WhatsApp</a><a class="call" href="tel:+923003037168">Call</a><a class="sms" href="sms:+923003037168">SMS</a></div>
+
+<!-- ATTENDANCE -->
+<div class="card">
+<h3 style="margin:0">📋 Attendance</h3>
+<p style="font-size:13px;color:#666">Aaj ki date: <b id="todayDate"></b></p>
+<div id="attList"></div>
+<button class="btn btn-green" onclick="saveAttendance()">✅ Attendance Save Karein</button>
+<p id="attMsg" style="text-align:center;color:#0b6e4f;font-weight:bold"></p>
+</div>
+
+<!-- 1000 VIDEOS -->
+<div class="card">
+<h3 style="margin:0">🎥 Bayanat - 1000+ Videos</h3>
+<input id="vSearch" placeholder="Video search karein... Jumma, Bayan..." oninput="renderVideos()">
+<div id="videoList"></div>
+<div style="margin-top:15px;border-top:1px solid #eee;padding-top:10px">
+<h4 style="margin:0">Admin - Nayi Video Add Karein</h4>
+<input id="vTitle" placeholder="Video ka naam - Misal: Jumma Bayan">
+<input id="vLink" placeholder="YouTube / TikTok Link paste karein">
+<button class="btn btn-red" onclick="addVideo()">+ Video Add Karein</button>
+</div>
+</div>
+
+<div class="card" id="playerCard" style="display:none">
+<h3 id="playingTitle" style="margin:0">Playing...</h3>
+<div id="playerBox" style="margin-top:10px"></div>
+<button class="btn btn-grey" onclick="closePlayer()">Band Karein</button>
+</div>
+
 <script>
-const BIN_ID = "6af98076ac6210605a8916c0";
-const BIN_KEY = "$2a$10$WO/W/lsDYWHjm2pHTXv77OelsKal.fgWt/GdSLCVu/Vawbi1ledb6";
-const CLOUD_NAME = "v1rjdpet";
-const UPLOAD_PRESET = "ruhani";
-let lang = localStorage.getItem('rm_lang') || 'ur';
-let posts = JSON.parse(localStorage.getItem('rm_posts_backup') || '[]');
-let branches = JSON.parse(localStorage.getItem('rm_branches') || '["Main Markaz - Kotri"]');
-let donate = {easy:"03003037168",easyName:"Ruhani Markaz - Kotri",jazz:"03003037168",jazzName:"Ruhani Markaz - Kotri",bank:"",bankName:""};
-let curCat = 'All';
-let selectedFile = null; let selectedType = '';
-const T = {
-en:{title:"Ruhani Markaz Updates",sub:"Bayan • Naat • Asbaq • Itlaa • Amal • Tamir • Live",muhtamim:"Muhtamim: Hazrat Molana Zubair Ahmed Sheikh Sb (d.b)",markaz:"Jama Masjid Bilal WA Madrasa Arabia Aizaz Ul Uloom Hammadia - Kotri",search:"Search",searchPh:"Search...",login:"Admin Login",loginBtn:"Login",codePh:"Enter Admin Code",admin:"Admin Panel",publish:"Publish Post",branchTitle:"Add Branch",addBranch:"Add Branch",logout:"Logout",noPost:"No post yet.",upload:"Gallery se Photo / Video Lagao",uploadSub:"Bari Video bhi Cloud me Upload hogi",remove:"Photo Hatado",donateTitle:"💚 Sadqa / Donation - For Markaz",donateSub:"Tap any option - App will open.",cats:['All','Bayan','Naat','Asbaq','Itlaa','Amal','Tamir','Live'],footer:"Ruhani Markaz Updates<br>Kotri Jamshoro - Rabta: 0300-3037168"},
-ur:{title:"روحانی مرکز اپ ڈیٹس",sub:"بیان • نعت • اسباق • اطلاع • عمل • تعمیر • لائیو",muhtamim:"مہتمم: حضرت مولانا زبیر احمد شیخ صاحب (د۔ب)",markaz:"جامع مسجد بلال و مدرسہ عربیہ اعزاز العلوم حمادیہ - کوٹری",search:"تلاش کریں",searchPh:"تلاش کریں...",login:"ایڈمن لاگ ان",loginBtn:"لاگ ان",codePh:"ایڈمن کوڈ لکھیں",admin:"ایڈمن پینل",publish:"پوسٹ شائع کریں",branchTitle:"برانچ شامل کریں",addBranch:"برانچ شامل کریں",logout:"لاگ آؤٹ",noPost:"ابھی کوئی پوسٹ نہیں ہے۔",upload:"گیلری سے تصویر / ویڈیو لگائیں",uploadSub:"بڑی ویڈیو بھی کلاؤڈ میں اپلوڈ ہوگی",remove:"تصویر ہٹائیں",donateTitle:"💚 صدقہ / ڈونیشن - مرکز کے لیے تعاون",donateSub:"کسی بھی آپشن پر دبائیں - سیدھا ایپ کھلے گی۔",cats:['سب','بیان','نعت','اسباق','اطلاع','عمل','تعمیر','لائیو'],footer:"روحانی مرکز اپ ڈیٹس<br>کوٹری جامشورو - رابطہ: 0300-3037168"},
-ar:{title:"المركز الروحاني للتحديثات",sub:"بيان • نعت • دروس • إعلان • عمل • تعمير • مباشر",muhtamim:"المحتمم: حضرت مولانا زبير أحمد شيخ صاحب (د.ب)",markaz:"جامع مسجد بلال و مدرسة عربية إعزاز العلوم الحمادية - كوتري",search:"بحث",searchPh:"ابحث...",login:"دخول المسؤول",loginBtn:"دخول",codePh:"أدخل رمز المسؤول",admin:"لوحة المسؤول",publish:"نشر المنشور",branchTitle:"إضافة فرع",addBranch:"إضافة فرع",logout:"تسجيل خروج",noPost:"لا توجد منشورات بعد.",upload:"أضف صورة / فيديو من المعرض",uploadSub:"سيتم رفع الفيديو إلى السحابة",remove:"إزالة الصورة",donateTitle:"💚 صدقة / تبرع - للمركز",donateSub:"اضغط على أي خيار - سيفتح التطبيق.",cats:['الكل','بيان','نعت','دروس','إعلان','عمل','تعمير','مباشر'],footer:"المركز الروحاني للتحديثات<br>كوتري جامشورو - التواصل: 0300-3037168"}
+// Tumhara Asli Firebase Config - Ruhan i Markaz Kotri
+const firebaseConfig = {
+  apiKey: "AIzaSyCm6fpmntJmEiP0POM4Xi829CIu8Gni8Pw",
+  authDomain: "ruhanimarkazkotri.firebaseapp.com",
+  databaseURL: "https://ruhanimarkazkotri-default-rtdb.firebaseio.com",
+  projectId: "ruhanimarkazkotri",
+  storageBucket: "ruhanimarkazkotri.firebasestorage.app",
+  messagingSenderId: "906148918722",
+  appId: "1:906148918722:web:d6c78aff570d9a3f67925b",
+  measurementId: "G-L73LV908LG"
 };
-function saveLocal(){ localStorage.setItem('rm_posts_backup', JSON.stringify(posts)); }
-async function loadData(){
-  render();
-  try{
-    let res = await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID+'/latest', {headers:{'X-Access-Key':BIN_KEY}});
-    let j = await res.json();
-    let d = j.record || {};
-    if(d.posts && d.posts.length > 0){ posts = d.posts; saveLocal(); }
-    if(d.donate && d.donate.easy) donate = d.donate;
-  }catch(e){ console.log('Cloud load fail, local backup dikha rahe hain', e); }
-  renderDonation(); render();
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+document.getElementById("todayDate").innerText = new Date().toLocaleDateString("en-PK");
+
+// --- MEMBERS ---
+const memRef = db.ref("members");
+let allMembers = {};
+memRef.on("value", s=>{ allMembers = s.val()||{}; renderMembers(); renderAtt(); });
+function addMember(){
+  let n = document.getElementById("mName").value.trim();
+  let p = document.getElementById("mPhone").value.trim();
+  if(!n){ alert("Naam likhein"); return; }
+  memRef.push({name:n, phone:p});
+  document.getElementById("mName").value=""; document.getElementById("mPhone").value="";
+  alert("Member Add Ho Gaya ✅");
 }
-async function saveData(){
-  saveLocal();
-  try{
-    let res = await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID, {method:'PUT', headers:{'Content-Type':'application/json','X-Access-Key':BIN_KEY,'X-Bin-Versioning':'false'}, body: JSON.stringify({posts:posts, donate:donate})});
-    if(!res.ok) throw new Error('JSONBin Save Fail - Status '+res.status);
-    return true;
-  }catch(e){ alert('⚠️ Cloud Save Fail hua: '+e.message+'\n\nPost tumhare phone me SAVE ho gayi hai, gayab nahi hogi. Net tez karke dobara Publish dabao.'); return false; }
+function renderMembers(){
+  let q = document.getElementById("mSearch").value.toLowerCase();
+  let h = "";
+  for(let id in allMembers){
+    let m = allMembers[id];
+    if(m.name.toLowerCase().includes(q)){
+      h += '<div class="list-item"><div><b>'+m.name+'</b><br><small>'+(m.phone||"")+'</small></div><button onclick="delMember(\''+id+'\')" style="background:#ff5252;color:#fff;border:none;padding:8px 10px;border-radius:8px">X</button></div>';
+    }
+  }
+  document.getElementById("memberList").innerHTML = h || "<p style='text-align:center;color:#888'>Koi member nahi</p>";
 }
-function copyNum(id){ let t=document.getElementById(id).innerText; navigator.clipboard.writeText(t); alert('Copy ho gaya: '+t); }
-function openEasy(e){ e.preventDefault(); if(!donate.easy) return alert('Easypaisa Number nahi lagaya'); try{navigator.clipboard.writeText(donate.easy);}catch(err){} var a=document.createElement('a'); a.href='intent://open#Intent;scheme=easypaisa;package=pk.com.telenor.phoenix;S.browser_fallback_url=https://play.google.com/store/apps/details?id=pk.com.telenor.phoenix;end'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ alert('Number Copy: '+donate.easy); },600); }
-function openJazz(e){ e.preventDefault(); if(!donate.jazz) return alert('JazzCash Number nahi lagaya'); try{navigator.clipboard.writeText(donate.jazz);}catch(err){} var a=document.createElement('a'); a.href='intent://open#Intent;scheme=jazzcash;package=com.techlogix.mobilinkcustomer;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.techlogix.mobilinkcustomer;end'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ alert('Number Copy: '+donate.jazz); },600); }
-async function saveDonation(){ donate={easy:document.getElementById('dEasy').value, easyName:document.getElementById('dEasyName').value, jazz:document.getElementById('dJazz').value, jazzName:document.getElementById('dJazzName').value, bank:document.getElementById('dBank').value, bankName:document.getElementById('dBankName').value}; await saveData(); renderDonation(); alert('Donation Save ho gaya!'); }
-function renderDonation(){
-  document.getElementById('showEasy').textContent = donate.easy || '---'; document.getElementById('showEasyName').textContent = donate.easyName || '';
-  document.getElementById('showJazz').textContent = donate.jazz || '---'; document.getElementById('showJazzName').textContent = donate.jazzName || '';
-  document.getElementById('showBank').textContent = donate.bank || '---'; document.getElementById('showBankName').textContent = donate.bankName || '';
-  document.getElementById('dEasy').value = donate.easy || ''; document.getElementById('dEasyName').value = donate.easyName || '';
-  document.getElementById('dJazz').value = donate.jazz || ''; document.getElementById('dJazzName').value = donate.jazzName || '';
-  document.getElementById('dBank').value = donate.bank || ''; document.getElementById('dBankName').value = donate.bankName || '';
+function delMember(id){ if(confirm("Delete karein?")) memRef.child(id).remove(); }
+
+// --- ATTENDANCE ---
+function renderAtt(){
+  let h = "";
+  for(let id in allMembers){
+    let m = allMembers[id];
+    h += '<div class="list-item"><div><b>'+m.name+'</b></div><select id="att_'+id+'"><option value="Present">✅ Present</option><option value="Absent">❌ Absent</option><option value="Leave">🏠 Leave</option></select></div>';
+  }
+  document.getElementById("attList").innerHTML = h || "Pehle member add karein";
 }
-function previewFile(){ let f=document.getElementById('pFile').files[0]; if(!f) return; selectedFile=f; selectedType=f.type; let url=URL.createObjectURL(f); if(f.type.startsWith('video')) document.getElementById('preview').innerHTML=`<video controls src="${url}"></video>`; else document.getElementById('preview').innerHTML=`<img src="${url}">`; alert('File select ho gayi: '+f.name+' ('+(f.size/1024/1024).toFixed(1)+' MB)'); }
-function clearFile(){ selectedFile=null; selectedType=''; document.getElementById('pFile').value=''; document.getElementById('preview').innerHTML=''; }
-function setLang(l){
-  lang=l; localStorage.setItem('rm_lang',l); let t=T[l];
-  document.getElementById('b-en').className = l=='en'?'active':''; document.getElementById('b-ur').className = l=='ur'?'active':''; document.getElementById('b-ar').className = l=='ar'?'active':'';
-  document.documentElement.lang=l; document.body.dir = (l=='ur'||l=='ar')?'rtl':'ltr';
-  document.getElementById('t-title').textContent=t.title; document.getElementById('t-sub').textContent=t.sub; document.getElementById('t-muhtamim').textContent=t.muhtamim; document.getElementById('t-markaz').textContent=t.markaz;
-  document.getElementById('t-search').textContent=t.search; document.getElementById('search').placeholder=t.searchPh;
-  document.getElementById('t-login').textContent=t.login; document.getElementById('t-loginBtn').textContent=t.loginBtn; document.getElementById('code').placeholder=t.codePh;
-  document.getElementById('t-admin').textContent=t.admin; document.getElementById('t-publish').textContent=t.publish;
-  document.getElementById('t-branchTitle').textContent=t.branchTitle; document.getElementById('t-addBranch').textContent=t.addBranch; document.getElementById('t-logout').textContent=t.logout;
-  document.getElementById('t-upload').textContent=t.upload; document.getElementById('t-uploadSub').textContent=t.uploadSub; document.getElementById('t-remove').textContent=t.remove;
-  document.getElementById('t-donateTitle').textContent=t.donateTitle; document.getElementById('t-donateSub').textContent=t.donateSub; document.getElementById('t-footer').innerHTML=t.footer;
-  document.getElementById('pCat').innerHTML = t.cats.slice(1).map(c=>`<option>${c}</option>`).join('');
-  curCat='All'; render();
+function saveAttendance(){
+  let date = new Date().toISOString().slice(0,10);
+  let data = {};
+  for(let id in allMembers){ data[id] = document.getElementById("att_"+id).value; }
+  db.ref("attendance/"+date).set(data).then(()=>{ document.getElementById("attMsg").innerText = "✅ Attendance Save Ho Gayi!"; });
 }
-function login(){ if(document.getElementById('code').value=='1234'){ document.getElementById('loginBox').style.display='none'; document.getElementById('adminBox').style.display='block'; renderBranches(); renderDonation(); } else alert('Ghalat Code'); }
-function logout(){ document.getElementById('loginBox').style.display='block'; document.getElementById('adminBox').style.display='none'; }
-async function uploadToCloud(file){
-  let fd=new FormData(); fd.append('file', file); fd.append('upload_preset', UPLOAD_PRESET);
-  let res=await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, {method:'POST', body:fd});
-  let data=await res.json(); if(!data.secure_url) throw new Error(data.error?.message || 'Cloudinary Preset ruhani Unsigned nahi hai. Cloudinary > Settings > Upload > Preset ko Unsigned karo.');
-  return data.secure_url;
+
+// --- 1000 VIDEOS ---
+const vidRef = db.ref("videos");
+let allVideos = {};
+vidRef.on("value", s=>{ allVideos = s.val()||{}; renderVideos(); });
+function addVideo(){
+  let t = document.getElementById("vTitle").value.trim();
+  let l = document.getElementById("vLink").value.trim();
+  if(!t || !l){ alert("Naam aur Link dono likhein"); return; }
+  let embed = l;
+  if(l.includes("youtube.com/watch?v=")){ embed = l.replace("watch?v=","embed/").split("&")[0]; }
+  if(l.includes("youtu.be/")){ embed = "https://www.youtube.com/embed/" + l.split("youtu.be/")[1].split("?")[0]; }
+  if(l.includes("youtube.com/shorts/")){ embed = l.replace("shorts/","embed/").split("?")[0]; }
+  vidRef.push({title:t, link:l, embed:embed, date:new Date().toLocaleDateString("en-PK")});
+  document.getElementById("vTitle").value=""; document.getElementById("vLink").value="";
+  alert("Video Add Ho Gayi ✅");
 }
-async function addPost(){
-  let title=document.getElementById('pTitle').value; if(!title) return alert('Title likhen!');
-  document.getElementById('status').style.display='block'; document.getElementById('progress').style.display='block'; document.getElementById('t-publish').textContent='Upload ho raha hai... Ruk jao...';
-  try{
-    let finalURL='';
-    if(selectedFile){ document.getElementById('progressBar').style.width='30%'; finalURL=await uploadToCloud(selectedFile); document.getElementById('progressBar').style.width='100%'; }
-    let newPost={cat:document.getElementById('pCat').value,catKey:document.getElementById('pCat').selectedIndex,title,desc:document.getElementById('pDesc').value,link:document.getElementById('pLink').value,branch:document.getElementById('pBranch').value,cloudURL:finalURL,ftype:selectedType,date:new Date().toLocaleDateString()};
-    posts.unshift(newPost); saveLocal();
-    let ok = await saveData();
-    document.getElementById('pTitle').value=''; document.getElementById('pDesc').value=''; document.getElementById('pLink').value=''; document.getElementById('pBranch').value=''; clearFile();
-    document.getElementById('status').style.display='none'; document.getElementById('progress').style.display='none'; document.getElementById('progressBar').style.width='0%';
-    setLang(lang); render(); alert(ok ? 'Post ho gaya! Ab band karke kholo, phir bhi rahega.' : 'Post phone me save hai, Cloud me dobara try karo.');
-  }catch(e){ document.getElementById('status').style.display='none'; document.getElementById('progress').style.display='none'; setLang(lang); alert('Upload Fail: ' + e.message); }
+function renderVideos(){
+  let q = document.getElementById("vSearch").value.toLowerCase();
+  let html = "";
+  let ids = Object.keys(allVideos).reverse();
+  for(let id of ids){
+    let v = allVideos[id];
+    if(v.title.toLowerCase().includes(q)){
+      html += '<div class="list-item"><div><b>'+v.title+'</b><br><small>'+(v.date||"")+'</small></div><div><button onclick="playVideo(\''+id+'\')" style="background:#ff0000;color:#fff;border:none;padding:8px 14px;border-radius:8px;font-weight:bold">▶ Play</button> <button onclick="delVideo(\''+id+'\')" style="background:#ff5252;color:#fff;border:none;padding:8px 10px;border-radius:8px">X</button></div></div>';
+    }
+  }
+  document.getElementById("videoList").innerHTML = html || "<p style='text-align:center;color:#888'>Abhi koi video nahi, upar se add karein</p>";
 }
-function addBranch(){ let n=document.getElementById('bName').value; if(!n) return; branches.push(n); localStorage.setItem('rm_branches',JSON.stringify(branches)); document.getElementById('bName').value=''; renderBranches(); }
-function delBranch(i){ branches.splice(i,1); localStorage.setItem('rm_branches',JSON.stringify(branches)); renderBranches(); }
-function renderBranches(){ document.getElementById('branchList').innerHTML = branches.map((b,i)=>`<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee"><span>${b}</span><button onclick="delBranch(${i})">❌</button></div>`).join(''); }
-function render(){
-  let t=T[lang];
-  document.getElementById('cats').innerHTML = t.cats.map((c,i)=>`<button onclick="curCat='${i==0?'All':c}';render()">${c}</button>`).join('');
-  let q=document.getElementById('search').value.toLowerCase();
-  let list=posts.filter(p=>{
-    let catMatch = (curCat=='All') || (p.cat==curCat) || (p.catKey!==undefined && t.cats[p.catKey]==curCat);
-    return catMatch && p.title.toLowerCase().includes(q);
-  });
-  if(!list.length){ document.getElementById('posts').innerHTML=`<p style="text-align:center;color:#888;padding:20px">${t.noPost}</p>`; return; }
-  document.getElementById('posts').innerHTML = list.map(p=>{
-    let media=''; if(p.cloudURL){ media = (p.ftype&&p.ftype.startsWith('video'))? `<video controls preload="metadata" src="${p.cloudURL}"></video>` : `<img src="${p.cloudURL}">`; }
-    return `<div class="post"><span class="badge">${p.cat}</span> <span style="font-size:11px;color:#888">${p.branch||''} • ${p.date}</span><h3>${p.title}</h3><p>${p.desc||''}</p>${media}${p.link?`<br><a href="${p.link}" target="_blank">Open Link</a>`:''}<br><button onclick="delPost(${posts.indexOf(p)})" style="background:#ffeded;border:0;padding:6px 12px;border-radius:20px;margin-top:8px">Delete</button></div>`;
-  }).join('');
+function playVideo(id){
+  let v = allVideos[id];
+  document.getElementById("playerCard").style.display = "block";
+  document.getElementById("playingTitle").innerText = "▶ " + v.title;
+  if(v.embed.includes("youtube")){
+    document.getElementById("playerBox").innerHTML = '<iframe width="100%" height="220" src="'+v.embed+'" frameborder="0" allowfullscreen style="border-radius:12px"></iframe>';
+  } else {
+    document.getElementById("playerBox").innerHTML = '<video controls autoplay style="width:100%;border-radius:12px" src="'+v.link+'"></video><br><a href="'+v.link+'" target="_blank">TikTok Par Kholo</a>';
+  }
+  document.getElementById("playerCard").scrollIntoView({behavior:"smooth"});
 }
-async function delPost(i){ if(!confirm('Delete karni hai?')) return; posts.splice(i,1); await saveData(); render(); }
-setLang(lang); renderDonation(); loadData();
+function closePlayer(){ document.getElementById("playerCard").style.display = "none"; document.getElementById("playerBox").innerHTML = ""; }
+function delVideo(id){ if(confirm("Video delete karein?")) vidRef.child(id).remove(); }
+
+// --- SERVICE WORKER ---
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </script>
 </body>
