@@ -1,7 +1,7 @@
 // Ruhani Markaz Updates - Service Worker
-// Version: ruhani-v19 - Agar kabhi bhi App update karni ho to sirf yahan v19 ko v20, v21 kar dena
+// Version: ruhani-v20 - Video + Firebase Rules Fix
 
-const CACHE = 'ruhani-v19';
+const CACHE = 'ruhani-v20';
 const CORE_FILES = [
   './',
   './index.html',
@@ -46,18 +46,15 @@ self.addEventListener('fetch', (e) => {
   const url = e.request.url;
 
   // A. index.html - HAMESHA Internet se naya lao, kabhi cache se mat dikhao
-  // Isi se tumhara masla hal hoga - App band karke khologe to nayi file khulegi
   if (url.includes('index.html') || url.endsWith('/') || url.includes('github.io')) {
     e.respondWith(
       fetch(e.request).then((res) => {
-        // Nayi file mil gayi to cache me bhi update kar do
         const resClone = res.clone();
         caches.open(CACHE).then((cache) => {
           cache.put(e.request, resClone);
         });
         return res;
       }).catch(() => {
-        // Net nahi hai to phir cache wali dikhao
         return caches.match(e.request).then((cached) => {
           if (cached) return cached;
           return caches.match('./index.html');
@@ -67,14 +64,42 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // B. JSONBin + Cloudinary - Kabhi cache mat karo, hamesha taza data lao
-  // Isi se Post gayab hone wala masla khatam hoga
-  if (url.includes('jsonbin') || url.includes('cloudinary') || url.includes('api.jsonbin.io')) {
+  // B. JSONBin + Cloudinary + Firebase Videos - Kabhi cache mat karo, hamesha taza data lao
+  // Isi se Post gayab hone wala + 1000 Videos List wala masla khatam hoga
+  // Firebase ka link hai: firebasedatabase.app
+  if (url.includes('jsonbin') || url.includes('cloudinary') || url.includes('api.jsonbin.io') || url.includes('firebasedatabase') || url.includes('firebaseio.com')) {
     e.respondWith(fetch(e.request));
     return;
   }
 
-  // C. Baqi sab - Pehle net, nahi to cache
+  // C. YouTube + TikTok Videos - Kabhi cache mat karo, ye online hi chalengi
+  // Inko cache karoge to App hang ho jayega
+  if (url.includes('youtube.com') || url.includes('youtu.be') || url.includes('tiktok.com') || url.includes('googlevideo.com') || url.includes('ytimg.com')) {
+    e.respondWith(fetch(e.request));
+    return;
+  }
+
+  // D. MP4 Videos - Jo download ki hui videos hain, unko cache karo taake offline chalein
+  // Sirf .mp4 wali videos offline chalengi
+  if (url.includes('.mp4')) {
+    e.respondWith(
+      caches.match(e.request).then((cached) => {
+        if (cached) return cached;
+        return fetch(e.request).then((res) => {
+          const resClone = res.clone();
+          caches.open(CACHE).then((cache) => {
+            cache.put(e.request, resClone);
+          });
+          return res;
+        }).catch(() => {
+          return caches.match(e.request);
+        });
+      })
+    );
+    return;
+  }
+
+  // E. Baqi sab - Pehle net, nahi to cache
   // Jaise photos, icons, manifest
   e.respondWith(
     fetch(e.request).then((res) => {
